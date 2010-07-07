@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Banco de Horas</string>
+    <string name="tab_title_day">Hoje</string>
+    <string name="tab_title_month">Mês</string>
+    <string name="tab_title_overview">Geral</string>
+</resources>
