@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" 
+  android:orientation="vertical"
+  android:gravity="center">
+  
+  <ImageView android:id="@+id/widgetImage"
+  	android:src="@drawable/blue_clock"
+  	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	></ImageView>
+  	<TextView android:id="@+id/widgetText" 
+  		android:text="@string/widget_button_text"
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:shadowColor="#000000"
+  		android:shadowDx="30"
+  		android:shadowDy="20"
+  		android:shadowRadius="10"	
+  		android:gravity="center_horizontal"
+  		android:layout_marginTop="8px"
+  		android:background="#000000"
+  		android:textColor="#F0F0F0"
+  		></TextView>
+</LinearLayout>
