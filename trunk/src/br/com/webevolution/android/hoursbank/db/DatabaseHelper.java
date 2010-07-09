@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -44,11 +45,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		// TODO create the code to upgrade database according with versions
 	}
 
-	public Cursor getTodayCheckpoints(){
+	public Cursor getTodayCheckpoints() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.clear(Calendar.HOUR);
 		calendar.clear(Calendar.MINUTE);
 		calendar.clear(Calendar.SECOND);
-		return db.query(TABLE_NAME, new String[]{KEY_ID,KEY_CHECKPOINT},KEY_CHECKPOINT +" >= "+calendar.getTimeInMillis() , null, null, null, KEY_CHECKPOINT);
+
+		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT },
+				KEY_CHECKPOINT + " >= " + calendar.getTimeInMillis(), null,
+				null, null, KEY_CHECKPOINT);
+
+	}
+	
+	public long insertCheckpoint(){
+		ContentValues values = new ContentValues();
+		long checkpoint = Calendar.getInstance().getTimeInMillis();
+		values.put(KEY_CHECKPOINT, checkpoint);
+		long result = db.insert(TABLE_NAME, null, values);
+		if(result != -1) {
+			return checkpoint;
+		}else {
+			return result;
+		}
 	}
 }
