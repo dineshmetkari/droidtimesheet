@@ -1,8 +1,6 @@
 package br.com.webevolution.android.hoursbank.db;
 
-import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -20,6 +18,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String CREATE_SQL = "create table " + TABLE_NAME
 			+ " (" + KEY_ID + " integer primary key autoincrement ,"
 			+ KEY_CHECKPOINT + " datetime not null)";
+	public static final String STATUS_IN = "STATUS_IN";
+	public static final String STATUS_OUT = "STATUS_OUT";
 
 	private SQLiteDatabase db;
 
@@ -66,6 +66,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			return checkpoint;
 		}else {
 			return result;
+		}
+	}
+	
+	public String getStatus() {
+		int todayCount = getTodayCheckpoints().getCount();
+		if (todayCount % 2 == 0) {
+			return STATUS_OUT;
+		}else {
+			return STATUS_IN;
 		}
 	}
 }

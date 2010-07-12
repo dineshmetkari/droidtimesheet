@@ -3,7 +3,6 @@ package br.com.webevolution.android.hoursbank;
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import br.com.webevolution.android.hoursbank.db.DatabaseHelper;
 
@@ -14,8 +13,8 @@ public class Day extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.checkpoint_list);
 		db = new DatabaseHelper(this);
+		setContentView(R.layout.checkpoint_list);
 		fillData();
 	}
 	
@@ -27,6 +26,18 @@ public class Day extends ListActivity {
 	}
 
 	private void fillData() {
+		
+		
+		db.open();
+		// Get all of the rows from the database and create the item list
+		Cursor cursor = db.getTodayCheckpoints();
+		startManagingCursor(cursor);
+		
+		CheckPointListAdapter adapter = new CheckPointListAdapter(this, R.layout.checkpoint_row, cursor);
+		setListAdapter(adapter);
+		db.close();
+		
+		/*
 		db.open();
 		// Get all of the rows from the database and create the item list
 		Cursor cursor = db.getTodayCheckpoints();
@@ -43,6 +54,6 @@ public class Day extends ListActivity {
 		// Now create a simple cursor adapter and set it to display
 		SimpleCursorAdapter checkpoints = new SimpleCursorAdapter(this, R.layout.checkpoint_row, cursor, from, to);
 		setListAdapter(checkpoints);
-		db.close();
+		db.close();*/
 	}
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.IBinder;
 import android.widget.RemoteViews;
@@ -33,6 +34,21 @@ public class CheckpointService extends Service {
 		db = new DatabaseHelper(this);
 		db.open();
 		showToastNotification(db.insertCheckpoint());
+		
+		//updating the widgets to display the correct drawnable element
+		AppWidgetManager manager = AppWidgetManager.getInstance(this);
+		int[] ids = manager.getAppWidgetIds(new ComponentName(this, CheckpointWidget.class));
+		RemoteViews view = new RemoteViews(getPackageName(),R.layout.checkpoint_widget);
+		int clockId = 0;
+		String status = db.getStatus();
+		//check the status and set the correct drawnable id
+		if(DatabaseHelper.STATUS_IN.equals(status)) {
+			clockId = R.drawable.red_clock;
+		}else if(DatabaseHelper.STATUS_OUT.equals(status)) {
+			clockId = R.drawable.blue_clock;
+		}
+		view.setImageViewResource(R.id.widgetImage, clockId);
+		manager.updateAppWidget(ids, view);
 		db.close();
 	}
 

@@ -38,4 +38,12 @@ public class HoursBank extends TabActivity {
 				.setContent(new Intent(this, Overview.class)));
 
 	}
+	
+	static public int getImageResId(int count) {
+		if(count %2==0) {
+			return R.drawable.red_clock;
+		}else {
+			return R.drawable.blue_clock;
+		}
+	}
 }
