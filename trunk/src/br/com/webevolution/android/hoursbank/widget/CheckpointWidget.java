@@ -1,7 +1,6 @@
 package br.com.webevolution.android.hoursbank.widget;
 
 import android.app.PendingIntent;
-import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
@@ -13,29 +12,18 @@ import br.com.webevolution.android.hoursbank.R;
 public class CheckpointWidget extends AppWidgetProvider {
 
 	@Override
-	public void onReceive(Context context, Intent intent) {
-		// TODO Auto-generated method stub
-		super.onReceive(context, intent);
-	}
-
-	@Override
-	public void onEnabled(Context context) {
-		// TODO Auto-generated method stub
-		super.onEnabled(context);
-	}
-
-	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		final int N = appWidgetIds.length;
-
+		
 		// Create an Intent to launch ExampleActivity
 		Intent intent = new Intent(context, CheckpointService.class);
+		
 		PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
-
+		
 		// Get the layout for the App Widget and attach an on-click listener to
 		// the button
 		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.checkpoint_widget);
-
+				
 		views.setOnClickPendingIntent(R.id.widgetImage, pendingIntent);
 
 		// Perform this loop procedure for each App Widget that belongs to this
