@@ -6,14 +6,11 @@ import android.widget.TextView;
 
 
 
-public class Overview extends Activity {
+public class OverviewActivity extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TextView text = new TextView(this);
-        text.setText("some text OVERVIEW");
-        setContentView(text);
         
         
     }

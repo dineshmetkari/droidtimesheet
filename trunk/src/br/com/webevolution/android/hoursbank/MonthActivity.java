@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 
 
-public class Month extends Activity {
+public class MonthActivity extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {

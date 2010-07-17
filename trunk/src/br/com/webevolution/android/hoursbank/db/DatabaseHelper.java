@@ -15,7 +15,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String TABLE_NAME = "CheckPoints";
 	public static final String KEY_ID = "_id";
 	public static final String KEY_CHECKPOINT = "checkpoint";
-	private static final String CREATE_SQL = "create table " + TABLE_NAME
+	private static final String CREATE_SQL = "create table if not exists " + TABLE_NAME
 			+ " (" + KEY_ID + " integer primary key autoincrement ,"
 			+ KEY_CHECKPOINT + " datetime not null)";
 	public static final String STATUS_IN = "STATUS_IN";
