@@ -8,4 +8,6 @@
     <string name="widget_button_text">Checkpoint</string>
     <string name="message_checkpoint_create_success">Checkpoint criado em:</string>
     <string name="message_checkpoint_create_error">Não foi possível criar o checkpoint!</string>
+    <string name="total_hours">Total Executado:</string>
+    <string name="time_to_go">Horario de saida:</string>
 </resources>
