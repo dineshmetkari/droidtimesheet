@@ -1,7 +1,6 @@
 package br.com.webevolution.android.hoursbank;
 
 import br.com.webevolution.android.hoursbank.db.DatabaseHelper;
-import br.com.webevolution.android.hoursbank.setup.SetupActivity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -62,7 +61,7 @@ public class BlotterActivity extends ListActivity {
 
 		switch (item.getItemId()) {
 			case HoursBank.MENU_SETTINGS:
-				Intent intent = new Intent(this, SetupActivity.class);
+				Intent intent = new Intent(this, PreferencesActivity.class);
 				startActivity(intent);
 				break;
 		}

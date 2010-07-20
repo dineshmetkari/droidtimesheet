@@ -24,4 +24,7 @@
     <string name="dialog_add_checkpoint_title2">Selecione o dia e a hora</string>
     <string name="button_ok">OK</string>
     <string name="button_cancel">Cancelar</string>
+    <string name="hours_day">Horas por dia</string>
+    <string name="min_lunch_time">Tempo mín de almoço</string>
+    <string name="min_lunch_time_summary">Defina o tempo mínimo de almoço. 0:00 se não houver tempo mínimo.</string>
 </resources>

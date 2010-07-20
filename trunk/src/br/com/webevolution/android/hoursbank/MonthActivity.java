@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import br.com.webevolution.android.hoursbank.db.DatabaseHelper;
-import br.com.webevolution.android.hoursbank.setup.SetupActivity;
 
 public class MonthActivity extends ListActivity {
 	private DatabaseHelper db;
@@ -29,7 +28,6 @@ public class MonthActivity extends ListActivity {
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 		fillData();
 
@@ -74,7 +72,7 @@ public class MonthActivity extends ListActivity {
 		
 		switch(item.getItemId()) {
 			case HoursBank.MENU_SETTINGS:
-				Intent intent = new Intent(this, SetupActivity.class);
+				Intent intent = new Intent(this, PreferencesActivity.class);
 				startActivity(intent);
 				break;
 			case MENU_ADD:
