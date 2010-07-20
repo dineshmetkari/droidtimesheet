@@ -1,7 +1,6 @@
 package br.com.webevolution.android.hoursbank.db;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			"13/07/2010 14:14", "13/07/2010 13:14", "13/07/2010 09:24", "12/07/2010 20:45", "12/07/2010 12:56", "12/07/2010 11:56", "12/07/2010 09:52", "08/07/2010 21:40", "08/07/2010 13:04",
 			"08/07/2010 12:04", "08/07/2010 07:56", "07/07/2010 21:32", "07/07/2010 17:28", "07/07/2010 16:59", "07/07/2010 12:51", "07/07/2010 11:40", "07/07/2010 08:28", "06/07/2010 11:23",
 			"06/07/2010 09:31", "05/07/2010 18:13", "05/07/2010 13:43", "05/07/2010 12:03", "05/07/2010 08:28", "02/07/2010 20:40", "02/07/2010 12:54", "02/07/2010 10:36", "02/07/2010 09:08",
-			"01/07/2010 19:56", "01/07/2010 13:49", "01/07/2010 11:48", "01/07/2010 09:05" };
+			"01/07/2010 19:56", "01/07/2010 13:49", "01/07/2010 11:48", "01/07/2010 09:05", "19/07/2010 20:58", "20/07/2010 09:49" };
 
 	private SQLiteDatabase db;
 
@@ -52,17 +51,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public Cursor getCheckpointsByDay(Calendar day) {
 		Calendar startDate = (Calendar) day.clone();
-		Calendar endDate = (Calendar)day.clone();
-		
+		Calendar endDate = (Calendar) day.clone();
+
 		startDate.set(Calendar.HOUR_OF_DAY, 0);
 		startDate.set(Calendar.MINUTE, 0);
 		startDate.set(Calendar.SECOND, 0);
-		
+
 		endDate.set(Calendar.HOUR_OF_DAY, 23);
 		endDate.set(Calendar.MINUTE, 59);
 		endDate.set(Calendar.SECOND, 59);
-		
-		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_CHECKPOINT + " >= " + startDate.getTimeInMillis() +" AND "+ KEY_CHECKPOINT +" <= "+endDate.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
+
+		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_CHECKPOINT + " >= " + startDate.getTimeInMillis() + " AND " + KEY_CHECKPOINT + " <= " + endDate.getTimeInMillis(),
+				null, null, null, KEY_CHECKPOINT);
 
 	}
 
@@ -82,8 +82,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public long insertCheckpoint() {
+		return insertCheckpoint(Calendar.getInstance().getTimeInMillis());
+	}
+
+	public long insertCheckpoint(long checkpoint) {
 		ContentValues values = new ContentValues();
-		long checkpoint = Calendar.getInstance().getTimeInMillis();
 		values.put(KEY_CHECKPOINT, checkpoint);
 		long result = db.insert(TABLE_NAME, null, values);
 		if (result != -1) {
@@ -91,6 +94,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		} else {
 			return result;
 		}
+	}
+
+	public int deleteCheckpoint(long id) {
+		return db.delete(TABLE_NAME, KEY_ID + " = " + id, null);
+	}
+
+	public int updateCheckpoint(long id, long checkpoint) {
+		ContentValues values = new ContentValues();
+		values.put(KEY_CHECKPOINT, checkpoint);
+		return db.update(TABLE_NAME, values, KEY_ID + " = " + id, null);
 	}
 
 	public String getStatus() {
@@ -104,26 +117,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public void setupTest() {
 		db.execSQL("delete from " + TABLE_NAME);
-		
-		for(String a : SETUP_VALUES) {
+
+		for (String a : SETUP_VALUES) {
 			int day = Integer.valueOf(a.split(" ")[0].split("/")[0]);
 			int month = Integer.valueOf(a.split(" ")[0].split("/")[1]);
 			int year = Integer.valueOf(a.split(" ")[0].split("/")[2]);
 			int hour = Integer.valueOf(a.split(" ")[1].split(":")[0]);
 			int minute = Integer.valueOf(a.split(" ")[1].split(":")[1]);
-			Date dt = new Date(year, month, day, hour, minute);
 			Calendar cal = Calendar.getInstance();
 			cal.set(Calendar.YEAR, year);
-			cal.set(Calendar.MONTH,month-1);
-			cal.set(Calendar.DAY_OF_MONTH,day);
-			cal.set(Calendar.HOUR_OF_DAY,hour);
-			cal.set(Calendar.MINUTE,minute);
-			String date = cal.getTime().toString();
+			cal.set(Calendar.MONTH, month - 1);
+			cal.set(Calendar.DAY_OF_MONTH, day);
+			cal.set(Calendar.HOUR_OF_DAY, hour);
+			cal.set(Calendar.MINUTE, minute);
 			ContentValues values = new ContentValues();
-			values.put(KEY_CHECKPOINT, cal.getTimeInMillis() );
+			values.put(KEY_CHECKPOINT, cal.getTimeInMillis());
 			db.insert(TABLE_NAME, null, values);
 		}
-		
+
 	}
-	
+
 }
