@@ -3,7 +3,6 @@ package br.com.webevolution.android.hoursbank;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.view.MenuItem;
-import br.com.webevolution.android.hoursbank.setup.SetupActivity;
 
 public class OverviewActivity extends ListActivity {
 	@Override
@@ -11,7 +10,7 @@ public class OverviewActivity extends ListActivity {
 		
 		switch(item.getItemId()) {
 			case HoursBank.MENU_SETTINGS:
-				Intent intent = new Intent(this, SetupActivity.class);
+				Intent intent = new Intent(this, PreferencesActivity.class);
 				startActivity(intent);
 				break;
 		}

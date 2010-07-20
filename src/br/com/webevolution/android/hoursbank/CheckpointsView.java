@@ -60,4 +60,12 @@ public class CheckpointsView {
 		}
 		return sHours + ":" + sMinutes;
 	}
+	
+	public long unformatTotalHours(String totalHours) {
+		long hours = Long.valueOf(totalHours.split(":")[0]);
+		long minutes = (hours * 60) +  Long.valueOf(totalHours.split(":")[1]);	
+		long timeInSeconds = minutes * 60;
+		long timestamp = timeInSeconds * 1000;
+		return timestamp;
+	}
 }

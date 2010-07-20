@@ -18,12 +18,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String CREATE_SQL = "create table if not exists " + TABLE_NAME + " (" + KEY_ID + " integer primary key autoincrement ," + KEY_CHECKPOINT + " datetime not null)";
 	public static final String STATUS_IN = "STATUS_IN";
 	public static final String STATUS_OUT = "STATUS_OUT";
+	// TODO remove this before release, as it's just for testing
 	public static final String[] SETUP_VALUES = { "19/07/2010 13:07", "19/07/2010 12:07", "19/07/2010 09:16", "16/07/2010 20:00", "16/07/2010 13:18", "16/07/2010 12:18", "16/07/2010 09:41",
 			"15/07/2010 21:00", "15/07/2010 14:35", "15/07/2010 13:35", "15/07/2010 09:51", "14/07/2010 21:00", "14/07/2010 15:12", "14/07/2010 14:12", "14/07/2010 09:38", "13/07/2010 21:27",
 			"13/07/2010 14:14", "13/07/2010 13:14", "13/07/2010 09:24", "12/07/2010 20:45", "12/07/2010 12:56", "12/07/2010 11:56", "12/07/2010 09:52", "08/07/2010 21:40", "08/07/2010 13:04",
 			"08/07/2010 12:04", "08/07/2010 07:56", "07/07/2010 21:32", "07/07/2010 17:28", "07/07/2010 16:59", "07/07/2010 12:51", "07/07/2010 11:40", "07/07/2010 08:28", "06/07/2010 11:23",
 			"06/07/2010 09:31", "05/07/2010 18:13", "05/07/2010 13:43", "05/07/2010 12:03", "05/07/2010 08:28", "02/07/2010 20:40", "02/07/2010 12:54", "02/07/2010 10:36", "02/07/2010 09:08",
-			"01/07/2010 19:56", "01/07/2010 13:49", "01/07/2010 11:48", "01/07/2010 09:05", "19/07/2010 20:58", "20/07/2010 09:49" };
+			"01/07/2010 19:56", "01/07/2010 13:49", "01/07/2010 11:48", "01/07/2010 09:05", "19/07/2010 20:58", "20/07/2010 09:49", "20/07/2010 12:43:00", "20/07/2010 14:04:00" };
 
 	private SQLiteDatabase db;
 
@@ -115,6 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 
+	// TODO remove this before release, as it's just for testing
 	public void setupTest() {
 		db.execSQL("delete from " + TABLE_NAME);
 
