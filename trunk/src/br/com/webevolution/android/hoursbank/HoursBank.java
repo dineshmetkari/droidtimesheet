@@ -3,14 +3,18 @@ package br.com.webevolution.android.hoursbank;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TabHost;
 import br.com.webevolution.android.hoursbank.db.DatabaseHelper;
+import br.com.webevolution.android.hoursbank.setup.SetupActivity;
 
 public class HoursBank extends TabActivity {
 	private static final String TAB_BLOTTER = "blotter";
 	private static final String TAB_DAY = "day";
 	private static final String TAB_MONTH = "month";
 	private static final String TAB_OVERVIEW = "overview";
+	public static final int MENU_SETTINGS = 1;
 	public static final boolean TESTING = false;
 
 	/** Called when the activity is first created. */
@@ -56,6 +60,25 @@ public class HoursBank extends TabActivity {
 		db.open();
 		db.setupTest();
 		db.close();
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, R.string.menu_settings)
+		.setIcon(android.R.drawable.ic_menu_preferences);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		
+		switch(item.getItemId()) {
+			case MENU_SETTINGS:
+				Intent intent = new Intent(this, SetupActivity.class);
+				startActivity(intent);
+				break;
+		}
+		return super.onMenuItemSelected(featureId, item);
 	}
 
 }
