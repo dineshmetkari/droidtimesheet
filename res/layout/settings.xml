@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceCategory android:title="Quantas Horas?">
+       		<EditTextPreference
+            android:key="hours_monday"
+            android:defaultValue="9:00"
+            android:title="@string/monday"
+            android:summary="@string/dialog_hours_summary"
+            android:dialogTitle="@string/dialog_hours_title" />
+            <EditTextPreference
+            android:key="hours_tuesday"
+            android:defaultValue="9:00"
+            android:title="@string/tuesday"
+            android:summary="@string/dialog_hours_summary"
+            android:dialogTitle="@string/dialog_hours_title" />
+            <EditTextPreference
+            android:key="hours_wednesday"
+            android:defaultValue="9:00"
+            android:title="@string/wednesday"
+            android:summary="@string/dialog_hours_summary"
+            android:dialogTitle="@string/dialog_hours_title" />
+            <EditTextPreference
+            android:key="hours_thursday"
+            android:defaultValue="9:00"
+            android:title="@string/thursday"
+            android:summary="@string/dialog_hours_summary"
+            android:dialogTitle="@string/dialog_hours_title" />
+            <EditTextPreference
+            android:key="hours_friday"
+            android:defaultValue="8:00"
+            android:title="@string/friday"
+            android:summary="@string/dialog_hours_summary"
+            android:dialogTitle="@string/dialog_hours_title" />
+            <EditTextPreference
+            android:key="hours_saturday"
+            android:defaultValue="0:00"
+            android:title="@string/saturday"
+            android:summary="@string/dialog_hours_summary"
+            android:dialogTitle="@string/dialog_hours_title" />
+            
+    </PreferenceCategory>
+</PreferenceScreen>

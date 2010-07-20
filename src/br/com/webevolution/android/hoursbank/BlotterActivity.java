@@ -1,15 +1,13 @@
 package br.com.webevolution.android.hoursbank;
 
+import br.com.webevolution.android.hoursbank.db.DatabaseHelper;
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import br.com.webevolution.android.hoursbank.db.DatabaseHelper;
 
-
-
-public class MonthActivity extends ListActivity {
+public class BlotterActivity extends ListActivity {
 	private DatabaseHelper db;
 
 	/** Called when the activity is first created. */
@@ -33,11 +31,11 @@ public class MonthActivity extends ListActivity {
 
 		db.open();
 		// Get all of the rows from the database and create the item list
-		Cursor cursor = db.getMonthCheckpoints();
+		Cursor cursor = db.getAllCheckpoints();
 		startManagingCursor(cursor);
 
 		CheckpointsView chk = new CheckpointsView(this);
-		CheckPointListAdapter adapter = new CheckPointListAdapter(this, CheckPointListAdapter.MONTH, cursor);
+		CheckPointListAdapter adapter = new CheckPointListAdapter(this, CheckPointListAdapter.BLOTTER, cursor);
 		setListAdapter(adapter);
 
 		if (cursor.getCount() > 0) {
