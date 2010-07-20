@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Banco de Horas</string>
+    <string name="tab_title_blotter">Registros</string>
     <string name="tab_title_day">Hoje</string>
     <string name="tab_title_month">Mês</string>
     <string name="tab_title_overview">Geral</string>
-    <string name="list_empty">Parece que não há registros...</string>
+    <string name="list_empty">Você ainda não começou a trabalhar!</string>
     <string name="widget_button_text">Checkpoint</string>
     <string name="message_checkpoint_create_success">Checkpoint criado em:</string>
     <string name="message_checkpoint_create_error">Não foi possível criar o checkpoint!</string>
     <string name="total_hours">Total Executado:</string>
-    <string name="time_to_go">Horario de saida:</string>
+    <string name="monday">Segunda-Feira</string>
+    <string name="tuesday">Terça-Feira</string>
+    <string name="wednesday">Quarta-Feira</string>
+    <string name="thursday">Quinta-Feira</string>
+    <string name="friday">Sexta-Feira</string>
+    <string name="saturday">Sábado</string>
+    <string name="dialog_hours_title">Horas por dia</string>
+    <string name="dialog_hours_summary">Digite quantas horas você tem que trabalhar nesse dia ex: 9:00</string>
+    <string name="menu_settings">Preferências</string>
 </resources>

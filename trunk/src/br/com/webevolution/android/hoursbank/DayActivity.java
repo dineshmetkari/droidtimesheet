@@ -1,20 +1,21 @@
 package br.com.webevolution.android.hoursbank;
 
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.format.DateFormat;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import br.com.webevolution.android.hoursbank.db.DatabaseHelper;
+import br.com.webevolution.android.hoursbank.setup.SetupActivity;
 
 public class DayActivity extends ListActivity {
 	private DatabaseHelper db;
+	private static final int MENU_SEETINGS = 1; 
 
 	/** Called when the activity is first created. */
 	@Override
@@ -37,49 +38,47 @@ public class DayActivity extends ListActivity {
 
 		db.open();
 		// Get all of the rows from the database and create the item list
-		Cursor cursor = db.getTodayCheckpoints();
+		Cursor cursor = db.getCheckpointsByDay(Calendar.getInstance());
 		startManagingCursor(cursor);
 
-		CheckPointListAdapter adapter = new CheckPointListAdapter(this, R.layout.checkpoint_row, cursor);
+		CheckpointsView chk = new CheckpointsView(this);
+		CheckPointListAdapter adapter = new CheckPointListAdapter(this, CheckPointListAdapter.DAY, cursor);
 		setListAdapter(adapter);
 
-		
-		
 		if (cursor.getCount() > 0) {
 			findViewById(R.id.layoutContainer).setVisibility(View.VISIBLE);
-			long totalHours = 0;
-			cursor.moveToFirst();
-			while (!cursor.isAfterLast()) {
-				long checkpoint = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
-				long now = Calendar.getInstance().getTimeInMillis();
-				if ((cursor.getPosition() + 1) % 2 == 0) {
-					cursor.moveToPrevious();
-					long lastCheckpoint = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
-					totalHours += checkpoint - lastCheckpoint;
-					cursor.moveToNext();
-				} else {
-					if (cursor.isLast() && cursor.isFirst()) {
-						// this case today has only one checkpoint
-						totalHours = now - checkpoint;
-					} else if (cursor.isLast()) {
-						totalHours += now - checkpoint;
-					}
-				}
-				cursor.moveToNext();
-			}
-			
-			long timeInSeconds = totalHours /1000;
-			long hours = timeInSeconds / 3600;
-			long minutes = (timeInSeconds / 60) - (hours * 60);
 
-			
-			//TODO get from preferences the amount of hours to do for each day
+			long sum = chk.calculateTotalHours(cursor);
+			String totalHours = chk.formatTotalHours(sum);
+
+			// TODO get from preferences the amount of hours to do for each day
 			// and calculate the time to get out to set in the label!
-						
-			((TextView) findViewById(R.id.lblTotalHours)).setText(hours+":"+minutes);
+
+			((TextView) findViewById(R.id.lblTotalHours)).setText(totalHours);
 
 		}
 
 		db.close();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(Menu.NONE, MENU_SEETINGS, Menu.NONE, R.string.menu_settings)
+		.setIcon(android.R.drawable.ic_menu_preferences);
+		;
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		
+		switch(item.getItemId()) {
+			case MENU_SEETINGS:
+				Intent intent = new Intent(this, SetupActivity.class);
+				startActivity(intent);
+				break;
+		}
+		return super.onMenuItemSelected(featureId, item);
 	}
 }
