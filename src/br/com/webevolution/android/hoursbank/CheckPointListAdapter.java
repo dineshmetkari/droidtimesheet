@@ -22,8 +22,6 @@ public class CheckPointListAdapter extends ResourceCursorAdapter {
 	public static final int DAY = 2;
 	public static final int MONTH = 3;
 	public static final int OVERVIEW = 4;
-	private int lastDay = 0;
-
 	public CheckPointListAdapter(Context context, int layoutType, Cursor cursor) {
 		super(context, getLayoutId(), cursor);
 		this.layoutType = layoutType;

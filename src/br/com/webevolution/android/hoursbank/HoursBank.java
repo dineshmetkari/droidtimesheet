@@ -12,10 +12,11 @@ public class HoursBank extends TabActivity {
 	private static final String TAB_BLOTTER = "blotter";
 	private static final String TAB_DAY = "day";
 	private static final String TAB_MONTH = "month";
-	private static final String TAB_OVERVIEW = "overview";
+	private static final String TAB_REPORTS = "overview";
+
 	public static final int MENU_SETTINGS = 1;
-	//TODO remove this before release, as it's just for testing
-	public static final boolean TESTING = true;
+	// TODO remove this before release, as it's just for testing
+	public static final boolean TESTING = false;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -26,9 +27,37 @@ public class HoursBank extends TabActivity {
 		if (TESTING) {
 			setupTest();
 		}
+		
+		setupTabs();
 
+		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+
+	}
+
+	static public int getImageResId(int count) {
+		if (count % 2 == 0) {
+			return R.drawable.ic_checkout;
+		} else {
+			return R.drawable.ic_checkin;
+		}
+	}
+
+	// TODO remove this before release, as it's just for testing
+	private void setupTest() {
+		DatabaseHelper db = new DatabaseHelper(this);
+		db.open();
+		db.setupTest();
+		db.close();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, R.string.menu_settings).setIcon(android.R.drawable.ic_menu_preferences);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	private void setupTabs() {
 		TabHost tabHost = getTabHost();
-
 		tabHost.addTab(tabHost.newTabSpec(TAB_DAY)
 		// TODO create an icon and set it here as a drawable
 				.setIndicator(getResources().getText(R.string.tab_title_day)).setContent(new Intent(this, DayActivity.class)));
@@ -37,37 +66,11 @@ public class HoursBank extends TabActivity {
 		// TODO create an icon and set it here as a drawable
 				.setIndicator(getResources().getText(R.string.tab_title_month)).setContent(new Intent(this, MonthActivity.class)));
 
-		tabHost.addTab(tabHost.newTabSpec(TAB_OVERVIEW)
-		// TODO create an icon and set it here as a drawable
-				.setIndicator(getResources().getText(R.string.tab_title_overview)).setContent(new Intent(this, OverviewActivity.class)));
+		tabHost.addTab(tabHost.newTabSpec(TAB_REPORTS)
+				.setIndicator(getResources().getText(R.string.tab_title_overview), getResources().getDrawable(R.drawable.ic_tab_reports)).setContent(
+						new Intent(this, ReportsActivity.class)));
 
 		tabHost.addTab(tabHost.newTabSpec(TAB_BLOTTER)
-		// TODO create an icon and set it here as a drawable
-				.setIndicator(getResources().getText(R.string.tab_title_blotter)).setContent(new Intent(this, BlotterActivity.class)));
-		
-		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
-		
+				.setIndicator(getResources().getText(R.string.tab_title_blotter), getResources().getDrawable(R.drawable.ic_tab_graph)).setContent(new Intent(this, BlotterActivity.class)));
 	}
-
-	static public int getImageResId(int count) {
-		if (count % 2 == 0) {
-			return R.drawable.red_clock;
-		} else {
-			return R.drawable.blue_clock;
-		}
-	}
-	//TODO remove this before release, as it's just for testing
-	private void setupTest() {
-		DatabaseHelper db = new DatabaseHelper(this);
-		db.open();
-		db.setupTest();
-		db.close();
-	}
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, R.string.menu_settings)
-		.setIcon(android.R.drawable.ic_menu_preferences);
-		return super.onCreateOptionsMenu(menu);
-	}
-
 }

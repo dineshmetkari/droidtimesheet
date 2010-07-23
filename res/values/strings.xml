@@ -9,6 +9,9 @@
     <string name="widget_button_text">Checkpoint</string>
     <string name="message_checkpoint_create_success">Checkpoint criado em:</string>
     <string name="message_checkpoint_create_error">Não foi possível criar o checkpoint!</string>
+    <string name="message_checkpoint_created">Checkpoint Criado!</string>
+    <string name="message_checkpoint_edited">Checkpoint Editado!</string>
+    <string name="message_checkpoint_deleted">Checkpoint excluído!</string>
     <string name="total_hours">Total Executado:</string>
     <string name="monday">Segunda-Feira</string>
     <string name="tuesday">Terça-Feira</string>
@@ -27,4 +30,7 @@
     <string name="hours_day">Horas por dia</string>
     <string name="min_lunch_time">Tempo mín de almoço</string>
     <string name="min_lunch_time_summary">Defina o tempo mínimo de almoço. 0:00 se não houver tempo mínimo.</string>
+    <string name="menu_edit">Editar</string>
+    <string name="menu_delete">Excluir</string>
+    <string name="context_menu_title">Checkpoint</string>
 </resources>
