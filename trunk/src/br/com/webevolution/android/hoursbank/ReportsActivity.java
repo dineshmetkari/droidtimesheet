@@ -4,7 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.view.MenuItem;
 
-public class OverviewActivity extends ListActivity {
+public class ReportsActivity extends ListActivity {
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		
