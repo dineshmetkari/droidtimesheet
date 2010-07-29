@@ -57,7 +57,7 @@ public class DayActivity extends CheckpointListActivity {
 		Cursor cursor = db.getCheckpointsByDay(Calendar.getInstance());
 		startManagingCursor(cursor);
 
-		CheckPointListAdapter adapter = new CheckPointListAdapter(this, CheckPointListAdapter.DAY, cursor);
+		CheckpointCursorAdapter adapter = new CheckpointCursorAdapter(this, CheckpointCursorAdapter.DAY, cursor);
 		setListAdapter(adapter);
 
 		if (cursor.getCount() > 0) {
@@ -75,24 +75,7 @@ public class DayActivity extends CheckpointListActivity {
 	}
 
 	private String getTodayHoursPref() {
-		Calendar cal = Calendar.getInstance();
-		String defValue = "0:00";
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		switch (cal.get(Calendar.DAY_OF_WEEK)) {
-			case Calendar.MONDAY:
-				return prefs.getString(PreferencesActivity.KEY_HOURS_MONDAY, defValue);
-			case Calendar.TUESDAY:
-				return prefs.getString(PreferencesActivity.KEY_HOURS_TUESDAY, defValue);
-			case Calendar.WEDNESDAY:
-				return prefs.getString(PreferencesActivity.KEY_HOURS_WEDNESDAY, defValue);
-			case Calendar.THURSDAY:
-				return prefs.getString(PreferencesActivity.KEY_HOURS_THURSDAY, defValue);
-			case Calendar.FRIDAY:
-				return prefs.getString(PreferencesActivity.KEY_HOURS_FRIDAY, defValue);
-			case Calendar.SATURDAY:
-				return prefs.getString(PreferencesActivity.KEY_HOURS_SATURDAY, defValue);
-		}
-		return defValue;
+		return getHoursPrefByDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
 	}
 
 	@Override

@@ -9,7 +9,9 @@ import android.app.ListActivity;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,7 +59,7 @@ public abstract class CheckpointListActivity extends ListActivity {
 		menu.add(0, MENU_DELETE, 0, R.string.menu_delete);
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
-	
+
 	@Override
 	protected void onResume() {
 		fillData();
@@ -149,5 +151,25 @@ public abstract class CheckpointListActivity extends ListActivity {
 		db.deleteCheckpoint(id);
 		showToastMessage(TOAST_DELETED);
 		db.close();
+	}
+
+	protected String getHoursPrefByDay(int dayOfWeek) {
+		String defValue = "0:00";
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		switch (dayOfWeek) {
+			case Calendar.MONDAY:
+				return prefs.getString(PreferencesActivity.KEY_HOURS_MONDAY, defValue);
+			case Calendar.TUESDAY:
+				return prefs.getString(PreferencesActivity.KEY_HOURS_TUESDAY, defValue);
+			case Calendar.WEDNESDAY:
+				return prefs.getString(PreferencesActivity.KEY_HOURS_WEDNESDAY, defValue);
+			case Calendar.THURSDAY:
+				return prefs.getString(PreferencesActivity.KEY_HOURS_THURSDAY, defValue);
+			case Calendar.FRIDAY:
+				return prefs.getString(PreferencesActivity.KEY_HOURS_FRIDAY, defValue);
+			case Calendar.SATURDAY:
+				return prefs.getString(PreferencesActivity.KEY_HOURS_SATURDAY, defValue);
+		}
+		return defValue;
 	}
 }
