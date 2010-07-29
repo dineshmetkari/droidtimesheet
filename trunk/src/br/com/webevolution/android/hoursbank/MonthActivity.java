@@ -1,16 +1,13 @@
 package br.com.webevolution.android.hoursbank;
 
+import java.util.HashMap;
+import java.util.List;
+
 import android.app.Dialog;
-import android.app.ListActivity;
-import android.content.Intent;
 import android.database.Cursor;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import br.com.webevolution.android.hoursbank.db.DatabaseHelper;
 
 public class MonthActivity extends CheckpointListActivity {
 	protected void fillData() {
@@ -21,7 +18,15 @@ public class MonthActivity extends CheckpointListActivity {
 		startManagingCursor(cursor);
 
 		CheckpointsView chk = new CheckpointsView(this);
-		CheckPointListAdapter adapter = new CheckPointListAdapter(this, CheckPointListAdapter.MONTH, cursor);
+		
+		
+		String[] from = new String[] {CheckpointsView.KEY_DAY,CheckpointsView.KEY_TOTAL};
+		int[] to = new int[] {R.id.txtCheckPoint,R.id.txtTotalHours}; 
+		List<HashMap<String,String>> list = chk.cursorToList(cursor, CheckpointsView.MONTH);
+		SimpleAdapter adapter = new SimpleAdapter(this, list , R.layout.checkpoint_row, from, to);
+		
+		//CheckpointCursorAdapter adapter = new CheckpointCursorAdapter(this, CheckpointCursorAdapter.MONTH, cursor);
+		try {
 		setListAdapter(adapter);
 
 		if (cursor.getCount() > 0) {
@@ -38,6 +43,9 @@ public class MonthActivity extends CheckpointListActivity {
 		}
 
 		db.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	@Override
 	protected Dialog createAddDialog() {

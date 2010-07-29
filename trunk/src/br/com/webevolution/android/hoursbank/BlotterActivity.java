@@ -15,7 +15,7 @@ public class BlotterActivity extends CheckpointListActivity {
 		startManagingCursor(cursor);
 
 		CheckpointsView chk = new CheckpointsView(this);
-		CheckPointListAdapter adapter = new CheckPointListAdapter(this, CheckPointListAdapter.BLOTTER, cursor);
+		CheckpointCursorAdapter adapter = new CheckpointCursorAdapter(this, CheckpointCursorAdapter.BLOTTER, cursor);
 		setListAdapter(adapter);
 
 		if (cursor.getCount() > 0) {

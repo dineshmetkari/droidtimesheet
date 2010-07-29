@@ -11,18 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import br.com.webevolution.android.hoursbank.db.DatabaseHelper;
 
-public class CheckPointListAdapter extends ResourceCursorAdapter {
+public class CheckpointCursorAdapter extends ResourceCursorAdapter {
 
 	private int layoutType = 0;
 	public static final int BLOTTER = 1;
 	public static final int DAY = 2;
 	public static final int MONTH = 3;
 	public static final int OVERVIEW = 4;
-	public CheckPointListAdapter(Context context, int layoutType, Cursor cursor) {
+	public CheckpointCursorAdapter(Context context, int layoutType, Cursor cursor) {
 		super(context, getLayoutId(), cursor);
 		this.layoutType = layoutType;
 	}
