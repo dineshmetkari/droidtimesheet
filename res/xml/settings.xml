@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-<PreferenceCategory android:title="@string/min_lunch_time">
-	<EditTextPreference
-            android:key="min_lunch"
-            android:defaultValue="1:00"
-            android:title="@string/min_lunch_time"
-            android:summary="@string/min_lunch_time_summary"
-            android:dialogTitle="@string/min_lunch_time" />
-</PreferenceCategory>
-
 <PreferenceCategory android:title="@string/hours_day">
       		<EditTextPreference
             android:key="hours_monday"
