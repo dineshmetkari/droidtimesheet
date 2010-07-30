@@ -14,6 +14,7 @@ import android.widget.TimePicker;
 public class BlotterActivity extends CheckpointListActivity {
 
 	private Dialog addDialog = null;
+	private Dialog editDialog = null;
 
 	protected void fillData() {
 
@@ -73,8 +74,35 @@ public class BlotterActivity extends CheckpointListActivity {
 
 	@Override
 	protected Dialog createEditDialog() {
-		// TODO Auto-generated method stub
-		return null;
+		editDialog = new Dialog(this);
+		editDialog.setTitle(R.string.dialog_add_checkpoint_title2);
+		editDialog.setContentView(R.layout.dialog_new_checkpoint);
+		((Button) editDialog.findViewById(R.id.btnDialogAddCheckpointOk)).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				int day = ((DatePicker) editDialog.findViewById(R.id.dtAddCheckpoint)).getDayOfMonth();
+				int month = ((DatePicker) editDialog.findViewById(R.id.dtAddCheckpoint)).getMonth();
+				int hour = ((TimePicker) editDialog.findViewById(R.id.tpAddCheckpoint)).getCurrentHour();
+				int minute = ((TimePicker) editDialog.findViewById(R.id.tpAddCheckpoint)).getCurrentMinute();
+				Calendar cal = Calendar.getInstance();
+				cal.set(Calendar.DAY_OF_MONTH, day);
+				cal.set(Calendar.MONTH, month);
+				cal.set(Calendar.HOUR_OF_DAY, hour);
+				cal.set(Calendar.MINUTE, minute);
+				editCheckpoint(cal.getTimeInMillis());
+				editDialog.dismiss();
+			}
+		});
+		((Button) editDialog.findViewById(R.id.btnDialogAddCheckpointCancel)).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				editDialog.dismiss();
+			}
+		});
+
+		return editDialog;
 	}
 
 	@Override
