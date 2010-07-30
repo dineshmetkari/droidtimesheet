@@ -145,4 +145,13 @@ public abstract class CheckpointListActivity extends ListActivity {
 		showToastMessage(TOAST_ADDED);
 		fillData();
 	}
+	
+	protected void editCheckpoint(long checkpoint) {
+		db.open();
+		db.editCheckpoint(editId, checkpoint);
+		db.close();
+		showToastMessage(TOAST_EDITED);
+		fillData();
+	}
 }
+

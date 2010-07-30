@@ -24,12 +24,7 @@ public class DayActivity extends CheckpointListActivity {
 			Calendar cal = Calendar.getInstance();
 			cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
 			cal.set(Calendar.MINUTE, minute);
-			db.open();
-			db.editCheckpoint(editId, cal.getTimeInMillis());
-			db.close();
-			showToastMessage(TOAST_EDITED);
-			fillData();
-
+			editCheckpoint(cal.getTimeInMillis());
 		}
 	};
 
