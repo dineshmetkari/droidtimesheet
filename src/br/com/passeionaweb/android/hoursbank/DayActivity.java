@@ -31,6 +31,14 @@ public class DayActivity extends CheckpointListActivity {
 	private boolean areHoursByDayDone() {
 		return hoursDone > minHours;
 	}
+	
+	private long getBalance() {
+		if (hoursDone > minHours) {
+			return hoursDone - minHours;
+		} else {
+			return minHours - hoursDone;
+		}
+	}
 
 	@Override
 	protected Dialog createEditDialog() {
@@ -55,11 +63,15 @@ public class DayActivity extends CheckpointListActivity {
 			hoursDone = chk.calculateTotalHours(cursor);
 			String totalHours = chk.formatTotalHours(hoursDone);
 			((TextView) findViewById(R.id.lblTotalHours)).setText(totalHours);
+			
+			
 			if (areHoursByDayDone()) {
-				((ImageView) findViewById(R.id.imgHoursDone)).setImageResource(R.drawable.ic_btn_round_plus);
+				((ImageView) findViewById(R.id.imgHoursBalance)).setImageResource(R.drawable.ic_btn_round_plus);
 			} else {
-				((ImageView) findViewById(R.id.imgHoursDone)).setImageResource(R.drawable.ic_btn_round_minus);
+				((ImageView) findViewById(R.id.imgHoursBalance)).setImageResource(R.drawable.ic_btn_round_minus);
 			}
+			findViewById(R.id.layoutBalance).setVisibility(View.VISIBLE);
+			((TextView) findViewById(R.id.lblHoursBalance)).setText(chk.formatTotalHours(getBalance()));
 		}
 		db.close();
 	}

@@ -13,6 +13,7 @@
     <string name="message_checkpoint_edited">Checkpoint updated!</string>
     <string name="message_checkpoint_deleted">Checkpoint deleted!</string>
     <string name="total_hours">Total Time:</string>
+    <string name="balance_hours">Balance:</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>

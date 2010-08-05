@@ -16,6 +16,7 @@ import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
 public class CheckpointsView {
 
 	private Context context;
+	private long balance = 0;
 
 	public static final int MONTH = 2;
 	public static final int ALL = -1;
@@ -73,6 +74,9 @@ public class CheckpointsView {
 	}
 
 	public String formatTotalHours(long totalHours) {
+		if(totalHours < 0) {
+			totalHours *= -1;
+		}
 		long timeInSeconds = totalHours / 1000;
 		long hours = timeInSeconds / 3600;
 		long minutes = (timeInSeconds / 60) - (hours * 60);
@@ -121,7 +125,7 @@ public class CheckpointsView {
 						if (cal.get(Calendar.DAY_OF_MONTH) == day) {
 							listCheckpoints.add(cal.getTimeInMillis());
 							lastCheckpoint = cal.getTimeInMillis();
-						}else if(cal.get(Calendar.DAY_OF_MONTH) > day) {
+						} else if (cal.get(Calendar.DAY_OF_MONTH) > day) {
 							break;
 						}
 						cursor.moveToNext();
@@ -142,11 +146,8 @@ public class CheckpointsView {
 						cal.setTimeInMillis(lastCheckpoint);
 						long hoursBalance = 0;
 						long minHours = unformatTotalHours(getHoursPrefByDay(cal.get(Calendar.DAY_OF_WEEK)));
-						if (totalHours > minHours) {
-							hoursBalance = totalHours - minHours;
-						} else {
-							hoursBalance = minHours - totalHours;
-						}
+						hoursBalance = totalHours - minHours;
+						balance += hoursBalance;
 						map.put(KEY_BALANCE, formatTotalHours(hoursBalance));
 						// setting the image Res Id to bind with the view
 						map.put(KEY_IMAGE, String.valueOf(getImageResId(totalHours)));
@@ -219,5 +220,9 @@ public class CheckpointsView {
 
 	public String getLunchPref() {
 		return PreferenceManager.getDefaultSharedPreferences(context).getString(PreferencesActivity.KEY_MIN_LUNCH, "1:00");
+	}
+
+	public long getBalance() {
+		return balance;
 	}
 }
