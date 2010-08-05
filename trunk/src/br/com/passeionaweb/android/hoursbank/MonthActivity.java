@@ -12,6 +12,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -39,6 +40,13 @@ public class MonthActivity extends CheckpointListActivity {
 			long sum = chk.calculateTotalHours(cursor);
 			String totalHours = chk.formatTotalHours(sum);
 			((TextView) findViewById(R.id.lblTotalHours)).setText(totalHours);
+			findViewById(R.id.layoutBalance).setVisibility(View.VISIBLE);
+			((TextView) findViewById(R.id.lblHoursBalance)).setText(chk.formatTotalHours(chk.getBalance()));
+			if (chk.getBalance() >= 0) {
+				((ImageView) findViewById(R.id.imgHoursBalance)).setImageResource(R.drawable.ic_btn_round_plus);
+			} else {
+				((ImageView) findViewById(R.id.imgHoursBalance)).setImageResource(R.drawable.ic_btn_round_minus);
+			}
 		}
 		db.close();
 	}
