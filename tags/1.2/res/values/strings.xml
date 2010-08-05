@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hours Bank</string>
+    <string name="tab_title_blotter">Blotter</string>
+    <string name="tab_title_day">Today</string>
+    <string name="tab_title_month">Month</string>
+    <string name="tab_title_overview">Overview</string>
+    <string name="list_empty">Don\'t you need to start to work!?</string>
+    <string name="widget_button_text">Checkpoint</string>
+    <string name="message_checkpoint_create_success">Checkpoint created at:</string>
+    <string name="message_checkpoint_create_error">I\'m sorry! Was not possible to create the checkpoint!</string>
+    <string name="message_checkpoint_created">Checkpoint created!</string>
+    <string name="message_checkpoint_edited">Checkpoint updated!</string>
+    <string name="message_checkpoint_deleted">Checkpoint deleted!</string>
+    <string name="total_hours">Total Time:</string>
+    <string name="balance_hours">Balance:</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="dialog_hours_title">Hours By Day</string>
+    <string name="dialog_hours_summary">How many hours do you have to work this day? eg. 9:00</string>
+    <string name="menu_settings">Preferences</string>
+    <string name="menu_add_checkpoint">Checkpoint</string>
+    <string name="dialog_add_checkpoint_title">Select the time</string>
+    <string name="dialog_add_checkpoint_title2">Select Date and Time</string>
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="hours_day">Hours By Day</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_delete">Delete</string>
+    <string name="context_menu_title">Checkpoint</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+</resources>
