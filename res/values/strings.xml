@@ -34,4 +34,5 @@
     <string name="context_menu_title">Checkpoint</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <string name="prefs_error">There is an error in of of your preferences, please check.</string>
 </resources>
