@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
@@ -37,7 +38,8 @@ public class CheckpointsView {
 			long checkpoint = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
 			if ((cursor.getPosition() + 1) % 2 == 0) {
 				cursor.moveToPrevious();
-				long lastCheckpoint = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
+				long lastCheckpoint = cursor.getLong(cursor
+						.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
 				totalHours += checkpoint - lastCheckpoint;
 				cursor.moveToNext();
 			} else {
@@ -74,7 +76,7 @@ public class CheckpointsView {
 	}
 
 	public String formatTotalHours(long totalHours) {
-		if(totalHours < 0) {
+		if (totalHours < 0) {
 			totalHours *= -1;
 		}
 		long timeInSeconds = totalHours / 1000;
@@ -96,11 +98,19 @@ public class CheckpointsView {
 	}
 
 	public long unformatTotalHours(String totalHours) {
-		long hours = Long.valueOf(totalHours.split(":")[0]);
-		long minutes = (hours * 60) + Long.valueOf(totalHours.split(":")[1]);
-		long timeInSeconds = minutes * 60;
-		long timestamp = timeInSeconds * 1000;
-		return timestamp;
+		try {
+			long hours = Long.valueOf(totalHours.split(":")[0]);
+			long minutes = (hours * 60) + Long.valueOf(totalHours.split(":")[1]);
+			long timeInSeconds = minutes * 60;
+			long timestamp = timeInSeconds * 1000;
+			return timestamp;
+		} catch (Exception E) {
+			Intent intent = new Intent(context, PreferencesActivity.class);
+			intent.putExtra("ERROR", true);
+			context.startActivity(intent);
+			return 0;
+		}
+
 	}
 
 	public List<HashMap<String, String>> cursorToList(Cursor cursor, int type) {
@@ -110,16 +120,19 @@ public class CheckpointsView {
 			case MONTH:
 				cursor.moveToFirst();
 				Calendar cal = Calendar.getInstance();
-				cal.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
+				cal.setTimeInMillis(cursor.getLong(cursor
+						.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
 				// get all this based on the month eg:(1 - 30)
 				ArrayList<Integer> days = getDaysByMonth(cal.get(Calendar.MONTH));
 				ArrayList<Long> listCheckpoints = new ArrayList<Long>();
 				// interact over all days
-				long lastCheckpoint = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
+				long lastCheckpoint = cursor.getLong(cursor
+						.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
 				for (int day : days) {
 					// interact over all checkpoints of that month
 					while (!cursor.isAfterLast()) {
-						cal.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
+						cal.setTimeInMillis(cursor.getLong(cursor
+								.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
 						// still the same day, so keep inserting in the
 						// listCheckpoint
 						if (cal.get(Calendar.DAY_OF_MONTH) == day) {
@@ -138,14 +151,16 @@ public class CheckpointsView {
 					// Image to be binded to the view
 					if (listCheckpoints.size() > 0) {
 						map = new HashMap<String, String>();
-						map.put(KEY_DAY, new SimpleDateFormat("E dd/MM").format(new Date(lastCheckpoint)));
+						map.put(KEY_DAY, new SimpleDateFormat("E dd/MM").format(new Date(
+								lastCheckpoint)));
 						long totalHours = calculateTotalHours(listCheckpoints);
 						String formated = formatTotalHours(totalHours);
 						map.put(KEY_TOTAL, formated);
 						// calculating the hours balance to put in the map
 						cal.setTimeInMillis(lastCheckpoint);
 						long hoursBalance = 0;
-						long minHours = unformatTotalHours(getHoursPrefByDay(cal.get(Calendar.DAY_OF_WEEK)));
+						long minHours = unformatTotalHours(getHoursPrefByDay(cal
+								.get(Calendar.DAY_OF_WEEK)));
 						hoursBalance = totalHours - minHours;
 						balance += hoursBalance;
 						map.put(KEY_BALANCE, formatTotalHours(hoursBalance));
@@ -219,7 +234,8 @@ public class CheckpointsView {
 	}
 
 	public String getLunchPref() {
-		return PreferenceManager.getDefaultSharedPreferences(context).getString(PreferencesActivity.KEY_MIN_LUNCH, "1:00");
+		return PreferenceManager.getDefaultSharedPreferences(context).getString(
+				PreferencesActivity.KEY_MIN_LUNCH, "1:00");
 	}
 
 	public long getBalance() {
