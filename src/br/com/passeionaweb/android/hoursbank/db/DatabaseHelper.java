@@ -56,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		endDate.set(Calendar.SECOND, 59);
 
 		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_CHECKPOINT + " >= " + startDate.getTimeInMillis() + " AND " + KEY_CHECKPOINT + " <= " + endDate.getTimeInMillis(),
-				null, null, null, KEY_CHECKPOINT);
+				null, null, null, KEY_CHECKPOINT );
 
 	}
 
@@ -72,7 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public Cursor getAllCheckpoints() {
-		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, null, null, null, null, KEY_CHECKPOINT);
+		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, null, null, null, null, KEY_CHECKPOINT + " DESC");
 	}
 
 	public long insertCheckpoint() {
