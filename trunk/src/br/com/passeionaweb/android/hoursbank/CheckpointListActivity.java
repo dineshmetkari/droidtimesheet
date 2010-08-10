@@ -1,5 +1,7 @@
 package br.com.passeionaweb.android.hoursbank;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 
 import android.app.Dialog;
@@ -24,6 +26,7 @@ public abstract class CheckpointListActivity extends ListActivity {
 	protected static final int TOAST_ADDED = 1;
 	protected static final int TOAST_DELETED = 2;
 	protected static final int TOAST_EDITED = 3;
+	protected static final int TOAST_EXPORT_ERROR = 4;
 	protected DatabaseHelper db;
 	protected CheckpointsView chk;
 	protected long editId;
@@ -33,8 +36,6 @@ public abstract class CheckpointListActivity extends ListActivity {
 	protected abstract Dialog createEditDialog();
 
 	protected abstract Dialog createAddDialog();
-
-	protected abstract long calculateMinHoursByPref();
 
 	/** Called when the activity is first created. */
 	@Override
@@ -64,7 +65,8 @@ public abstract class CheckpointListActivity extends ListActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(Menu.NONE, MENU_ADD, Menu.NONE, R.string.menu_add_checkpoint).setIcon(android.R.drawable.ic_menu_add);
+		menu.add(Menu.NONE, MENU_ADD, Menu.NONE, R.string.menu_add_checkpoint).setIcon(
+				android.R.drawable.ic_menu_add);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -97,13 +99,18 @@ public abstract class CheckpointListActivity extends ListActivity {
 	protected void showToastMessage(int id) {
 		switch (id) {
 			case TOAST_ADDED:
-				Toast.makeText(this, R.string.message_checkpoint_created, Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.message_checkpoint_created, Toast.LENGTH_SHORT)
+						.show();
 				break;
 			case TOAST_DELETED:
-				Toast.makeText(this, R.string.message_checkpoint_deleted, Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.message_checkpoint_deleted, Toast.LENGTH_SHORT)
+						.show();
 				break;
 			case TOAST_EDITED:
 				Toast.makeText(this, R.string.message_checkpoint_edited, Toast.LENGTH_SHORT).show();
+				break;
+			case TOAST_EXPORT_ERROR:
+				Toast.makeText(this, R.string.export_error, Toast.LENGTH_SHORT).show();
 				break;
 		}
 
@@ -145,7 +152,7 @@ public abstract class CheckpointListActivity extends ListActivity {
 		showToastMessage(TOAST_ADDED);
 		fillData();
 	}
-	
+
 	protected void editCheckpoint(long checkpoint) {
 		db.open();
 		db.editCheckpoint(editId, checkpoint);
@@ -153,5 +160,20 @@ public abstract class CheckpointListActivity extends ListActivity {
 		showToastMessage(TOAST_EDITED);
 		fillData();
 	}
-}
 
+	protected void export() {
+		db.open();
+		try {
+			File csv = chk.generateCSV(db.getAllCheckpoints());
+			Intent i = new Intent(Intent.ACTION_SEND);
+			i.setType("text/csv");
+			i.putExtra(Intent.EXTRA_STREAM, csv.getAbsolutePath());
+			startActivity(Intent.createChooser(i, "test"));
+			
+		} catch (IOException e) {
+			showToastMessage(TOAST_EXPORT_ERROR);
+			e.printStackTrace();
+		}
+		db.close();
+	}
+}

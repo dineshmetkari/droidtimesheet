@@ -77,20 +77,15 @@ public class DayActivity extends CheckpointListActivity {
 	}
 
 	@Override
-	protected long calculateMinHoursByPref() {
-		return chk.unformatTotalHours(chk.getHoursPrefByDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)));
-	}
-
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		minHours = calculateMinHoursByPref();
+		minHours = chk.unformatTotalHours(chk.getHoursPrefByDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)));
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		minHours = calculateMinHoursByPref();
+		minHours = chk.unformatTotalHours(chk.getHoursPrefByDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)));
 	}
 
 	@Override

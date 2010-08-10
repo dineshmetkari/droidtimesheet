@@ -19,6 +19,7 @@ import android.widget.TimePicker;
 
 public class MonthActivity extends CheckpointListActivity {
 	private Dialog addDialog;
+
 	protected void fillData() {
 
 		db.open();
@@ -28,8 +29,10 @@ public class MonthActivity extends CheckpointListActivity {
 
 		CheckpointsView chk = new CheckpointsView(this);
 
-		String[] from = new String[] { CheckpointsView.KEY_DAY, CheckpointsView.KEY_TOTAL, CheckpointsView.KEY_BALANCE, CheckpointsView.KEY_IMAGE };
-		int[] to = new int[] { R.id.txtCheckPoint, R.id.txtTotalHours, R.id.txtHourBalanceRow, R.id.imgCheckpointInOut };
+		String[] from = new String[] { CheckpointsView.KEY_DAY, CheckpointsView.KEY_TOTAL,
+				CheckpointsView.KEY_BALANCE, CheckpointsView.KEY_IMAGE };
+		int[] to = new int[] { R.id.txtCheckPoint, R.id.txtTotalHours, R.id.txtHourBalanceRow,
+				R.id.imgCheckpointInOut };
 		if (cursor.getCount() > 0) {
 			List<HashMap<String, String>> list = chk.cursorToList(cursor, CheckpointsView.MONTH);
 			SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.checkpoint_row, from, to);
@@ -41,11 +44,14 @@ public class MonthActivity extends CheckpointListActivity {
 			String totalHours = chk.formatTotalHours(sum);
 			((TextView) findViewById(R.id.lblTotalHours)).setText(totalHours);
 			findViewById(R.id.layoutBalance).setVisibility(View.VISIBLE);
-			((TextView) findViewById(R.id.lblHoursBalance)).setText(chk.formatTotalHours(chk.getBalance()));
+			((TextView) findViewById(R.id.lblHoursBalance)).setText(chk.formatTotalHours(chk
+					.getBalance()));
 			if (chk.getBalance() >= 0) {
-				((ImageView) findViewById(R.id.imgHoursBalance)).setImageResource(R.drawable.ic_btn_round_plus);
+				((ImageView) findViewById(R.id.imgHoursBalance))
+						.setImageResource(R.drawable.ic_btn_round_plus);
 			} else {
-				((ImageView) findViewById(R.id.imgHoursBalance)).setImageResource(R.drawable.ic_btn_round_minus);
+				((ImageView) findViewById(R.id.imgHoursBalance))
+						.setImageResource(R.drawable.ic_btn_round_minus);
 			}
 		}
 		db.close();
@@ -56,30 +62,37 @@ public class MonthActivity extends CheckpointListActivity {
 		addDialog = new Dialog(this);
 		addDialog.setTitle(R.string.dialog_add_checkpoint_title2);
 		addDialog.setContentView(R.layout.dialog_new_checkpoint);
-		((Button) addDialog.findViewById(R.id.btnDialogAddCheckpointOk)).setOnClickListener(new OnClickListener() {
+		((TimePicker) addDialog.findViewById(R.id.tpAddCheckpoint)).setIs24HourView(true);
+		((Button) addDialog.findViewById(R.id.btnDialogAddCheckpointOk))
+				.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				int day = ((DatePicker) addDialog.findViewById(R.id.dtAddCheckpoint)).getDayOfMonth();
-				int month = ((DatePicker) addDialog.findViewById(R.id.dtAddCheckpoint)).getMonth();
-				int hour = ((TimePicker) addDialog.findViewById(R.id.tpAddCheckpoint)).getCurrentHour();
-				int minute = ((TimePicker) addDialog.findViewById(R.id.tpAddCheckpoint)).getCurrentMinute();
-				Calendar cal = Calendar.getInstance();
-				cal.set(Calendar.DAY_OF_MONTH, day);
-				cal.set(Calendar.MONTH, month);
-				cal.set(Calendar.HOUR_OF_DAY, hour);
-				cal.set(Calendar.MINUTE, minute);
-				insertCheckpoint(cal.getTimeInMillis());
-				addDialog.dismiss();
-			}
-		});
-		((Button) addDialog.findViewById(R.id.btnDialogAddCheckpointCancel)).setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						int day = ((DatePicker) addDialog.findViewById(R.id.dtAddCheckpoint))
+								.getDayOfMonth();
+						int month = ((DatePicker) addDialog.findViewById(R.id.dtAddCheckpoint))
+								.getMonth();
+						int hour = ((TimePicker) addDialog.findViewById(R.id.tpAddCheckpoint))
+								.getCurrentHour();
+						int minute = ((TimePicker) addDialog.findViewById(R.id.tpAddCheckpoint))
+								.getCurrentMinute();
+						Calendar cal = Calendar.getInstance();
+						cal.set(Calendar.DAY_OF_MONTH, day);
+						cal.set(Calendar.MONTH, month);
+						cal.set(Calendar.HOUR_OF_DAY, hour);
+						cal.set(Calendar.MINUTE, minute);
+						insertCheckpoint(cal.getTimeInMillis());
+						addDialog.dismiss();
+					}
+				});
+		((Button) addDialog.findViewById(R.id.btnDialogAddCheckpointCancel))
+				.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				addDialog.dismiss();
-			}
-		});
+					@Override
+					public void onClick(View v) {
+						addDialog.dismiss();
+					}
+				});
 
 		return addDialog;
 
@@ -87,26 +100,18 @@ public class MonthActivity extends CheckpointListActivity {
 
 	@Override
 	protected Dialog createEditDialog() {
-		// TODO Auto-generated method stub
+		// TODO Implement this method
 		return null;
 	}
 
 	@Override
-	protected long calculateMinHoursByPref() {
-
-		// TODO
-		return 0;
-	}
-
-	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		//TODO implement this method to edit and delete all checkpoints related to this day
-		//DO NOT REMOVE THIS METHOD 
-		//This method is necessary to avoid the superclass method of creating this context menu
-		//DO NOT REMOVE THIS METHOD
+		// TODO implement this method to edit and delete all checkpoints related
+		// to this day
+		// DO NOT REMOVE THIS METHOD
+		// This method is necessary to avoid the superclass method of creating
+		// this context menu
+		// DO NOT REMOVE THIS METHOD
 	}
-	
-	
-	
 
 }
