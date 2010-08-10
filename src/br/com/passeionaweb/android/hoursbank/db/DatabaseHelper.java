@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import br.com.passeionaweb.android.hoursbank.PreferencesActivity;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -60,9 +61,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	}
 
-	public Cursor getMonthCheckpoints() {
+	public Cursor getMonthCheckpoints(Context context) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		calendar.set(Calendar.DAY_OF_MONTH, PreferencesActivity.getFirstDayOfMonth(context));
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);

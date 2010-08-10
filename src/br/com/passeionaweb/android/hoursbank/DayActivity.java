@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,7 +32,7 @@ public class DayActivity extends CheckpointListActivity {
 	private boolean areHoursByDayDone() {
 		return hoursDone > minHours;
 	}
-	
+
 	private long getBalance() {
 		if (hoursDone > minHours) {
 			return hoursDone - minHours;
@@ -43,7 +44,8 @@ public class DayActivity extends CheckpointListActivity {
 	@Override
 	protected Dialog createEditDialog() {
 		Calendar c = Calendar.getInstance();
-		TimePickerDialog editDialog = new TimePickerDialog(this, onEditCheckpointListener, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true);
+		TimePickerDialog editDialog = new TimePickerDialog(this, onEditCheckpointListener, c
+				.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true);
 		editDialog.setTitle(R.string.dialog_add_checkpoint_title);
 		return editDialog;
 	}
@@ -55,7 +57,8 @@ public class DayActivity extends CheckpointListActivity {
 		Cursor cursor = db.getCheckpointsByDay(Calendar.getInstance());
 		startManagingCursor(cursor);
 
-		CheckpointCursorAdapter adapter = new CheckpointCursorAdapter(this, CheckpointCursorAdapter.DAY, cursor);
+		CheckpointCursorAdapter adapter = new CheckpointCursorAdapter(this,
+				CheckpointCursorAdapter.DAY, cursor);
 		setListAdapter(adapter);
 
 		if (cursor.getCount() > 0) {
@@ -63,15 +66,17 @@ public class DayActivity extends CheckpointListActivity {
 			hoursDone = chk.calculateTotalHours(cursor);
 			String totalHours = chk.formatTotalHours(hoursDone);
 			((TextView) findViewById(R.id.lblTotalHours)).setText(totalHours);
-			
-			
+
 			if (areHoursByDayDone()) {
-				((ImageView) findViewById(R.id.imgHoursBalance)).setImageResource(R.drawable.ic_btn_round_plus);
+				((ImageView) findViewById(R.id.imgHoursBalance))
+						.setImageResource(R.drawable.ic_btn_round_plus);
 			} else {
-				((ImageView) findViewById(R.id.imgHoursBalance)).setImageResource(R.drawable.ic_btn_round_minus);
+				((ImageView) findViewById(R.id.imgHoursBalance))
+						.setImageResource(R.drawable.ic_btn_round_minus);
 			}
 			findViewById(R.id.layoutBalance).setVisibility(View.VISIBLE);
-			((TextView) findViewById(R.id.lblHoursBalance)).setText(chk.formatTotalHours(getBalance()));
+			((TextView) findViewById(R.id.lblHoursBalance)).setText(chk
+					.formatTotalHours(getBalance()));
 		}
 		db.close();
 	}
@@ -79,19 +84,22 @@ public class DayActivity extends CheckpointListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		minHours = chk.unformatTotalHours(chk.getHoursPrefByDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)));
+		minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, Calendar
+				.getInstance().get(Calendar.DAY_OF_WEEK)));
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		minHours = chk.unformatTotalHours(chk.getHoursPrefByDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)));
+		minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, Calendar
+				.getInstance().get(Calendar.DAY_OF_WEEK)));
 	}
 
 	@Override
 	protected Dialog createAddDialog() {
 		Calendar c = Calendar.getInstance();
-		TimePickerDialog addDialog = new TimePickerDialog(this, onAddCheckpointListener, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true);
+		TimePickerDialog addDialog = new TimePickerDialog(this, onAddCheckpointListener, c
+				.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true);
 		addDialog.setTitle(R.string.dialog_add_checkpoint_title);
 		return addDialog;
 	}

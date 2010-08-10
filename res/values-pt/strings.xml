@@ -40,4 +40,8 @@
 	<string name="export_error">Houve um erro na exportação!</string>
 	<string name="export_email_subject">Exportação Banco de Horas</string>
 	<string name="chooser_email_title">Email:</string>
+	<string name="general_prefs">Configurações Gerais</string>
+	<string name="pref_first_day">Primeiro dia do mês</string>
+	<string name="pref_first_day_summary">Selecione o primeiro dia do mês</string>
+	<string name="pref_first_day_title">Digite o dia</string>
 </resources>

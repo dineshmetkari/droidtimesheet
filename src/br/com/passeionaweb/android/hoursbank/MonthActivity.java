@@ -24,7 +24,7 @@ public class MonthActivity extends CheckpointListActivity {
 
 		db.open();
 		// Get all of the rows from the database and create the item list
-		Cursor cursor = db.getMonthCheckpoints();
+		Cursor cursor = db.getMonthCheckpoints(this);
 		startManagingCursor(cursor);
 
 		CheckpointsView chk = new CheckpointsView(this);
