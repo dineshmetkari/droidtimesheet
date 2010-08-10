@@ -23,6 +23,7 @@
     <string name="dialog_hours_title">Hours By Day</string>
     <string name="dialog_hours_summary">How many hours do you have to work this day? eg. 9:00</string>
     <string name="menu_settings">Preferences</string>
+    <string name="menu_export">Export to CSV</string>
     <string name="menu_add_checkpoint">Checkpoint</string>
     <string name="dialog_add_checkpoint_title">Select the time</string>
     <string name="dialog_add_checkpoint_title2">Select Date and Time</string>
@@ -37,4 +38,6 @@
     <string name="prefs_error">There is an error in of of your preferences, please check.</string>
     <string name="csv_header">Check-in,Check-out,Amount</string>
     <string name="export_error">There was an error exporting your checkpoints!</string>
+    <string name="export_email_subject">Hours Bank Export</string>
+    <string name="chooser_email_title">Email:</string>
 </resources>

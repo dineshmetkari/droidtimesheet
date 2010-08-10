@@ -15,7 +15,8 @@ public class HoursBank extends TabActivity {
 	private static final String TAB_DAY = "day";
 	private static final String TAB_MONTH = "month";
 
-	public static final int MENU_SETTINGS = 1;
+	public static final int MENU_SETTINGS = 0;
+	public static final int MENU_EXPORT = 1;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -32,6 +33,7 @@ public class HoursBank extends TabActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, R.string.menu_settings).setIcon(android.R.drawable.ic_menu_preferences);
+		menu.add(Menu.NONE,MENU_EXPORT,Menu.NONE,R.string.menu_export).setIcon(android.R.drawable.ic_menu_share);
 		return super.onCreateOptionsMenu(menu);
 	}
 

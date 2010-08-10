@@ -35,7 +35,6 @@ public class CheckpointsView {
 
 	public CheckpointsView(Context context) {
 		this.context = context;
-		csvPrefixName = context.getString(R.string.app_name);
 	}
 
 	public long calculateTotalHours(Cursor cursor) {
@@ -245,37 +244,37 @@ public class CheckpointsView {
 		return balance;
 	}
 
-	public File generateCSV(Cursor cursor) throws IOException  {
-			File root = Environment.getExternalStorageDirectory();
-			File exportDir = new File(root.getAbsolutePath()+"/"+context.getString(R.string.app_name));
-			//Make sure the dir exists
-			exportDir.mkdir();
-			File gpxfile = new File( exportDir, csvPrefixName + "_"
-					+ Calendar.getInstance().getTimeInMillis() + ".csv");
-			FileWriter writer = new FileWriter(gpxfile);
+	public File generateCSV(Cursor cursor) throws IOException {
+		File root = Environment.getExternalStorageDirectory();
+		File exportDir = new File(root.getAbsolutePath() + "/"
+				+ context.getString(R.string.app_name));
+		// Make sure the dir exists
+		exportDir.mkdir();
+		csvPrefixName = context.getString(R.string.app_name).replace(" ", "_");
+		File gpxfile = new File(exportDir, csvPrefixName + ".csv");
+		FileWriter writer = new FileWriter(gpxfile);
 
-			csvHeader = context.getString(R.string.csv_header);
-			writer.append(csvHeader + "\n");
+		csvHeader = context.getString(R.string.csv_header);
+		writer.append(csvHeader + "\n");
 
-			cursor.moveToFirst();
-			long lastTimestamp = 0;
-			SimpleDateFormat df = new SimpleDateFormat(csvExportFormat);
-			while (!cursor.isAfterLast()) {
-				long timestamp = cursor.getLong(cursor
-						.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
-				String timestampFormatted = (df.format(new Date(timestamp)));
-				writer.append(timestampFormatted);
-				writer.append(",");
-				if (cursor.getPosition() % 2 != 0) {
-					writer.append(df.format(new Date(timestamp - lastTimestamp)));
-					writer.append(",\n");
-				}
-				lastTimestamp = timestamp;
-				cursor.moveToNext();
+		cursor.moveToFirst();
+		long lastTimestamp = 0;
+		SimpleDateFormat dfExcel = new SimpleDateFormat(csvExportFormat);
+		while (!cursor.isAfterLast()) {
+			long timestamp = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
+			String timestampFormatted = (dfExcel.format(new Date(timestamp)));
+			writer.append(timestampFormatted);
+			writer.append(",");
+			if (cursor.getPosition() % 2 != 0) {
+				writer.append(formatTotalHours(timestamp - lastTimestamp));
+				writer.append(",\n");
 			}
-			writer.flush();
-			writer.close();
-			return gpxfile;
+			lastTimestamp = timestamp;
+			cursor.moveToNext();
+		}
+		writer.flush();
+		writer.close();
+		return gpxfile;
 	}
 
 }
