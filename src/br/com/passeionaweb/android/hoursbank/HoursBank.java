@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.widget.TabHost;
+import br.com.passeionaweb.android.hoursbank.BlotterActivity;
+import br.com.passeionaweb.android.hoursbank.DayActivity;
+import br.com.passeionaweb.android.hoursbank.MonthActivity;
 
 public class HoursBank extends TabActivity {
 	private static final String TAB_BLOTTER = "blotter";

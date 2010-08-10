@@ -1,5 +1,8 @@
 package br.com.passeionaweb.android.hoursbank;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
 
@@ -18,6 +22,9 @@ public class CheckpointsView {
 
 	private Context context;
 	private long balance = 0;
+	private String csvPrefixName;
+	private String csvHeader;
+	private String csvExportFormat = "dd/MM/yyyy HH:mm:ss";
 
 	public static final int MONTH = 2;
 	public static final int ALL = -1;
@@ -28,6 +35,7 @@ public class CheckpointsView {
 
 	public CheckpointsView(Context context) {
 		this.context = context;
+		csvPrefixName = context.getString(R.string.app_name);
 	}
 
 	public long calculateTotalHours(Cursor cursor) {
@@ -165,7 +173,13 @@ public class CheckpointsView {
 						balance += hoursBalance;
 						map.put(KEY_BALANCE, formatTotalHours(hoursBalance));
 						// setting the image Res Id to bind with the view
-						map.put(KEY_IMAGE, String.valueOf(getImageResId(totalHours)));
+						int imgId = 0;
+						if (totalHours >= minHours) {
+							imgId = R.drawable.ic_btn_round_plus;
+						} else {
+							imgId = R.drawable.ic_btn_round_minus;
+						}
+						map.put(KEY_IMAGE, String.valueOf(imgId));
 						// add the created map to the collection
 						list.add(map);
 						// clear the listCheckpoints and stop the while
@@ -202,17 +216,6 @@ public class CheckpointsView {
 		}
 	}
 
-	public int getImageResId(long totalHours) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(totalHours);
-		String hours = getHoursPrefByDay(cal.get(Calendar.DAY_OF_WEEK));
-		if (totalHours >= unformatTotalHours(hours)) {
-			return R.drawable.ic_btn_round_plus;
-		} else {
-			return R.drawable.ic_btn_round_minus;
-		}
-	}
-
 	public String getHoursPrefByDay(int dayOfWeek) {
 		String defValue = "0:00";
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -241,4 +244,38 @@ public class CheckpointsView {
 	public long getBalance() {
 		return balance;
 	}
+
+	public File generateCSV(Cursor cursor) throws IOException  {
+			File root = Environment.getExternalStorageDirectory();
+			File exportDir = new File(root.getAbsolutePath()+"/"+context.getString(R.string.app_name));
+			//Make sure the dir exists
+			exportDir.mkdir();
+			File gpxfile = new File( exportDir, csvPrefixName + "_"
+					+ Calendar.getInstance().getTimeInMillis() + ".csv");
+			FileWriter writer = new FileWriter(gpxfile);
+
+			csvHeader = context.getString(R.string.csv_header);
+			writer.append(csvHeader + "\n");
+
+			cursor.moveToFirst();
+			long lastTimestamp = 0;
+			SimpleDateFormat df = new SimpleDateFormat(csvExportFormat);
+			while (!cursor.isAfterLast()) {
+				long timestamp = cursor.getLong(cursor
+						.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
+				String timestampFormatted = (df.format(new Date(timestamp)));
+				writer.append(timestampFormatted);
+				writer.append(",");
+				if (cursor.getPosition() % 2 != 0) {
+					writer.append(df.format(new Date(timestamp - lastTimestamp)));
+					writer.append(",\n");
+				}
+				lastTimestamp = timestamp;
+				cursor.moveToNext();
+			}
+			writer.flush();
+			writer.close();
+			return gpxfile;
+	}
+
 }

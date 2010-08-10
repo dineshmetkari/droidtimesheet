@@ -20,15 +20,16 @@ public class CheckpointCursorAdapter extends ResourceCursorAdapter {
 	public static final int DAY = 2;
 	public static final int MONTH = 3;
 	public static final int OVERVIEW = 4;
+	public static final int LAYOUT_ID = R.layout.checkpoint_row;
 	public CheckpointCursorAdapter(Context context, int layoutType, Cursor cursor) {
-		super(context, getLayoutId(), cursor);
+		super(context, LAYOUT_ID, cursor);
 		this.layoutType = layoutType;
 	}
 
 	@Override
 	public View newView(Context context, Cursor cur, ViewGroup parent) {
 		LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		return li.inflate(getLayoutId(), parent, false);
+		return li.inflate(LAYOUT_ID, parent, false);
 	}
 
 	@Override
@@ -54,8 +55,6 @@ public class CheckpointCursorAdapter extends ResourceCursorAdapter {
 		}
 	}
 
-	private static int getLayoutId() {
-		return R.layout.checkpoint_row;
-	}
+
 
 }
