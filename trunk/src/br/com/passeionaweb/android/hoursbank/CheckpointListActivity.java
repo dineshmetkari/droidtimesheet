@@ -7,6 +7,7 @@ import java.util.Calendar;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -18,9 +19,9 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
 
 public abstract class CheckpointListActivity extends ListActivity {
-	protected static final int MENU_ADD = 2;
-	protected static final int MENU_EDIT = 3;
-	protected static final int MENU_DELETE = 4;
+	protected static final int MENU_ADD = 10;
+	protected static final int MENU_EDIT = 11;
+	protected static final int MENU_DELETE = 12;
 	protected static final int DIALOG_ADD = 1;
 	protected static final int DIALOG_EDIT = 2;
 	protected static final int TOAST_ADDED = 1;
@@ -80,6 +81,9 @@ public abstract class CheckpointListActivity extends ListActivity {
 				break;
 			case MENU_ADD:
 				showDialog(DIALOG_ADD);
+				break;
+			case HoursBank.MENU_EXPORT:
+				export();
 				break;
 		}
 		return super.onMenuItemSelected(featureId, item);
@@ -167,7 +171,9 @@ public abstract class CheckpointListActivity extends ListActivity {
 			File csv = chk.generateCSV(db.getAllCheckpoints());
 			Intent i = new Intent(Intent.ACTION_SEND);
 			i.setType("text/csv");
-			i.putExtra(Intent.EXTRA_STREAM, csv.getAbsolutePath());
+			String path = csv.getAbsolutePath();
+			i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.export_email_subject));
+			i.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"+path));
 			startActivity(Intent.createChooser(i, "test"));
 			
 		} catch (IOException e) {
