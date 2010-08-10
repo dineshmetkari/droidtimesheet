@@ -40,4 +40,8 @@
     <string name="export_error">There was an error exporting your checkpoints!</string>
     <string name="export_email_subject">Hours Bank Export</string>
     <string name="chooser_email_title">Email:</string>
+    <string name="general_prefs">General Preferences</string>
+    <string name="pref_first_day">First Day of Month</string>
+    <string name="pref_first_day_summary">Select the first day of month to start counting</string>
+    <string name="pref_first_day_title">Input the Day</string>
 </resources>

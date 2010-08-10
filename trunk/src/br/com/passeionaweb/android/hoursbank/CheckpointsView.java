@@ -166,8 +166,8 @@ public class CheckpointsView {
 						// calculating the hours balance to put in the map
 						cal.setTimeInMillis(lastCheckpoint);
 						long hoursBalance = 0;
-						long minHours = unformatTotalHours(getHoursPrefByDay(cal
-								.get(Calendar.DAY_OF_WEEK)));
+						long minHours = unformatTotalHours(PreferencesActivity.getHoursPrefByDay(
+								context, cal.get(Calendar.DAY_OF_WEEK)));
 						hoursBalance = totalHours - minHours;
 						balance += hoursBalance;
 						map.put(KEY_BALANCE, formatTotalHours(hoursBalance));
@@ -213,26 +213,6 @@ public class CheckpointsView {
 		} else {
 			return R.drawable.ic_checkin;
 		}
-	}
-
-	public String getHoursPrefByDay(int dayOfWeek) {
-		String defValue = "0:00";
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		switch (dayOfWeek) {
-			case Calendar.MONDAY:
-				return prefs.getString(PreferencesActivity.KEY_HOURS_MONDAY, defValue);
-			case Calendar.TUESDAY:
-				return prefs.getString(PreferencesActivity.KEY_HOURS_TUESDAY, defValue);
-			case Calendar.WEDNESDAY:
-				return prefs.getString(PreferencesActivity.KEY_HOURS_WEDNESDAY, defValue);
-			case Calendar.THURSDAY:
-				return prefs.getString(PreferencesActivity.KEY_HOURS_THURSDAY, defValue);
-			case Calendar.FRIDAY:
-				return prefs.getString(PreferencesActivity.KEY_HOURS_FRIDAY, defValue);
-			case Calendar.SATURDAY:
-				return prefs.getString(PreferencesActivity.KEY_HOURS_SATURDAY, defValue);
-		}
-		return defValue;
 	}
 
 	public String getLunchPref() {
