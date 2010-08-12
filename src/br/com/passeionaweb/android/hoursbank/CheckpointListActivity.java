@@ -173,9 +173,9 @@ public abstract class CheckpointListActivity extends ListActivity {
 			i.setType("text/csv");
 			String path = csv.getAbsolutePath();
 			i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.export_email_subject));
-			i.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"+path));
+			i.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + path));
 			startActivity(Intent.createChooser(i, "test"));
-			
+
 		} catch (IOException e) {
 			showToastMessage(TOAST_EXPORT_ERROR);
 			e.printStackTrace();
