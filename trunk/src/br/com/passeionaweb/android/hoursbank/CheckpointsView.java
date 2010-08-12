@@ -12,7 +12,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -127,25 +126,25 @@ public class CheckpointsView {
 			case MONTH:
 				cursor.moveToFirst();
 				Calendar cal = Calendar.getInstance();
+				ArrayList<Calendar> days = getDaysByMonth(cal.get(Calendar.MONTH));
 				cal.setTimeInMillis(cursor.getLong(cursor
 						.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
 				// get all this based on the month eg:(1 - 30)
-				ArrayList<Integer> days = getDaysByMonth(cal.get(Calendar.MONTH));
 				ArrayList<Long> listCheckpoints = new ArrayList<Long>();
 				// interact over all days
 				long lastCheckpoint = cursor.getLong(cursor
 						.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
-				for (int day : days) {
+				for (Calendar day : days) {
 					// interact over all checkpoints of that month
 					while (!cursor.isAfterLast()) {
 						cal.setTimeInMillis(cursor.getLong(cursor
 								.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
 						// still the same day, so keep inserting in the
 						// listCheckpoint
-						if (cal.get(Calendar.DAY_OF_MONTH) == day) {
+						if (cal.get(Calendar.DAY_OF_MONTH) == day.get(Calendar.DAY_OF_MONTH)) {
 							listCheckpoints.add(cal.getTimeInMillis());
 							lastCheckpoint = cal.getTimeInMillis();
-						} else if (cal.get(Calendar.DAY_OF_MONTH) > day) {
+						} else if (cal.after(day)) {
 							break;
 						}
 						cursor.moveToNext();
@@ -193,16 +192,29 @@ public class CheckpointsView {
 		return list;
 	}
 
-	/*
-	 * month is one of Calendar final fields.
-	 */
-	public ArrayList<Integer> getDaysByMonth(int month) {
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.MONTH, month);
-		int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		ArrayList<Integer> list = new ArrayList<Integer>();
-		for (int day = 1; day <= maxDay; day++) {
-			list.add(day);
+	public ArrayList<Calendar> getDaysByMonth(int month) {
+		Calendar minDay = Calendar.getInstance();
+		Calendar maxDay = Calendar.getInstance();
+		minDay.set(Calendar.MONTH, month);
+		minDay.clear(Calendar.HOUR_OF_DAY);
+		minDay.clear(Calendar.MINUTE);
+		minDay.clear(Calendar.SECOND);
+		int firstDayPref = Integer.valueOf(PreferencesActivity.getFirstDayOfMonth(context));
+		if (minDay.get(Calendar.DAY_OF_MONTH) < firstDayPref) {
+			minDay.roll(Calendar.MONTH, false);
+			minDay.set(Calendar.DAY_OF_MONTH, firstDayPref);
+			maxDay.set(Calendar.DAY_OF_MONTH, firstDayPref);
+			maxDay.add(Calendar.DAY_OF_MONTH, -1);
+		} else {
+			minDay.set(Calendar.DAY_OF_MONTH, firstDayPref);
+			minDay.set(Calendar.MONTH, month);
+		}
+
+		ArrayList<Calendar> list = new ArrayList<Calendar>();
+
+		while (minDay.before(maxDay)) {
+			list.add((Calendar)minDay.clone());
+			minDay.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		return list;
 	}

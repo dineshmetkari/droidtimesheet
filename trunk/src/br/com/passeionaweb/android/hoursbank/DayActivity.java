@@ -2,6 +2,8 @@ package br.com.passeionaweb.android.hoursbank;
 
 import java.util.Calendar;
 
+import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
+
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
@@ -43,11 +45,31 @@ public class DayActivity extends CheckpointListActivity {
 
 	@Override
 	protected Dialog createEditDialog() {
-		Calendar c = Calendar.getInstance();
-		TimePickerDialog editDialog = new TimePickerDialog(this, onEditCheckpointListener, c
-				.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true);
+		TimePickerDialog editDialog = new TimePickerDialog(this, onEditCheckpointListener, 0, 0,
+				true);
 		editDialog.setTitle(R.string.dialog_add_checkpoint_title);
 		return editDialog;
+	}
+
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		super.onPrepareDialog(id, dialog);
+		Calendar c = Calendar.getInstance();
+		TimePickerDialog tmDialog = null;
+		switch (id) {
+			case DIALOG_EDIT:
+				db.open();
+				long checkpoint = db.getCheckpointById(editId);
+				db.close();
+				c.setTimeInMillis(checkpoint);
+				tmDialog = (TimePickerDialog) dialog;
+				tmDialog.updateTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+				break;
+			case DIALOG_ADD:
+				tmDialog = (TimePickerDialog) dialog;
+				tmDialog.updateTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+				break;
+		}
 	}
 
 	protected void fillData() {

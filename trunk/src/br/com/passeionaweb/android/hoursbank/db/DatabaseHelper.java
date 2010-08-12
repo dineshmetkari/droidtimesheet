@@ -16,7 +16,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String TABLE_NAME = "CheckPoints";
 	public static final String KEY_ID = "_id";
 	public static final String KEY_CHECKPOINT = "checkpoint";
-	private static final String CREATE_SQL = "create table if not exists " + TABLE_NAME + " (" + KEY_ID + " integer primary key autoincrement ," + KEY_CHECKPOINT + " datetime not null)";
+	private static final String CREATE_SQL = "create table if not exists " + TABLE_NAME + " ("
+			+ KEY_ID + " integer primary key autoincrement ," + KEY_CHECKPOINT
+			+ " datetime not null)";
 	public static final String STATUS_IN = "STATUS_IN";
 	public static final String STATUS_OUT = "STATUS_OUT";
 
@@ -56,24 +58,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		endDate.set(Calendar.MINUTE, 59);
 		endDate.set(Calendar.SECOND, 59);
 
-		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_CHECKPOINT + " >= " + startDate.getTimeInMillis() + " AND " + KEY_CHECKPOINT + " <= " + endDate.getTimeInMillis(),
-				null, null, null, KEY_CHECKPOINT );
+		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_CHECKPOINT
+				+ " >= " + startDate.getTimeInMillis() + " AND " + KEY_CHECKPOINT + " <= "
+				+ endDate.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
 
+	}
+
+	public long getCheckpointById(long id) {
+		Cursor cursor = db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_ID
+				+ " = " + id, null, null, null, null);
+		if (cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			return cursor.getLong(cursor.getColumnIndex(KEY_CHECKPOINT));
+		}else {
+			return -1;
+		}
 	}
 
 	public Cursor getMonthCheckpoints(Context context) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.DAY_OF_MONTH, PreferencesActivity.getFirstDayOfMonth(context));
+		int firstDay = Integer.valueOf(PreferencesActivity.getFirstDayOfMonth(context));
+
+		if (calendar.get(Calendar.DAY_OF_MONTH) < firstDay) {
+			calendar.roll(Calendar.MONTH, false);
+		}
+		calendar.set(Calendar.DAY_OF_MONTH, firstDay);
+
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 
-		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_CHECKPOINT + " >= " + calendar.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
+		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_CHECKPOINT
+				+ " >= " + calendar.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
 
 	}
 
 	public Cursor getAllCheckpoints() {
-		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, null, null, null, null, KEY_CHECKPOINT + " DESC");
+		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, null, null, null,
+				null, KEY_CHECKPOINT + " DESC");
 	}
 
 	public long insertCheckpoint() {
