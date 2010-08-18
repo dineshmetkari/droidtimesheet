@@ -6,6 +6,8 @@ import java.util.Calendar;
 
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
+import br.com.passeionaweb.android.hoursbank.widget.CheckpointWidget;
 
 public abstract class CheckpointListActivity extends ListActivity {
 	protected static final int MENU_ADD = 10;
@@ -140,8 +143,9 @@ public abstract class CheckpointListActivity extends ListActivity {
 	protected void deleteCheckpoint(long id) {
 		db.open();
 		db.deleteCheckpoint(id);
-		showToastMessage(TOAST_DELETED);
 		db.close();
+		showToastMessage(TOAST_DELETED);
+		updateWidgets();
 	}
 
 	protected void insertCheckpoint() {
@@ -155,6 +159,7 @@ public abstract class CheckpointListActivity extends ListActivity {
 		db.close();
 		showToastMessage(TOAST_ADDED);
 		fillData();
+		updateWidgets();
 	}
 
 	protected void editCheckpoint(long checkpoint) {
@@ -163,8 +168,9 @@ public abstract class CheckpointListActivity extends ListActivity {
 		db.close();
 		showToastMessage(TOAST_EDITED);
 		fillData();
+		updateWidgets();
 	}
-
+	
 	protected void export() {
 		db.open();
 		try {
@@ -181,5 +187,8 @@ public abstract class CheckpointListActivity extends ListActivity {
 			e.printStackTrace();
 		}
 		db.close();
+	}
+	protected void updateWidgets() {
+		CheckpointWidget.updateWidgets(this);
 	}
 }
