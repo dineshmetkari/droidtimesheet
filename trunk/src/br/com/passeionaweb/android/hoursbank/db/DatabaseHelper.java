@@ -70,7 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		if (cursor.getCount() > 0) {
 			cursor.moveToFirst();
 			return cursor.getLong(cursor.getColumnIndex(KEY_CHECKPOINT));
-		}else {
+		} else {
 			return -1;
 		}
 	}
@@ -88,8 +88,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 
+		Calendar calYesterday = Calendar.getInstance();
+		calYesterday.set(Calendar.HOUR_OF_DAY, 0);
+		calYesterday.set(Calendar.MINUTE, 0);
+		calYesterday.set(Calendar.SECOND, 0);
+
 		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_CHECKPOINT
-				+ " >= " + calendar.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
+				+ " >= " + calendar.getTimeInMillis() + " AND " + KEY_CHECKPOINT + " < "
+				+ calYesterday.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
 
 	}
 
