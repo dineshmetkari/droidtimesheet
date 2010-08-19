@@ -40,7 +40,7 @@ public class CheckpointCursorAdapter extends ResourceCursorAdapter {
 		switch (layoutType) {
 			case BLOTTER:
 				tvListText.setText(dt.toLocaleString());
-				((ImageView) view.findViewById(R.id.imgCheckpointInOut)).setImageResource(CheckpointsView.getImageResId(cursor.getPosition() + 1));
+				((ImageView) view.findViewById(R.id.imgCheckpointInOut)).setImageResource(CheckpointsView.getImageResId(cursor.getCount() - cursor.getPosition()));
 				break;
 			case DAY:
 				tvListText.setText(new SimpleDateFormat("HH:mm:ss").format(dt));
