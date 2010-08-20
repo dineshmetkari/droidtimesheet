@@ -88,6 +88,10 @@ public abstract class CheckpointListActivity extends ListActivity {
 			case HoursBank.MENU_EXPORT:
 				export();
 				break;
+			case HoursBank.MENU_DONATION:
+				Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(HoursBank.LINK_DONATION));
+				startActivity(i);
+				break;
 		}
 		return super.onMenuItemSelected(featureId, item);
 	}
