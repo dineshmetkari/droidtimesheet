@@ -7,9 +7,7 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -20,7 +18,6 @@ public class DayActivity extends CheckpointListActivity {
 	private long minHours;
 	private Calendar day;
 	private boolean today = true;
-	public static final int MENU_TODAY = 20;
 
 	protected TimePickerDialog.OnTimeSetListener onEditCheckpointListener = new OnTimeSetListener() {
 
@@ -161,26 +158,6 @@ public class DayActivity extends CheckpointListActivity {
 			insertCheckpoint(cal.getTimeInMillis());
 		}
 	};
-
-	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(Menu.NONE, MENU_TODAY, Menu.NONE, R.string.tab_title_day).setIcon(
-				android.R.drawable.ic_menu_day);
-		return super.onCreateOptionsMenu(menu);
-
-	}
-
-	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		switch (item.getItemId()) {
-			case MENU_TODAY:
-				today = true;
-				fillData();
-				return true;
-			default:
-				return super.onMenuItemSelected(featureId, item);
-		}
-
-	}
 
 	public void setDay(Calendar day) {
 		this.day = day;
