@@ -49,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public Cursor getCheckpointsByDay(Calendar day) {
 		Calendar startDate = (Calendar) day.clone();
 		Calendar endDate = (Calendar) day.clone();
-
+		
 		startDate.set(Calendar.HOUR_OF_DAY, 0);
 		startDate.set(Calendar.MINUTE, 0);
 		startDate.set(Calendar.SECOND, 0);

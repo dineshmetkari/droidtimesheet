@@ -2,15 +2,14 @@ package br.com.passeionaweb.android.hoursbank;
 
 import java.util.Calendar;
 
-import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
-
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -19,6 +18,9 @@ public class DayActivity extends CheckpointListActivity {
 
 	private long hoursDone;
 	private long minHours;
+	private Calendar day;
+	private boolean today = true;
+	public static final int MENU_TODAY = 20;
 
 	protected TimePickerDialog.OnTimeSetListener onEditCheckpointListener = new OnTimeSetListener() {
 
@@ -75,8 +77,13 @@ public class DayActivity extends CheckpointListActivity {
 	protected void fillData() {
 
 		db.open();
+		if (today) {
+			day = Calendar.getInstance();
+		} else {
+			String a = "a";
+		}
 		// Get all of the rows from the database and create the item list
-		Cursor cursor = db.getCheckpointsByDay(Calendar.getInstance());
+		Cursor cursor = db.getCheckpointsByDay(day);
 		startManagingCursor(cursor);
 
 		CheckpointCursorAdapter adapter = new CheckpointCursorAdapter(this,
@@ -106,15 +113,33 @@ public class DayActivity extends CheckpointListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, Calendar
-				.getInstance().get(Calendar.DAY_OF_WEEK)));
+		if (getIntent().hasExtra("DAY")) {
+			Calendar day = Calendar.getInstance();
+			day.setTimeInMillis(getIntent().getExtras().getLong("DAY"));
+			setDay(day);
+			minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, day
+					.get(Calendar.DAY_OF_WEEK)));
+		} else {
+			minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, Calendar
+					.getInstance().get(Calendar.DAY_OF_WEEK)));
+		}
+		
+
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, Calendar
-				.getInstance().get(Calendar.DAY_OF_WEEK)));
+		if (getIntent().hasExtra("DAY")) {
+			Calendar day = Calendar.getInstance();
+			day.setTimeInMillis(getIntent().getExtras().getLong("DAY"));
+			setDay(day);
+			minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, day
+					.get(Calendar.DAY_OF_WEEK)));
+		} else {
+			minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, Calendar
+					.getInstance().get(Calendar.DAY_OF_WEEK)));
+		}
 	}
 
 	@Override
@@ -136,4 +161,30 @@ public class DayActivity extends CheckpointListActivity {
 			insertCheckpoint(cal.getTimeInMillis());
 		}
 	};
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(Menu.NONE, MENU_TODAY, Menu.NONE, R.string.tab_title_day).setIcon(
+				android.R.drawable.ic_menu_day);
+		return super.onCreateOptionsMenu(menu);
+
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch (item.getItemId()) {
+			case MENU_TODAY:
+				today = true;
+				fillData();
+				return true;
+			default:
+				return super.onMenuItemSelected(featureId, item);
+		}
+
+	}
+
+	public void setDay(Calendar day) {
+		this.day = day;
+		today = false;
+	}
+
 }
