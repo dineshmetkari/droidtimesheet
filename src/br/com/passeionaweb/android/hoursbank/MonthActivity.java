@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.view.ContextMenu;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -112,6 +114,20 @@ public class MonthActivity extends CheckpointListActivity {
 		// This method is necessary to avoid the superclass method of creating
 		// this context menu
 		// DO NOT REMOVE THIS METHOD
+	}
+
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		Intent intent = new Intent(getApplicationContext(), DayActivity.class);
+
+		String strDay = (String) ((TextView) v.findViewById(R.id.txtCheckPoint)).getText();
+		Calendar day = Calendar.getInstance();
+		day.set(Calendar.DAY_OF_MONTH, Integer.valueOf(strDay.split(" ")[1].split("/")[0]));
+		day.set(Calendar.MONTH, Integer.valueOf(strDay.split(" ")[1].split("/")[1]) -1);
+
+		intent.putExtra("DAY", day.getTimeInMillis());
+		startActivity(intent);
+		super.onListItemClick(l, v, position, id);
 	}
 
 }
