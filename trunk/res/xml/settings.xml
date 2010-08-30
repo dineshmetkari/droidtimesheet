@@ -25,6 +25,8 @@
 		<TimePickerPreference android:key="hours_saturday"
 			android:defaultValue="0:00" android:title="@string/saturday"
 			android:summary="@string/dialog_hours_summary" android:dialogTitle="@string/dialog_hours_title" />
-
+		<TimePickerPreference android:key="hours_sunday"
+			android:defaultValue="0:00" android:title="@string/sunday"
+			android:summary="@string/dialog_hours_summary" android:dialogTitle="@string/dialog_hours_title" />
 	</PreferenceCategory>
 </PreferenceScreen>
