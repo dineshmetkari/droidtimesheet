@@ -19,6 +19,7 @@ public class PreferencesActivity extends PreferenceActivity {
 	public static final String KEY_HOURS_THURSDAY = "hours_thursday";
 	public static final String KEY_HOURS_FRIDAY = "hours_friday";
 	public static final String KEY_HOURS_SATURDAY = "hours_saturday";
+	public static final String KEY_HOURS_SUNDAY = "hours_sunday";
 
 	public static int getFirstDayOfMonth(Context context) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -41,6 +42,8 @@ public class PreferencesActivity extends PreferenceActivity {
 				return prefs.getString(KEY_HOURS_FRIDAY, defValue);
 			case Calendar.SATURDAY:
 				return prefs.getString(KEY_HOURS_SATURDAY, defValue);
+			case Calendar.SUNDAY:
+				return prefs.getString(KEY_HOURS_SUNDAY, defValue);
 		}
 		return defValue;
 	}
