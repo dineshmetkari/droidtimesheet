@@ -20,7 +20,7 @@ public class BlotterActivity extends CheckpointListActivity {
 
 		db.open();
 		// Get all of the rows from the database and create the item list
-		Cursor cursor = db.getAllCheckpoints();
+		Cursor cursor = db.getAllCheckpoints(false);
 		startManagingCursor(cursor);
 
 		CheckpointsView chk = new CheckpointsView(this);

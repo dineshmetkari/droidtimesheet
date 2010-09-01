@@ -176,7 +176,7 @@ public abstract class CheckpointListActivity extends ListActivity {
 	protected void export() {
 		db.open();
 		try {
-			File csv = chk.generateCSV(db.getAllCheckpoints());
+			File csv = chk.generateCSV(db.getAllCheckpoints(true));
 			Intent i = new Intent(Intent.ACTION_SEND);
 			i.setType("text/csv");
 			String path = csv.getAbsolutePath();

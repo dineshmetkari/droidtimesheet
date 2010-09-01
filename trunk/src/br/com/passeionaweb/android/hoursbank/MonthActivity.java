@@ -39,8 +39,6 @@ public class MonthActivity extends CheckpointListActivity {
 			List<HashMap<String, String>> list = chk.cursorToList(cursor, CheckpointsView.MONTH);
 			SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.checkpoint_row, from, to);
 			setListAdapter(adapter);
-		}
-		if (cursor.getCount() > 0) {
 			findViewById(R.id.layoutContainer).setVisibility(View.VISIBLE);
 			long sum = chk.calculateTotalHours(cursor);
 			String totalHours = chk.formatTotalHours(sum);
