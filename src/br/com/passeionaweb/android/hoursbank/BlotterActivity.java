@@ -45,7 +45,9 @@ public class BlotterActivity extends CheckpointListActivity {
 		addDialog.setTitle(R.string.dialog_add_checkpoint_title2);
 		addDialog.setContentView(R.layout.dialog_new_checkpoint);
 		// TODO 24 - 12hrs preference
-		((TimePicker) addDialog.findViewById(R.id.tpAddCheckpoint)).setIs24HourView(true);
+		
+		TimePicker tp = (TimePicker) addDialog.findViewById(R.id.tpAddCheckpoint);
+		tp.setIs24HourView(true);
 		((Button) addDialog.findViewById(R.id.btnDialogAddCheckpointOk))
 				.setOnClickListener(new OnClickListener() {
 
@@ -80,7 +82,30 @@ public class BlotterActivity extends CheckpointListActivity {
 		return addDialog;
 
 	}
-
+	
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		super.onPrepareDialog(id, dialog);
+		Calendar c = Calendar.getInstance();
+		
+		switch (id) {
+			case DIALOG_EDIT:
+				db.open();
+				long checkpoint = db.getCheckpointById(editId);
+				db.close();
+				c.setTimeInMillis(checkpoint);
+				((TimePicker) dialog.findViewById(R.id.tpAddCheckpoint)).setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
+				((TimePicker) dialog.findViewById(R.id.tpAddCheckpoint)).setCurrentMinute(c.get(Calendar.MINUTE));
+				((DatePicker) dialog.findViewById(R.id.dtAddCheckpoint)).updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+				break;
+			case DIALOG_ADD:
+				((TimePicker) dialog.findViewById(R.id.tpAddCheckpoint)).setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
+				((TimePicker) dialog.findViewById(R.id.tpAddCheckpoint)).setCurrentMinute(c.get(Calendar.MINUTE));
+				((DatePicker) dialog.findViewById(R.id.dtAddCheckpoint)).updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+				break;
+		}
+	}
+	
 	@Override
 	protected Dialog createEditDialog() {
 		editDialog = new Dialog(this);
