@@ -99,9 +99,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	}
 
-	public Cursor getAllCheckpoints() {
+	public Cursor getAllCheckpoints(boolean asc) {
+		String orderBy = " DESC";
+		if(asc) {
+			orderBy = "";
+		}
 		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, null, null, null,
-				null, KEY_CHECKPOINT + " DESC");
+				null, KEY_CHECKPOINT + orderBy);
 	}
 
 	public long insertCheckpoint() {
