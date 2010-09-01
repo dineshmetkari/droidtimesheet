@@ -17,7 +17,6 @@ public class DayActivity extends CheckpointListActivity {
 	private long hoursDone;
 	private long minHours;
 	private Calendar day;
-	private boolean today = true;
 
 	protected TimePickerDialog.OnTimeSetListener onEditCheckpointListener = new OnTimeSetListener() {
 
@@ -30,6 +29,7 @@ public class DayActivity extends CheckpointListActivity {
 		}
 	};
 
+		
 	private boolean areHoursByDayDone() {
 		return hoursDone > minHours;
 	}
@@ -74,10 +74,8 @@ public class DayActivity extends CheckpointListActivity {
 	protected void fillData() {
 
 		db.open();
-		if (today) {
+		if (day == null) {
 			day = Calendar.getInstance();
-		} else {
-			String a = "a";
 		}
 		// Get all of the rows from the database and create the item list
 		Cursor cursor = db.getCheckpointsByDay(day);
@@ -113,7 +111,7 @@ public class DayActivity extends CheckpointListActivity {
 		if (getIntent().hasExtra("DAY")) {
 			Calendar day = Calendar.getInstance();
 			day.setTimeInMillis(getIntent().getExtras().getLong("DAY"));
-			setDay(day);
+			this.day = day;
 			minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, day
 					.get(Calendar.DAY_OF_WEEK)));
 		} else {
@@ -130,7 +128,7 @@ public class DayActivity extends CheckpointListActivity {
 		if (getIntent().hasExtra("DAY")) {
 			Calendar day = Calendar.getInstance();
 			day.setTimeInMillis(getIntent().getExtras().getLong("DAY"));
-			setDay(day);
+			this.day = day;
 			minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, day
 					.get(Calendar.DAY_OF_WEEK)));
 		} else {
@@ -152,16 +150,11 @@ public class DayActivity extends CheckpointListActivity {
 
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			Calendar cal = Calendar.getInstance();
+			Calendar cal = (Calendar)day.clone();
 			cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
 			cal.set(Calendar.MINUTE, minute);
 			insertCheckpoint(cal.getTimeInMillis());
 		}
 	};
-
-	public void setDay(Calendar day) {
-		this.day = day;
-		today = false;
-	}
 
 }
