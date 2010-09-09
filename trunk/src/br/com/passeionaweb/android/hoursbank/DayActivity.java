@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -29,7 +30,6 @@ public class DayActivity extends CheckpointListActivity {
 		}
 	};
 
-		
 	private boolean areHoursByDayDone() {
 		return hoursDone > minHours;
 	}
@@ -118,7 +118,6 @@ public class DayActivity extends CheckpointListActivity {
 			minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, Calendar
 					.getInstance().get(Calendar.DAY_OF_WEEK)));
 		}
-		
 
 	}
 
@@ -150,11 +149,16 @@ public class DayActivity extends CheckpointListActivity {
 
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			Calendar cal = (Calendar)day.clone();
+			Calendar cal = (Calendar) day.clone();
 			cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
 			cal.set(Calendar.MINUTE, minute);
 			insertCheckpoint(cal.getTimeInMillis());
 		}
 	};
 
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		beginEdit(id);
+	}
+	
 }

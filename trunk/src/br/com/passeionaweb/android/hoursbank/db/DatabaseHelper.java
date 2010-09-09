@@ -49,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public Cursor getCheckpointsByDay(Calendar day) {
 		Calendar startDate = (Calendar) day.clone();
 		Calendar endDate = (Calendar) day.clone();
-		
+
 		startDate.set(Calendar.HOUR_OF_DAY, 0);
 		startDate.set(Calendar.MINUTE, 0);
 		startDate.set(Calendar.SECOND, 0);
@@ -75,11 +75,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 
-	public Cursor getMonthCheckpoints(Context context) {
-		Calendar calendar = Calendar.getInstance();
-		int firstDay = Integer.valueOf(PreferencesActivity.getFirstDayOfMonth(context));
+	public Cursor getMonthCheckpoints(Context context, int month) {
 
-		if (calendar.get(Calendar.DAY_OF_MONTH) < firstDay) {
+		int firstDay = Integer.valueOf(PreferencesActivity.getFirstDayOfMonth(context));
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.MONTH, month);
+		calendar.set(Calendar.DAY_OF_MONTH, firstDay);
+
+		if (calendar.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH)
+				&& calendar.get(Calendar.DAY_OF_MONTH) < firstDay) {
 			calendar.roll(Calendar.MONTH, false);
 		}
 		calendar.set(Calendar.DAY_OF_MONTH, firstDay);
@@ -87,21 +91,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
-
-		Calendar calYesterday = Calendar.getInstance();
-		calYesterday.set(Calendar.HOUR_OF_DAY, 0);
-		calYesterday.set(Calendar.MINUTE, 0);
-		calYesterday.set(Calendar.SECOND, 0);
+		Calendar calLastDay;
+		if (calendar.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH)) {
+			calLastDay = Calendar.getInstance();
+			calLastDay.roll(Calendar.DAY_OF_MONTH, false);
+		} else {
+			calLastDay = (Calendar) calendar.clone();
+			calLastDay.roll(Calendar.MONTH, true);
+		}
 
 		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_CHECKPOINT
 				+ " >= " + calendar.getTimeInMillis() + " AND " + KEY_CHECKPOINT + " < "
-				+ calYesterday.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
+				+ calLastDay.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
 
 	}
 
 	public Cursor getAllCheckpoints(boolean asc) {
 		String orderBy = " DESC";
-		if(asc) {
+		if (asc) {
 			orderBy = "";
 		}
 		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, null, null, null,

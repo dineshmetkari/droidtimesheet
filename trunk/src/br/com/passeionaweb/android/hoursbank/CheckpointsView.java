@@ -119,14 +119,14 @@ public class CheckpointsView {
 
 	}
 
-	public List<HashMap<String, String>> cursorToList(Cursor cursor, int type) {
+	public List<HashMap<String, String>> cursorToList(Cursor cursor, int type,int month) {
 		HashMap<String, String> map = null;
 		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 		switch (type) {
 			case MONTH:
 				cursor.moveToFirst();
 				Calendar cal = Calendar.getInstance();
-				ArrayList<Calendar> days = getDaysByMonth(cal.get(Calendar.MONTH));
+				ArrayList<Calendar> days = getDaysByMonth(month);
 				cal.setTimeInMillis(cursor.getLong(cursor
 						.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
 				// get all this based on the month eg:(1 - 30)
@@ -141,7 +141,7 @@ public class CheckpointsView {
 								.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
 						// still the same day, so keep inserting in the
 						// listCheckpoint
-						if (cal.get(Calendar.DAY_OF_MONTH) == day.get(Calendar.DAY_OF_MONTH)) {
+						if (cal.get(Calendar.DAY_OF_MONTH) == day.get(Calendar.DAY_OF_MONTH) && cal.getTimeInMillis() >= lastCheckpoint) {
 							listCheckpoints.add(cal.getTimeInMillis());
 							lastCheckpoint = cal.getTimeInMillis();
 						} else if (cal.after(day)) {

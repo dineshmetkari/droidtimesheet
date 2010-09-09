@@ -130,9 +130,7 @@ public abstract class CheckpointListActivity extends ListActivity {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 		switch (item.getItemId()) {
 			case MENU_EDIT:
-				editId = info.id;
-				showDialog(DIALOG_EDIT);
-				fillData();
+				beginEdit(info.id);
 				break;
 			case MENU_DELETE:
 				deleteCheckpoint(info.id);
@@ -140,6 +138,11 @@ public abstract class CheckpointListActivity extends ListActivity {
 				break;
 		}
 		return super.onContextItemSelected(item);
+	}
+
+	protected void beginEdit(long id) {
+		editId = id;
+		showDialog(DIALOG_EDIT);
 	}
 
 	protected void deleteCheckpoint(long id) {
@@ -172,7 +175,7 @@ public abstract class CheckpointListActivity extends ListActivity {
 		fillData();
 		updateWidgets();
 	}
-	
+
 	protected void export() {
 		db.open();
 		try {
@@ -190,6 +193,7 @@ public abstract class CheckpointListActivity extends ListActivity {
 		}
 		db.close();
 	}
+
 	protected void updateWidgets() {
 		CheckpointWidget.updateWidgets(this);
 	}
