@@ -27,6 +27,7 @@
 	<string name="menu_settings">Preferências</string>
 	<string name="menu_export">Exportar CSV</string>
 	<string name="menu_add_checkpoint">Checkpoint</string>
+	<string name="menu_set_month">Mudar o Mês</string>
 	<string name="dialog_add_checkpoint_title">Selecione a hora</string>
 	<string name="dialog_add_checkpoint_title2">Selecione o dia e a hora</string>
 	<string name="button_ok">OK</string>
@@ -46,4 +47,18 @@
 	<string name="pref_first_day">Primeiro dia do mês</string>
 	<string name="pref_first_day_summary">Selecione o primeiro dia do mês</string>
 	<string name="pref_first_day_title">Digite o dia</string>
+	<string-array name="months">
+    	<item>Janeiro</item>
+		<item>Fevereiro</item>
+		<item>Março</item>
+		<item>Abril</item>
+		<item>Maio</item>
+		<item>Junho</item>
+		<item>Julho</item>
+		<item>Agosto</item>
+		<item>Setembro</item>
+		<item>Outubro</item>
+		<item>Novembro</item>
+		<item>Dezembro</item>
+    </string-array>
 </resources>

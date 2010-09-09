@@ -27,6 +27,7 @@
     <string name="menu_settings">Preferences</string>
     <string name="menu_export">Export to CSV</string>
     <string name="menu_add_checkpoint">Checkpoint</string>
+    <string name="menu_set_month">Set Month</string>
     <string name="dialog_add_checkpoint_title">Select the time</string>
     <string name="dialog_add_checkpoint_title2">Select Date and Time</string>
     <string name="button_ok">OK</string>
@@ -46,4 +47,20 @@
     <string name="pref_first_day">First Day of Month</string>
     <string name="pref_first_day_summary">Select the first day of month to start counting</string>
     <string name="pref_first_day_title">Input the Day</string>
+    <string-array name="months">
+    	<item>January</item>
+		<item>February</item>
+		<item>March</item>
+		<item>April</item>
+		<item>May</item>
+		<item>June</item>
+		<item>July</item>
+		<item>August</item>
+		<item>September</item>
+		<item>October</item>
+		<item>November</item>
+		<item>December</item>
+    </string-array>
+    
+    
 </resources>
