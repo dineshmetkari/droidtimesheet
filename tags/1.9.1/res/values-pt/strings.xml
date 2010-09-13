@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Banco de Horas</string>
+	<string name="tab_title_blotter">Registros</string>
+	<string name="tab_title_day">Hoje</string>
+	<string name="tab_title_month">Mês</string>
+	<string name="tab_title_overview">Geral</string>
+	<string name="list_empty">Você ainda não começou a trabalhar!</string>
+	<string name="widget_button_text">Checkpoint</string>
+	<string name="message_checkpoint_create_success">Checkpoint criado em:</string>
+	<string name="message_checkpoint_create_error">Não foi possível criar o checkpoint!</string>
+	<string name="message_checkpoint_created">Checkpoint Criado!</string>
+	<string name="message_checkpoint_edited">Checkpoint Editado!</string>
+	<string name="message_checkpoint_deleted">Checkpoint excluído!</string>
+	<string name="total_hours">Total Executado:</string>
+	<string name="balance_hours">Saldo:</string>
+	<string name="monday">Segunda-Feira</string>
+	<string name="tuesday">Terça-Feira</string>
+	<string name="wednesday">Quarta-Feira</string>
+	<string name="thursday">Quinta-Feira</string>
+	<string name="friday">Sexta-Feira</string>
+	<string name="saturday">Sábado</string>
+	<string name="sunday">Domingo</string>
+	<string name="dialog_hours_title">Horas por dia</string>
+	<string name="dialog_hours_summary">Digite quantas horas você tem que trabalhar nesse dia ex: 9:00</string>
+	<string name="menu_donate">Ajude!</string>
+	<string name="menu_settings">Preferências</string>
+	<string name="menu_export">Exportar CSV</string>
+	<string name="menu_add_checkpoint">Checkpoint</string>
+	<string name="menu_set_month">Mudar o Mês</string>
+	<string name="dialog_add_checkpoint_title">Selecione a hora</string>
+	<string name="dialog_add_checkpoint_title2">Selecione o dia e a hora</string>
+	<string name="button_ok">OK</string>
+	<string name="button_cancel">Cancelar</string>
+	<string name="hours_day">Horas por dia</string>
+	<string name="menu_edit">Editar</string>
+	<string name="menu_delete">Excluir</string>
+	<string name="context_menu_title">Checkpoint</string>
+	<string name="confirm">Definir</string>
+	<string name="cancel">Cancelar</string>
+	<string name="prefs_error">Uma de suas preferências está errada, por favor corrija.</string>
+	<string name="csv_header">Entrada,Saída,Total</string>
+	<string name="export_error">Houve um erro na exportação!</string>
+	<string name="export_email_subject">Exportação Banco de Horas</string>
+	<string name="chooser_email_title">Email:</string>
+	<string name="general_prefs">Configurações Gerais</string>
+	<string name="pref_first_day">Primeiro dia do mês</string>
+	<string name="pref_first_day_summary">Selecione o primeiro dia do mês</string>
+	<string name="pref_first_day_title">Digite o dia</string>
+	<string-array name="months">
+    	<item>Janeiro</item>
+		<item>Fevereiro</item>
+		<item>Março</item>
+		<item>Abril</item>
+		<item>Maio</item>
+		<item>Junho</item>
+		<item>Julho</item>
+		<item>Agosto</item>
+		<item>Setembro</item>
+		<item>Outubro</item>
+		<item>Novembro</item>
+		<item>Dezembro</item>
+    </string-array>
+</resources>
