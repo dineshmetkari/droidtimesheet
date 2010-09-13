@@ -124,49 +124,34 @@ public class CheckpointsView {
 		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 		switch (type) {
 			case MONTH:
+				
+				
 				cursor.moveToFirst();
-				Calendar cal = Calendar.getInstance();
-				ArrayList<Calendar> days = getDaysByMonth(month);
-				cal.setTimeInMillis(cursor.getLong(cursor
-						.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
-				// get all this based on the month eg:(1 - 30)
+				boolean hasCheckpoints = false;
+				Calendar checkpoint = Calendar.getInstance();
+				checkpoint.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
+				Calendar lastCheckpoint = (Calendar)checkpoint.clone();
 				ArrayList<Long> listCheckpoints = new ArrayList<Long>();
-				// interact over all days
-				long lastCheckpoint = cursor.getLong(cursor
-						.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
-				for (Calendar day : days) {
-					// interact over all checkpoints of that month
-					while (!cursor.isAfterLast()) {
-						cal.setTimeInMillis(cursor.getLong(cursor
-								.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
-						// still the same day, so keep inserting in the
-						// listCheckpoint
-						if (cal.get(Calendar.DAY_OF_MONTH) == day.get(Calendar.DAY_OF_MONTH) && cal.getTimeInMillis() >= lastCheckpoint) {
-							listCheckpoints.add(cal.getTimeInMillis());
-							lastCheckpoint = cal.getTimeInMillis();
-						} else if (cal.after(day)) {
-							break;
-						}
-						cursor.moveToNext();
+				while(!cursor.isAfterLast() || hasCheckpoints  ) {
+					if(!cursor.isAfterLast()) {
+						checkpoint.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
 					}
-					// now the day was changed, so what is in the
-					// listCheckpoints are the checkpoints of a
-					// particular day
-					// create a hash map that represent the row
-					// which includes the Day, the total Hours, balance, and an
-					// Image to be binded to the view
-					if (listCheckpoints.size() > 0) {
-						map = new HashMap<String, String>();
-						map.put(KEY_DAY, new SimpleDateFormat("E dd/MM").format(new Date(
-								lastCheckpoint)));
+					
+					if(!cursor.isAfterLast() && checkpoint.get(Calendar.DAY_OF_MONTH) == lastCheckpoint.get(Calendar.DAY_OF_MONTH) && checkpoint.get(Calendar.MONTH) == lastCheckpoint.get(Calendar.MONTH)) {
+						listCheckpoints.add(checkpoint.getTimeInMillis());
+						lastCheckpoint = (Calendar)checkpoint.clone();
+						hasCheckpoints = true;
+					}else {//day has changed
+						
 						long totalHours = calculateTotalHours(listCheckpoints);
 						String formated = formatTotalHours(totalHours);
+						map = new HashMap<String, String>();
+						map.put(KEY_DAY, new SimpleDateFormat("E dd/MM").format(new Date(
+								lastCheckpoint.getTimeInMillis())));
 						map.put(KEY_TOTAL, formated);
-						// calculating the hours balance to put in the map
-						cal.setTimeInMillis(lastCheckpoint);
 						long hoursBalance = 0;
 						long minHours = unformatTotalHours(PreferencesActivity.getHoursPrefByDay(
-								context, cal.get(Calendar.DAY_OF_WEEK)));
+								context, lastCheckpoint.get(Calendar.DAY_OF_WEEK)));
 						hoursBalance = totalHours - minHours;
 						balance += hoursBalance;
 						map.put(KEY_BALANCE, formatTotalHours(hoursBalance));
@@ -180,13 +165,15 @@ public class CheckpointsView {
 						map.put(KEY_IMAGE, String.valueOf(imgId));
 						// add the created map to the collection
 						list.add(map);
-						// clear the listCheckpoints and stop the while
-						// iteration
 						listCheckpoints = new ArrayList<Long>();
+						lastCheckpoint = (Calendar)checkpoint.clone();
+						hasCheckpoints = false;
 					}
-					cursor.moveToFirst();
+					
+					if(!cursor.isAfterLast() && hasCheckpoints) {
+						cursor.moveToNext();
+					}
 				}
-
 		}
 
 		return list;
