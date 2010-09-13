@@ -94,16 +94,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Calendar calLastDay;
 		if (calendar.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH)) {
 			calLastDay = Calendar.getInstance();
-			calLastDay.roll(Calendar.DAY_OF_MONTH, false);
+			//calLastDay.roll(Calendar.DAY_OF_MONTH, false);
 		} else {
 			calLastDay = (Calendar) calendar.clone();
 			calLastDay.roll(Calendar.MONTH, true);
 		}
-
+		calLastDay.set(Calendar.HOUR_OF_DAY, 0);
+		calLastDay.set(Calendar.MINUTE, 0);
+		calLastDay.set(Calendar.SECOND, 0);
 		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_CHECKPOINT
 				+ " >= " + calendar.getTimeInMillis() + " AND " + KEY_CHECKPOINT + " < "
 				+ calLastDay.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
-
 	}
 
 	public Cursor getAllCheckpoints(boolean asc) {
