@@ -18,6 +18,7 @@ public class DayActivity extends CheckpointListActivity {
 	private long hoursDone;
 	private long minHours;
 	private Calendar day;
+	private boolean today = true;
 
 	protected TimePickerDialog.OnTimeSetListener onEditCheckpointListener = new OnTimeSetListener() {
 
@@ -74,7 +75,7 @@ public class DayActivity extends CheckpointListActivity {
 	protected void fillData() {
 
 		db.open();
-		if (day == null) {
+		if (day == null || today) {
 			day = Calendar.getInstance();
 		}
 		// Get all of the rows from the database and create the item list
@@ -108,29 +109,29 @@ public class DayActivity extends CheckpointListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (getIntent().hasExtra("DAY")) {
-			Calendar day = Calendar.getInstance();
-			day.setTimeInMillis(getIntent().getExtras().getLong("DAY"));
-			this.day = day;
-			minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, day
-					.get(Calendar.DAY_OF_WEEK)));
-		} else {
-			minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, Calendar
-					.getInstance().get(Calendar.DAY_OF_WEEK)));
-		}
+		checkDay();
+		
+		
 
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		checkDay();
+	}
+	
+	
+	protected void checkDay() {
 		if (getIntent().hasExtra("DAY")) {
 			Calendar day = Calendar.getInstance();
 			day.setTimeInMillis(getIntent().getExtras().getLong("DAY"));
 			this.day = day;
 			minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, day
 					.get(Calendar.DAY_OF_WEEK)));
+			today = false;
 		} else {
+			today = true;
 			minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(this, Calendar
 					.getInstance().get(Calendar.DAY_OF_WEEK)));
 		}
