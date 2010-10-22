@@ -24,7 +24,7 @@ public class DayActivity extends CheckpointListActivity {
 
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			Calendar cal = Calendar.getInstance();
+			Calendar cal = (Calendar) day.clone();
 			cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
 			cal.set(Calendar.MINUTE, minute);
 			editCheckpoint(cal.getTimeInMillis());
