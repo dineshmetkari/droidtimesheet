@@ -181,7 +181,7 @@ public abstract class CheckpointListActivity extends ListActivity {
 		try {
 			File csv = chk.generateCSV(db.getAllCheckpoints(true));
 			Intent i = new Intent(Intent.ACTION_SEND);
-			i.setType("text/html");
+			i.setType("text/csv");
 			String path = csv.getAbsolutePath();
 			i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.export_email_subject));
 			i.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + path));
