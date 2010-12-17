@@ -17,8 +17,6 @@ public class HoursBank extends TabActivity {
 
 	public static final int MENU_SETTINGS = 0;
 	public static final int MENU_EXPORT = 1;
-	public static final int MENU_DONATION = 2;
-	public static final String LINK_DONATION = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=H9FZXU9ADW5ZC&lc=BR&item_name=Rafael%20Roman&item_number=android%2dhoursbank&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted";
 
 	/** Called when the activity is first created. */
 	@Override
@@ -36,7 +34,6 @@ public class HoursBank extends TabActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(Menu.NONE,MENU_EXPORT,Menu.NONE,R.string.menu_export).setIcon(android.R.drawable.ic_menu_share);
 		menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, R.string.menu_settings).setIcon(android.R.drawable.ic_menu_preferences);
-		menu.add(Menu.NONE,MENU_DONATION,Menu.NONE,R.string.menu_donate).setIcon(R.drawable.donate);
 		return super.onCreateOptionsMenu(menu);
 	}
 
