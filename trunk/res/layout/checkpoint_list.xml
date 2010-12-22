@@ -38,11 +38,10 @@
 			android:textSize="32dp" android:text="00:00"></TextView>
 		
 	</LinearLayout>
-	<LinearLayout android:id="@+id/layoutAd"
-		android:visibility="gone" android:layout_width="fill_parent"
+	<LinearLayout android:id="@+id/layoutAd" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="horizontal">
 		<com.admob.android.ads.AdView android:id="@+id/ad"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:layout_height="30dp"
 			myapp:backgroundColor="#000000" myapp:primaryTextColor="#FFFFFF"
 			myapp:secondaryTextColor="#CCCCCC" />
 	</LinearLayout>

@@ -2,8 +2,13 @@ package br.com.passeionaweb.android.hoursbank;
 
 import java.util.Calendar;
 
+import br.com.passeionaweb.android.hoursbank.db.BackupAgent;
+
 import android.app.Dialog;
 import android.database.Cursor;
+import android.os.Environment;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -11,11 +16,14 @@ import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class BlotterActivity extends CheckpointListActivity {
 
 	private Dialog addDialog = null;
 	private Dialog editDialog = null;
+	private static final int MENU_BACKUP = 20;
+	private static final int MENU_RESTORE = 21;
 
 	protected void fillData() {
 
@@ -157,5 +165,44 @@ public class BlotterActivity extends CheckpointListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		beginEdit(id);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(Menu.NONE, MENU_BACKUP, Menu.NONE, R.string.menu_backup).setIcon(
+				android.R.drawable.ic_menu_save);
+		menu.add(Menu.NONE, MENU_RESTORE, Menu.NONE, R.string.menu_restore).setIcon(
+				android.R.drawable.ic_menu_revert);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		String message;
+		switch (item.getItemId()) {
+			case MENU_BACKUP:
+				BackupAgent bkpAgent = new BackupAgent();
+				boolean bkpDone = bkpAgent.backupData(getBaseContext());
+				if (bkpDone) {
+					message = getString(R.string.message_backup_done)
+							+ Environment.getExternalStorageDirectory() + "\\"
+							+ getString(R.string.app_name);
+
+				} else {
+					message = getString(R.string.message_backup_error);
+				}
+				Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+				break;
+			case MENU_RESTORE:
+				if(new BackupAgent().restoreData(getBaseContext())) {
+					message = getString(R.string.message_restore_done);
+				}else {
+					message = getString(R.string.message_restore_error);
+				}
+				Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+				fillData();
+				break;
+		}
+		return super.onMenuItemSelected(featureId, item);
 	}
 }

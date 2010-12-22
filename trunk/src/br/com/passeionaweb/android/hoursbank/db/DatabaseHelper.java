@@ -1,12 +1,14 @@
 package br.com.passeionaweb.android.hoursbank.db;
 
 import java.util.Calendar;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.SyncStateContract.Columns;
 import br.com.passeionaweb.android.hoursbank.PreferencesActivity;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -94,7 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Calendar calLastDay;
 		if (calendar.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH)) {
 			calLastDay = Calendar.getInstance();
-			//calLastDay.roll(Calendar.DAY_OF_MONTH, false);
+			// calLastDay.roll(Calendar.DAY_OF_MONTH, false);
 		} else {
 			calLastDay = (Calendar) calendar.clone();
 			calLastDay.roll(Calendar.MONTH, true);
@@ -154,5 +156,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		} else {
 			return STATUS_IN;
 		}
+	}
+	
+	public boolean existsCheckpoint(long checkpoint) {
+		return db.query(TABLE_NAME, new String[] {KEY_CHECKPOINT}, KEY_CHECKPOINT + " = " + checkpoint, null, null, null, null).getCount() > 0;
+	}
+	
+	public void insertCheckpoints(Long[] checkpoints, boolean unique) {
+		open();
+		db.beginTransaction();
+		try {
+			for (long checkpoint : checkpoints) {
+				if (!unique || !existsCheckpoint(checkpoint)) {
+					insertCheckpoint(checkpoint);
+				}
+			}
+			db.setTransactionSuccessful();
+		} finally {
+			db.endTransaction();
+		}
+		close();
 	}
 }
