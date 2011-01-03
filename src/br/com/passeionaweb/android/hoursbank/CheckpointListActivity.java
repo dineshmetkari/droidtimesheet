@@ -98,7 +98,7 @@ public abstract class CheckpointListActivity extends ListActivity {
 			case DIALOG_EDIT:
 				return createEditDialog();
 		}
-		return null;
+		return super.onCreateDialog(id);
 	}
 
 	protected void showToastMessage(int id) {

@@ -16,6 +16,8 @@
     <string name="message_backup_error">Ocorreu um erro ao tentar fazer o backup!!!</string>
     <string name="message_restore_done">A restauração do último backup foi um sucesso!!</string>
     <string name="message_restore_error">Infelizmente não foi possível restaurar o último backup!</string>
+	<string name="message_erase_done">Todos os checkpoints foram deletados...Significa que você tem um banco de dados fresquinho! Aproveite...</string>
+    <string name="message_erase_error">Ops...parece que nenhum checkpoint foi apagado, está certo isso?</string>
 	<string name="total_hours">Total Executado:</string>
 	<string name="balance_hours">Saldo:</string>
 	<string name="monday">Segunda-Feira</string>
@@ -41,6 +43,10 @@
 	<string name="menu_delete">Excluir</string>
 	<string name="menu_backup">Backup</string>
     <string name="menu_restore">Restaurar</string>
+    <string name="menu_erase">Apagar Dados</string>
+    <string name="dialog_erase_data">Tem certeza? Isso vai apagar todos os checkpoints</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
 	<string name="context_menu_title">Checkpoint</string>
 	<string name="confirm">Definir</string>
 	<string name="cancel">Cancelar</string>
