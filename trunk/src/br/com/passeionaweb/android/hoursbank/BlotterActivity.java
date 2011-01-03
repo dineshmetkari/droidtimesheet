@@ -3,8 +3,11 @@ package br.com.passeionaweb.android.hoursbank;
 import java.util.Calendar;
 
 import br.com.passeionaweb.android.hoursbank.db.BackupAgent;
+import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Environment;
 import android.view.Menu;
@@ -24,6 +27,8 @@ public class BlotterActivity extends CheckpointListActivity {
 	private Dialog editDialog = null;
 	private static final int MENU_BACKUP = 20;
 	private static final int MENU_RESTORE = 21;
+	private static final int MENU_ERASE = 22;
+	private static final int DIALOG_ERASE_DATA = 20;
 
 	protected void fillData() {
 
@@ -173,6 +178,8 @@ public class BlotterActivity extends CheckpointListActivity {
 				android.R.drawable.ic_menu_save);
 		menu.add(Menu.NONE, MENU_RESTORE, Menu.NONE, R.string.menu_restore).setIcon(
 				android.R.drawable.ic_menu_revert);
+		menu.add(Menu.NONE, MENU_ERASE, Menu.NONE, R.string.menu_erase).setIcon(
+				android.R.drawable.ic_menu_delete);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -202,7 +209,43 @@ public class BlotterActivity extends CheckpointListActivity {
 				Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 				fillData();
 				break;
+			case MENU_ERASE:
+				showDialog(DIALOG_ERASE_DATA);
 		}
 		return super.onMenuItemSelected(featureId, item);
+	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch(id) {
+			case DIALOG_ERASE_DATA:
+				return new AlertDialog.Builder(this)
+				.setCancelable(false)
+				.setIcon(android.R.drawable.ic_dialog_alert)
+				.setTitle(R.string.menu_erase)
+				.setMessage(R.string.dialog_erase_data)
+				.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				}).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						DatabaseHelper db = new DatabaseHelper(getBaseContext());
+						db.open();
+						if(db.eraseDatabase()> 0) {
+							Toast.makeText(getBaseContext(), getString(R.string.message_erase_done), Toast.LENGTH_LONG).show();
+						}else {
+							Toast.makeText(getBaseContext(), getString(R.string.message_erase_error), Toast.LENGTH_LONG).show();
+						}
+						db.close();
+						fillData();
+					}
+				}).create();
+		}
+		return super.onCreateDialog(id);
 	}
 }

@@ -23,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ " datetime not null)";
 	public static final String STATUS_IN = "STATUS_IN";
 	public static final String STATUS_OUT = "STATUS_OUT";
+	
 
 	private SQLiteDatabase db;
 
@@ -176,5 +177,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			db.endTransaction();
 		}
 		close();
+	}
+	
+	public int eraseDatabase () {
+		return db.delete(TABLE_NAME, "1", null);
+	}
+	
+	public boolean deleteCheckpoints(long start, long end) {
+		return db.delete(TABLE_NAME, KEY_CHECKPOINT + " >= " + start + KEY_CHECKPOINT + " <= "
+				+ end, null) > 0;
 	}
 }
