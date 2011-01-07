@@ -49,21 +49,21 @@ public class MonthActivity extends CheckpointListActivity {
 			SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.checkpoint_row, from, to);
 			setListAdapter(adapter);
 			findViewById(R.id.layoutContainer).setVisibility(View.VISIBLE);
-			long sum = chk.calculateTotalHours(cursor);
-			String totalHours = chk.formatTotalHours(sum);
-			((TextView) findViewById(R.id.lblTotalHours)).setText(totalHours);
-			findViewById(R.id.layoutBalance).setVisibility(View.VISIBLE);
-			((TextView) findViewById(R.id.lblHoursBalance)).setText(chk.formatTotalHours(chk
-					.getBalance()));
-			if (chk.getBalance() >= 0) {
-				((ImageView) findViewById(R.id.imgHoursBalance))
-						.setImageResource(R.drawable.ic_btn_round_plus);
-			} else {
-				((ImageView) findViewById(R.id.imgHoursBalance))
-						.setImageResource(R.drawable.ic_btn_round_minus);
-			}
 		}else {
 			setListAdapter(null);
+		}
+		long sum = chk.calculateTotalHours(cursor);
+		String totalHours = chk.formatTotalHours(sum);
+		((TextView) findViewById(R.id.lblTotalHours)).setText(totalHours);
+		findViewById(R.id.layoutBalance).setVisibility(View.VISIBLE);
+		((TextView) findViewById(R.id.lblHoursBalance)).setText(chk.formatTotalHours(chk
+				.getBalance()));
+		if (chk.getBalance() >= 0) {
+			((ImageView) findViewById(R.id.imgHoursBalance))
+					.setImageResource(R.drawable.ic_btn_round_plus);
+		} else {
+			((ImageView) findViewById(R.id.imgHoursBalance))
+					.setImageResource(R.drawable.ic_btn_round_minus);
 		}
 		db.close();
 	}
