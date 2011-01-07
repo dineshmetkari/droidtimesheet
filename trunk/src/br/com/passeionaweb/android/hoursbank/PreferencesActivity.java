@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -23,7 +24,17 @@ public class PreferencesActivity extends PreferenceActivity {
 
 	public static int getFirstDayOfMonth(Context context) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		return Integer.valueOf(prefs.getString(KEY_FIRST_DAY, "1"));
+		Integer day = 1;
+		String firstDay = prefs.getString(KEY_FIRST_DAY, day.toString());
+		try {
+			day = Integer.valueOf(firstDay);
+		}catch(NumberFormatException ex) {
+			Editor editor = prefs.edit();
+			editor.putString(KEY_FIRST_DAY, day.toString());
+			editor.commit();
+			//TODO: notify the user about the wrong set preference
+		}
+		return day;
 	}
 
 	public static String getHoursPrefByDay(Context context, int dayOfWeek) {

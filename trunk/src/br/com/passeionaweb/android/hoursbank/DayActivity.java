@@ -86,23 +86,20 @@ public class DayActivity extends CheckpointListActivity {
 				CheckpointCursorAdapter.DAY, cursor);
 		setListAdapter(adapter);
 
-		if (cursor.getCount() > 0) {
-			findViewById(R.id.layoutContainer).setVisibility(View.VISIBLE);
-			hoursDone = chk.calculateTotalHours(cursor);
-			String totalHours = chk.formatTotalHours(hoursDone);
-			((TextView) findViewById(R.id.lblTotalHours)).setText(totalHours);
+		findViewById(R.id.layoutContainer).setVisibility(View.VISIBLE);
+		hoursDone = chk.calculateTotalHours(cursor);
+		String totalHours = chk.formatTotalHours(hoursDone);
+		((TextView) findViewById(R.id.lblTotalHours)).setText(totalHours);
 
-			if (areHoursByDayDone()) {
-				((ImageView) findViewById(R.id.imgHoursBalance))
-						.setImageResource(R.drawable.ic_btn_round_plus);
-			} else {
-				((ImageView) findViewById(R.id.imgHoursBalance))
-						.setImageResource(R.drawable.ic_btn_round_minus);
-			}
-			findViewById(R.id.layoutBalance).setVisibility(View.VISIBLE);
-			((TextView) findViewById(R.id.lblHoursBalance)).setText(chk
-					.formatTotalHours(getBalance()));
+		if (areHoursByDayDone()) {
+			((ImageView) findViewById(R.id.imgHoursBalance))
+					.setImageResource(R.drawable.ic_btn_round_plus);
+		} else {
+			((ImageView) findViewById(R.id.imgHoursBalance))
+					.setImageResource(R.drawable.ic_btn_round_minus);
 		}
+		findViewById(R.id.layoutBalance).setVisibility(View.VISIBLE);
+		((TextView) findViewById(R.id.lblHoursBalance)).setText(chk.formatTotalHours(getBalance()));
 		db.close();
 	}
 

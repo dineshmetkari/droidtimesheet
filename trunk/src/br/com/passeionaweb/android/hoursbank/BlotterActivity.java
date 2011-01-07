@@ -42,14 +42,13 @@ public class BlotterActivity extends CheckpointListActivity {
 				CheckpointCursorAdapter.BLOTTER, cursor);
 		setListAdapter(adapter);
 
-		if (cursor.getCount() > 0) {
-			findViewById(R.id.layoutContainer).setVisibility(View.VISIBLE);
+		findViewById(R.id.layoutContainer).setVisibility(View.VISIBLE);
 
-			long sum = chk.calculateTotalHours(cursor);
-			String totalHours = chk.formatTotalHours(sum);
+		long sum = chk.calculateTotalHours(cursor);
+		String totalHours = chk.formatTotalHours(sum);
 
-			((TextView) findViewById(R.id.lblTotalHours)).setText(totalHours);
-		}
+		((TextView) findViewById(R.id.lblTotalHours)).setText(totalHours);
+
 		db.close();
 	}
 
