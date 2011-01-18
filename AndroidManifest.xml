@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="br.com.passeionaweb.android.hoursbank" android:versionCode="23" android:versionName="2.2.1">
+	package="br.com.passeionaweb.android.hoursbank" android:versionName="2.2.2"
+	android:versionCode="24">
+	<supports-screens android:smallScreens="true"
+		android:normalScreens="true" android:largeScreens="true"
+		android:anyDensity="true" />
 	<application android:icon="@drawable/black_clock"
 		android:label="@string/app_name" android:debuggable="false">
 		<activity android:name=".HoursBank" android:label="@string/app_name">
@@ -20,7 +24,7 @@
 		<receiver android:name=".widget.CheckpointWidget">
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-				<action android:name="br.com.passeionaweb.android.hoursbank.widget.CLICK"/>
+				<action android:name="br.com.passeionaweb.android.hoursbank.widget.CLICK" />
 			</intent-filter>
 			<meta-data android:name="android.appwidget.provider"
 				android:resource="@xml/widget_checkpoint" />
@@ -35,12 +39,12 @@
 		<!-- Track Market installs -->
 		<receiver android:name="com.admob.android.ads.analytics.InstallReceiver"
 			android:exported="true">
-		<intent-filter>
-			<action android:name="com.android.vending.INSTALL_REFERRER" />
-		</intent-filter>
-</receiver>
+			<intent-filter>
+				<action android:name="com.android.vending.INSTALL_REFERRER" />
+			</intent-filter>
+		</receiver>
 	</application>
-<uses-sdk android:minSdkVersion="3"></uses-sdk>
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+	<uses-sdk android:minSdkVersion="3"></uses-sdk>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
 </manifest> 
