@@ -25,30 +25,25 @@ public class CheckpointWidget extends AppWidgetProvider {
 	}
 
 	@Override
-	public void onReceive(Context context, Intent intent) {
+	public void onReceive(Context context, Intent intent) {		
 		super.onReceive(context, intent);
 		if (intent.getAction().equals(ACTION_CLICK)) {
 			createCheckpoint(context);
 		}
-
+		
 	}
 
 	private void createCheckpoint(Context context) {
 		// Creating the checkpoint and notifying the user
-		db = new DatabaseHelper(context);
-		db.open();
-		showToastNotification(context, db.insertCheckpoint());
-
-		// updating the widgets to display the correct drawnable element
-		AppWidgetManager manager = AppWidgetManager.getInstance(context);
-		int[] ids = manager.getAppWidgetIds(new ComponentName(context, CheckpointWidget.class));
-		RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.checkpoint_widget);
-		String status = db.getStatus();
-		// check the status and set the correct drawnable id
-		int clockId = getDrawableId(status);
-		view.setImageViewResource(R.id.widgetImage, clockId);
-		manager.updateAppWidget(ids, view);
-		db.close();
+		try {
+			db = new DatabaseHelper(context);
+			db.open();
+			showToastNotification(context, db.insertCheckpoint());
+			CheckpointWidget.updateWidgets(context);
+			db.close();
+		}catch (Exception e) {
+			Toast.makeText(context, "Error creating checkpoint: " + e.getMessage(), Toast.LENGTH_LONG).show();
+		}
 	}
 
 	private void showToastNotification(Context context, long resultCode) {
@@ -81,8 +76,9 @@ public class CheckpointWidget extends AppWidgetProvider {
 		// Get the layout for the App Widget and attach an on-click listener to
 		// the button
 		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.checkpoint_widget);
-
+		
 		views.setOnClickPendingIntent(R.id.widgetImage, pendingIntent);
+
 		DatabaseHelper db = new DatabaseHelper(context);
 		db.open();
 		int clockId = getDrawableId(db.getStatus());
@@ -93,5 +89,7 @@ public class CheckpointWidget extends AppWidgetProvider {
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 		ComponentName provider = new ComponentName("br.com.passeionaweb.android.hoursbank", "br.com.passeionaweb.android.hoursbank.widget.CheckpointWidget");
 		appWidgetManager.updateAppWidget(provider, views);
+		
+		
 	}
 }
