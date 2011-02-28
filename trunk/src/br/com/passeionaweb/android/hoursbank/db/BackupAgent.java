@@ -74,7 +74,8 @@ public class BackupAgent {
 				}
 			}
 			if (checkpoints.size() > 0) {
-				new DatabaseHelper(context).insertCheckpoints(checkpoints.toArray(new Long[checkpoints.size()]), true);
+				new DatabaseHelper(context).insertCheckpoints(checkpoints
+						.toArray(new Long[checkpoints.size()]), true);
 			}
 
 		} catch (Exception e) {

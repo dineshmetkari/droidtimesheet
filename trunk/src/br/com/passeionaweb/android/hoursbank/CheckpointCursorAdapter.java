@@ -21,6 +21,7 @@ public class CheckpointCursorAdapter extends ResourceCursorAdapter {
 	public static final int MONTH = 3;
 	public static final int OVERVIEW = 4;
 	public static final int LAYOUT_ID = R.layout.checkpoint_row;
+
 	public CheckpointCursorAdapter(Context context, int layoutType, Cursor cursor) {
 		super(context, LAYOUT_ID, cursor);
 		this.layoutType = layoutType;
@@ -28,7 +29,8 @@ public class CheckpointCursorAdapter extends ResourceCursorAdapter {
 
 	@Override
 	public View newView(Context context, Cursor cur, ViewGroup parent) {
-		LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater li = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		return li.inflate(LAYOUT_ID, parent, false);
 	}
 
@@ -40,21 +42,23 @@ public class CheckpointCursorAdapter extends ResourceCursorAdapter {
 		switch (layoutType) {
 			case BLOTTER:
 				tvListText.setText(dt.toLocaleString());
-				((ImageView) view.findViewById(R.id.imgCheckpointInOut)).setImageResource(CheckpointsView.getImageResId(cursor.getCount() - cursor.getPosition()));
+				((ImageView) view.findViewById(R.id.imgCheckpointInOut))
+						.setImageResource(CheckpointsView.getImageResId(cursor.getCount()
+								- cursor.getPosition()));
 				break;
 			case DAY:
 				tvListText.setText(new SimpleDateFormat("HH:mm:ss").format(dt));
-				((ImageView) view.findViewById(R.id.imgCheckpointInOut)).setImageResource(CheckpointsView.getImageResId(cursor.getPosition() + 1));
+				((ImageView) view.findViewById(R.id.imgCheckpointInOut))
+						.setImageResource(CheckpointsView.getImageResId(cursor.getPosition() + 1));
 				break;
 			case MONTH:
 				tvListText.setText(new SimpleDateFormat("MMM dd HH:mm:ss").format(dt));
-				((ImageView) view.findViewById(R.id.imgCheckpointInOut)).setImageResource(CheckpointsView.getImageResId(cursor.getPosition() + 1));
+				((ImageView) view.findViewById(R.id.imgCheckpointInOut))
+						.setImageResource(CheckpointsView.getImageResId(cursor.getPosition() + 1));
 				break;
 			case OVERVIEW:
 				break;
 		}
 	}
-
-
 
 }

@@ -108,7 +108,6 @@ public class MonthActivity extends CheckpointListActivity {
 
 	}
 
-	
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
@@ -169,7 +168,6 @@ public class MonthActivity extends CheckpointListActivity {
 		this.month = month;
 		fillData();
 	}
-
 
 	protected Dialog createSetMonthDialog() {
 		return new AlertDialog.Builder(this).setItems(R.array.months,
