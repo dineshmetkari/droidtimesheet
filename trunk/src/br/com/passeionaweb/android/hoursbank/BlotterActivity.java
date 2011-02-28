@@ -2,9 +2,6 @@ package br.com.passeionaweb.android.hoursbank;
 
 import java.util.Calendar;
 
-import br.com.passeionaweb.android.hoursbank.db.BackupAgent;
-import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -20,6 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import br.com.passeionaweb.android.hoursbank.db.BackupAgent;
+import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
 
 public class BlotterActivity extends CheckpointListActivity {
 
@@ -51,8 +50,7 @@ public class BlotterActivity extends CheckpointListActivity {
 
 		db.close();
 	}
-
-	@Override
+	
 	protected Dialog createAddDialog() {
 		addDialog = new Dialog(this);
 		addDialog.setTitle(R.string.dialog_add_checkpoint_title2);
@@ -125,7 +123,6 @@ public class BlotterActivity extends CheckpointListActivity {
 		}
 	}
 
-	@Override
 	protected Dialog createEditDialog() {
 		editDialog = new Dialog(this);
 		editDialog.setTitle(R.string.dialog_add_checkpoint_title2);
@@ -173,6 +170,8 @@ public class BlotterActivity extends CheckpointListActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(Menu.NONE, MENU_ADD, Menu.NONE, R.string.menu_add_checkpoint).setIcon(
+				android.R.drawable.ic_menu_add);
 		menu.add(Menu.NONE, MENU_BACKUP, Menu.NONE, R.string.menu_backup).setIcon(
 				android.R.drawable.ic_menu_save);
 		menu.add(Menu.NONE, MENU_RESTORE, Menu.NONE, R.string.menu_restore).setIcon(
@@ -200,9 +199,9 @@ public class BlotterActivity extends CheckpointListActivity {
 				Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 				break;
 			case MENU_RESTORE:
-				if(new BackupAgent().restoreData(getBaseContext())) {
+				if (new BackupAgent().restoreData(getBaseContext())) {
 					message = getString(R.string.message_restore_done);
-				}else {
+				} else {
 					message = getString(R.string.message_restore_error);
 				}
 				Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -213,38 +212,47 @@ public class BlotterActivity extends CheckpointListActivity {
 		}
 		return super.onMenuItemSelected(featureId, item);
 	}
-	
+
 	@Override
 	protected Dialog onCreateDialog(int id) {
-		switch(id) {
+		switch (id) {
+			case DIALOG_ADD:
+				return createAddDialog();
+			case DIALOG_EDIT:
+				return createEditDialog();
 			case DIALOG_ERASE_DATA:
-				return new AlertDialog.Builder(this)
-				.setCancelable(false)
-				.setIcon(android.R.drawable.ic_dialog_alert)
-				.setTitle(R.string.menu_erase)
-				.setMessage(R.string.dialog_erase_data)
-				.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.cancel();
-					}
-				}).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						DatabaseHelper db = new DatabaseHelper(getBaseContext());
-						db.open();
-						if(db.eraseDatabase()> 0) {
-							Toast.makeText(getBaseContext(), getString(R.string.message_erase_done), Toast.LENGTH_LONG).show();
-						}else {
-							Toast.makeText(getBaseContext(), getString(R.string.message_erase_error), Toast.LENGTH_LONG).show();
-						}
-						db.close();
-						fillData();
-					}
-				}).create();
+				return new AlertDialog.Builder(this).setCancelable(false).setIcon(
+						android.R.drawable.ic_dialog_alert).setTitle(R.string.menu_erase)
+						.setMessage(R.string.dialog_erase_data).setNegativeButton(
+								getString(R.string.no), new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog, int which) {
+										dialog.cancel();
+									}
+								}).setPositiveButton(getString(R.string.yes),
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog, int which) {
+										DatabaseHelper db = new DatabaseHelper(getBaseContext());
+										db.open();
+										if (db.eraseDatabase() > 0) {
+											Toast.makeText(getBaseContext(),
+													getString(R.string.message_erase_done),
+													Toast.LENGTH_LONG).show();
+										} else {
+											Toast.makeText(getBaseContext(),
+													getString(R.string.message_erase_error),
+													Toast.LENGTH_LONG).show();
+										}
+										db.close();
+										fillData();
+									}
+								}).create();
+			default:
+				return super.onCreateDialog(id);
+
 		}
-		return super.onCreateDialog(id);
 	}
 }

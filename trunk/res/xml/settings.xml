@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<!-- PreferenceCategory android:title="@string/prefs_notification">
+		<CheckBoxPreference android:key="notification_enabled"
+			android:defaultValue="true" android:title="@string/prefs_notification_enabled"
+			android:summaryOn="@string/prefs_notification_enabled_on"
+			android:summaryOff="@string/prefs_notification_enabled_off" />
+		<CheckBoxPreference android:key="notification_end_day"
+			android:defaultValue="true" android:title="@string/prefs_notification_end_day"
+			android:summary="@string/prefs_notification_end_day_summary"
+			android:dependency="notification_enabled" />
+		<RingtonePreference android:ringtoneType="notification"
+			android:showSilent="false" android:showDefault="true" android:key="notification_sound"
+			android:title="@string/prefs_notification_sound" android:dependency="notification_enabled" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/prefs_lunch">
+		<CheckBoxPreference android:key="lunch_autoround_enabled"
+			android:defaultValue="false" android:title="@string/prefs_lunch_autoround"
+			android:summaryOn="@string/prefs_lunch_autoround_on"
+			android:summaryOff="@string/prefs_lunch_autoround_off" />
+		<TimePickerPreference android:key="lunch_autoround_time"
+			android:defaultValue="1:00" android:title="@string/prefs_lunch_autoround_time"
+			android:summary="@string/prefs_time_to_round" android:dialogTitle="@string/dialog_hours_title"
+			android:dependency="lunch_autoround_enabled" />
+	</PreferenceCategory-->
 	<PreferenceCategory android:title="@string/general_prefs">
 		<EditTextPreference android:key="first_day"
 			android:defaultValue="1" android:title="@string/pref_first_day"

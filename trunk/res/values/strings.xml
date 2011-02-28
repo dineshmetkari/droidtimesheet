@@ -3,6 +3,7 @@
     <string name="app_name">Hours Bank</string>
     <string name="tab_title_blotter">Blotter</string>
     <string name="tab_title_day">Today</string>
+    <string name="tab_title_week">Week</string>
     <string name="tab_title_month">Month</string>
     <string name="tab_title_overview">Overview</string>
     <string name="list_empty">Don\'t you need to start to work!?</string>
@@ -59,6 +60,19 @@
     <string name="pref_first_day">First Day of Month</string>
     <string name="pref_first_day_summary">Select the first day of month to start counting</string>
     <string name="pref_first_day_title">Input the Day</string>
+    <string name="prefs_notification">Notification</string>
+    <string name="prefs_notification_sound">Notification Sound</string>
+	<string name="prefs_notification_enabled">Show Notifications</string>
+	<string name="prefs_notification_enabled_on">Show notifications</string>
+	<string name="prefs_notification_enabled_off">Won\'t show any notification</string>
+	<string name="prefs_notification_end_day">Ready to go...</string>
+	<string name="prefs_notification_end_day_summary">Notify when you complete your hours (Balance = 0:00)</string>
+	<string name="prefs_lunch">Lunch Time</string>
+	<string name="prefs_lunch_autoround">Auto round</string>
+	<string name="prefs_lunch_autoround_on">Auto round the lunch time when less than...</string>
+	<string name="prefs_lunch_autoround_off">Won\'t round the lunch time</string>
+	<string name="prefs_lunch_autoround_time">Round to?</string>
+	<string name="prefs_time_to_round">How many time of lunch can you take?</string>
     <string-array name="months">
     	<item>January</item>
 		<item>February</item>
@@ -73,6 +87,4 @@
 		<item>November</item>
 		<item>December</item>
     </string-array>
-    
-    
 </resources>

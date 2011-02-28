@@ -1,14 +1,12 @@
 package br.com.passeionaweb.android.hoursbank.db;
 
 import java.util.Calendar;
-import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.SyncStateContract.Columns;
 import br.com.passeionaweb.android.hoursbank.PreferencesActivity;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -23,7 +21,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ " datetime not null)";
 	public static final String STATUS_IN = "STATUS_IN";
 	public static final String STATUS_OUT = "STATUS_OUT";
-	
 
 	private SQLiteDatabase db;
 
@@ -37,16 +34,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public void open() {
-		db = getWritableDatabase();
+		if (db == null || !db.isOpen()) {
+			db = getWritableDatabase();
+		}
 	}
 
 	public void close() {
-		db.close();
+		if (db != null && db.isOpen()) {
+			db.close();
+		}
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// TODO create the code to upgrade database according with versions
+
 	}
 
 	public Cursor getCheckpointsByDay(Calendar day) {
@@ -82,8 +83,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 		int firstDay = Integer.valueOf(PreferencesActivity.getFirstDayOfMonth(context));
 		Calendar calendar = Calendar.getInstance();
+		int year = calendar.get(Calendar.YEAR);
+		calendar.clear();
 		calendar.set(Calendar.MONTH, month);
 		calendar.set(Calendar.DAY_OF_MONTH, firstDay);
+		calendar.set(Calendar.YEAR, year);
 
 		if (calendar.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH)
 				&& calendar.get(Calendar.DAY_OF_MONTH) < firstDay) {
@@ -91,23 +95,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		calendar.set(Calendar.DAY_OF_MONTH, firstDay);
 
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
 		Calendar calLastDay;
 		if (calendar.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH)) {
 			calLastDay = Calendar.getInstance();
-			// calLastDay.roll(Calendar.DAY_OF_MONTH, false);
+			calLastDay.roll(Calendar.DAY_OF_MONTH, false);
 		} else {
 			calLastDay = (Calendar) calendar.clone();
 			calLastDay.roll(Calendar.MONTH, true);
 		}
-		calLastDay.set(Calendar.HOUR_OF_DAY, 0);
-		calLastDay.set(Calendar.MINUTE, 0);
-		calLastDay.set(Calendar.SECOND, 0);
+		return getCheckpointsByCalendar(context, calendar, calLastDay);
+	}
+
+	public Cursor getCheckpointsByCalendar(Context context, Calendar calFrom, Calendar calTo) {
 		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_CHECKPOINT
-				+ " >= " + calendar.getTimeInMillis() + " AND " + KEY_CHECKPOINT + " < "
-				+ calLastDay.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
+				+ " >= " + calFrom.getTimeInMillis() + " AND " + KEY_CHECKPOINT + " < "
+				+ calTo.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
+	}
+
+	public Cursor getWeekCheckpoints(Context context, int week) {
+		Calendar calendar = Calendar.getInstance();
+		int year = calendar.get(Calendar.YEAR);
+		calendar.clear();
+		calendar.set(Calendar.WEEK_OF_YEAR, week);
+		calendar.set(Calendar.YEAR, year);
+
+		Calendar calLastDay = (Calendar) calendar.clone();
+		calLastDay.roll(Calendar.WEEK_OF_YEAR, true);
+		return getCheckpointsByCalendar(context, calendar, calLastDay);
 	}
 
 	public Cursor getAllCheckpoints(boolean asc) {
@@ -119,11 +133,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				null, KEY_CHECKPOINT + orderBy);
 	}
 
-	public long insertCheckpoint() {
-		return insertCheckpoint(Calendar.getInstance().getTimeInMillis());
+	public long removeSeconds(long checkpoint) {
+		Calendar calCheckpoint = Calendar.getInstance();
+		calCheckpoint.setTimeInMillis(checkpoint);
+		calCheckpoint.set(Calendar.SECOND, 0);
+		return calCheckpoint.getTimeInMillis();
 	}
 
 	public long insertCheckpoint(long checkpoint) {
+		checkpoint = removeSeconds(checkpoint);
 		ContentValues values = new ContentValues();
 		values.put(KEY_CHECKPOINT, checkpoint);
 		long result = db.insert(TABLE_NAME, null, values);
@@ -158,11 +176,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			return STATUS_IN;
 		}
 	}
-	
+
 	public boolean existsCheckpoint(long checkpoint) {
-		return db.query(TABLE_NAME, new String[] {KEY_CHECKPOINT}, KEY_CHECKPOINT + " = " + checkpoint, null, null, null, null).getCount() > 0;
+		return db.query(TABLE_NAME, new String[] { KEY_CHECKPOINT },
+				KEY_CHECKPOINT + " = " + checkpoint, null, null, null, null).getCount() > 0;
 	}
-	
+
 	public void insertCheckpoints(Long[] checkpoints, boolean unique) {
 		open();
 		db.beginTransaction();
@@ -178,13 +197,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		close();
 	}
-	
-	public int eraseDatabase () {
+
+	public int eraseDatabase() {
 		return db.delete(TABLE_NAME, "1", null);
 	}
-	
+
 	public boolean deleteCheckpoints(long start, long end) {
 		return db.delete(TABLE_NAME, KEY_CHECKPOINT + " >= " + start + KEY_CHECKPOINT + " <= "
 				+ end, null) > 0;
 	}
+
 }

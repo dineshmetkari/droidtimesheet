@@ -3,6 +3,7 @@
 	<string name="app_name">Banco de Horas</string>
 	<string name="tab_title_blotter">Registros</string>
 	<string name="tab_title_day">Hoje</string>
+	<string name="tab_title_week">Semana</string>
 	<string name="tab_title_month">Mês</string>
 	<string name="tab_title_overview">Geral</string>
 	<string name="list_empty">Você ainda não começou a trabalhar!</string>
@@ -59,6 +60,19 @@
 	<string name="pref_first_day">Primeiro dia do mês</string>
 	<string name="pref_first_day_summary">Selecione o primeiro dia do mês</string>
 	<string name="pref_first_day_title">Digite o dia</string>
+	<string name="prefs_notification">Notificações</string>
+	<string name="prefs_notification_enabled">Mostrar Notificações</string>
+	<string name="prefs_notification_sound">Som de Notificação</string>
+	<string name="prefs_notification_enabled_on">Mostrar Notificações quando possível</string>
+	<string name="prefs_notification_enabled_off">Não mostrar nenhuma notificação</string>
+	<string name="prefs_notification_end_day">Pronto pra ir...</string>
+	<string name="prefs_notification_end_day_summary">Notificar quando completar suas horas, ou seja, Saldo = 0:00</string>
+	<string name="prefs_lunch">Hora do Almoço</string>
+	<string name="prefs_lunch_autoround">Arredondar</string>
+	<string name="prefs_lunch_autoround_on">Arredondar hora do almoço quando menos que...</string>
+	<string name="prefs_lunch_autoround_off">Não arredondar nada</string>
+	<string name="prefs_lunch_autoround_time">Arredondar para</string>
+	<string name="prefs_time_to_round">Quanto tempo de almoço você pode tirar?</string>
 	<string-array name="months">
     	<item>Janeiro</item>
 		<item>Fevereiro</item>
