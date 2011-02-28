@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hours Bank</string>
+    <string name="tab_title_blotter">Blotter</string>
+    <string name="tab_title_day">Today</string>
+    <string name="tab_title_week">Week</string>
+    <string name="tab_title_month">Month</string>
+    <string name="tab_title_overview">Overview</string>
+    <string name="list_empty">Don\'t you need to start to work!?</string>
+    <string name="widget_button_text">Checkpoint</string>
+    <string name="message_checkpoint_create_success">Checkpoint created at:</string>
+    <string name="message_checkpoint_create_error">I\'m sorry! Was not possible to create the checkpoint!</string>
+    <string name="message_checkpoint_created">Checkpoint created!</string>
+    <string name="message_checkpoint_edited">Checkpoint updated!</string>
+    <string name="message_checkpoint_deleted">Checkpoint deleted!</string>
+    <string name="message_backup_done">Backup done! Check the file at:</string>
+    <string name="message_backup_error">Backup not done! An error occured</string>
+    <string name="message_restore_done">The restore of the last backup was successful!!</string>
+    <string name="message_restore_error">Sorry, I couldn\'t restore the last backup, an error occured!</string>
+    <string name="message_erase_done">All checkpoints were deleted, you have a fresh database now...Enjoy it!</string>
+    <string name="message_erase_error">Ops...Sorry! Seems that no one checkpoint was deleted. Is that right?</string>
+    <string name="total_hours">Total Time:</string>
+    <string name="balance_hours">Balance:</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="dialog_hours_title">Hours By Day</string>
+    <string name="dialog_hours_summary">How many hours do you have to work this day? eg. 9:00</string>
+    <string name="menu_donate">Support!</string>
+    <string name="menu_settings">Preferences</string>
+    <string name="menu_export">Export to CSV</string>
+    <string name="menu_add_checkpoint">Checkpoint</string>
+    <string name="menu_set_month">Set Month</string>
+    <string name="dialog_add_checkpoint_title">Select the time</string>
+    <string name="dialog_add_checkpoint_title2">Select Date and Time</string>
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="hours_day">Hours By Day</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_backup">Backup</string>
+    <string name="menu_restore">Restore</string>
+    <string name="menu_erase">Erase Data</string>
+    <string name="dialog_erase_data">Are you sure? This will delete all checkpoints.</string>
+    <string name="context_menu_title">Checkpoint</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="prefs_error">There is an error in of of your preferences, please check.</string>
+    <string name="csv_header">Check-in,Check-out,Amount</string>
+    <string name="export_error">There was an error exporting your checkpoints!</string>
+    <string name="export_email_subject">Hours Bank Export</string>
+    <string name="chooser_email_title">Email:</string>
+    <string name="general_prefs">General Preferences</string>
+    <string name="pref_first_day">First Day of Month</string>
+    <string name="pref_first_day_summary">Select the first day of month to start counting</string>
+    <string name="pref_first_day_title">Input the Day</string>
+    <string name="prefs_notification">Notification</string>
+    <string name="prefs_notification_sound">Notification Sound</string>
+	<string name="prefs_notification_enabled">Show Notifications</string>
+	<string name="prefs_notification_enabled_on">Show notifications</string>
+	<string name="prefs_notification_enabled_off">Won\'t show any notification</string>
+	<string name="prefs_notification_end_day">Ready to go...</string>
+	<string name="prefs_notification_end_day_summary">Notify when you complete your hours (Balance = 0:00)</string>
+	<string name="prefs_lunch">Lunch Time</string>
+	<string name="prefs_lunch_autoround">Auto round</string>
+	<string name="prefs_lunch_autoround_on">Auto round the lunch time when less than...</string>
+	<string name="prefs_lunch_autoround_off">Won\'t round the lunch time</string>
+	<string name="prefs_lunch_autoround_time">Round to?</string>
+	<string name="prefs_time_to_round">How many time of lunch can you take?</string>
+    <string-array name="months">
+    	<item>January</item>
+		<item>February</item>
+		<item>March</item>
+		<item>April</item>
+		<item>May</item>
+		<item>June</item>
+		<item>July</item>
+		<item>August</item>
+		<item>September</item>
+		<item>October</item>
+		<item>November</item>
+		<item>December</item>
+    </string-array>
+</resources>
