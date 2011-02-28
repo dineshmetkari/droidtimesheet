@@ -35,9 +35,6 @@ public abstract class CheckpointListActivity extends ListActivity {
 
 	protected abstract void fillData();
 
-	protected abstract Dialog createEditDialog();
-
-	protected abstract Dialog createAddDialog();
 
 	/** Called when the activity is first created. */
 	@Override
@@ -65,12 +62,6 @@ public abstract class CheckpointListActivity extends ListActivity {
 		super.onResume();
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(Menu.NONE, MENU_ADD, Menu.NONE, R.string.menu_add_checkpoint).setIcon(
-				android.R.drawable.ic_menu_add);
-		return super.onCreateOptionsMenu(menu);
-	}
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
@@ -88,17 +79,6 @@ public abstract class CheckpointListActivity extends ListActivity {
 				break;
 		}
 		return super.onMenuItemSelected(featureId, item);
-	}
-
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-			case DIALOG_ADD:
-				return createAddDialog();
-			case DIALOG_EDIT:
-				return createEditDialog();
-		}
-		return super.onCreateDialog(id);
 	}
 
 	protected void showToastMessage(int id) {

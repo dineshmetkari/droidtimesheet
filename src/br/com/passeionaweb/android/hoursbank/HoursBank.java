@@ -6,13 +6,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.widget.TabHost;
-import br.com.passeionaweb.android.hoursbank.BlotterActivity;
-import br.com.passeionaweb.android.hoursbank.DayActivity;
-import br.com.passeionaweb.android.hoursbank.MonthActivity;
 
 public class HoursBank extends TabActivity {
 	private static final String TAB_BLOTTER = "blotter";
 	private static final String TAB_DAY = "day";
+	private static final String TAB_WEEK = "week";
 	private static final String TAB_MONTH = "month";
 
 	public static final int MENU_SETTINGS = 0;
@@ -42,7 +40,8 @@ public class HoursBank extends TabActivity {
 		tabHost.addTab(tabHost.newTabSpec(TAB_DAY)
 		// TODO create an icon and set it here as a drawable
 				.setIndicator(getResources().getText(R.string.tab_title_day)).setContent(new Intent(this, DayActivity.class)));
-
+		tabHost.addTab(tabHost.newTabSpec(TAB_WEEK).setIndicator(getString(R.string.tab_title_week)).setContent(new Intent(this, WeekActivity.class)));
+		
 		tabHost.addTab(tabHost.newTabSpec(TAB_MONTH)
 		// TODO create an icon and set it here as a drawable
 				.setIndicator(getResources().getText(R.string.tab_title_month)).setContent(new Intent(this, MonthActivity.class)));

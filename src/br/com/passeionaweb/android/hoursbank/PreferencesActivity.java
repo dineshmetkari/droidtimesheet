@@ -21,7 +21,14 @@ public class PreferencesActivity extends PreferenceActivity {
 	public static final String KEY_HOURS_FRIDAY = "hours_friday";
 	public static final String KEY_HOURS_SATURDAY = "hours_saturday";
 	public static final String KEY_HOURS_SUNDAY = "hours_sunday";
-
+	public static final String KEY_NOFICIATION_END_DAY = "notification_end_day";
+	
+	public static boolean getNotificationEndDay(Context context) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		return prefs.getBoolean(KEY_NOFICIATION_END_DAY, true);
+	}
+	
+	
 	public static int getFirstDayOfMonth(Context context) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		Integer day = 1;

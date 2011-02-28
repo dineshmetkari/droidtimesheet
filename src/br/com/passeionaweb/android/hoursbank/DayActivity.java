@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -43,7 +44,6 @@ public class DayActivity extends CheckpointListActivity {
 		}
 	}
 
-	@Override
 	protected Dialog createEditDialog() {
 		TimePickerDialog editDialog = new TimePickerDialog(this, onEditCheckpointListener, 0, 0,
 				true);
@@ -133,8 +133,25 @@ public class DayActivity extends CheckpointListActivity {
 					.getInstance().get(Calendar.DAY_OF_WEEK)));
 		}
 	}
-
+	
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(Menu.NONE, MENU_ADD, Menu.NONE, R.string.menu_add_checkpoint).setIcon(
+				android.R.drawable.ic_menu_add);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+			case DIALOG_ADD:
+				return createAddDialog();
+			case DIALOG_EDIT:
+				return createEditDialog();
+		}
+		return super.onCreateDialog(id);
+	}
+	
 	protected Dialog createAddDialog() {
 		Calendar c = Calendar.getInstance();
 		TimePickerDialog addDialog = new TimePickerDialog(this, onAddCheckpointListener, c

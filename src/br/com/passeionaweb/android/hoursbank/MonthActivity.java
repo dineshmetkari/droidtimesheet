@@ -1,6 +1,5 @@
 package br.com.passeionaweb.android.hoursbank;
 
-import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +34,7 @@ public class MonthActivity extends CheckpointListActivity {
 
 		db.open();
 		// Get all of the rows from the database and create the item list
-		Cursor cursor = db.getMonthCheckpoints(this,month);
+		Cursor cursor = db.getMonthCheckpoints(this, month);
 		startManagingCursor(cursor);
 
 		CheckpointsView chk = new CheckpointsView(this);
@@ -45,11 +44,12 @@ public class MonthActivity extends CheckpointListActivity {
 		int[] to = new int[] { R.id.txtCheckPoint, R.id.txtTotalHours, R.id.txtHourBalanceRow,
 				R.id.imgCheckpointInOut };
 		if (cursor.getCount() > 0) {
-			List<HashMap<String, String>> list = chk.cursorToList(cursor, CheckpointsView.MONTH,month);
+			List<HashMap<String, String>> list = chk.cursorToList(cursor, CheckpointsView.MONTH,
+					month);
 			SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.checkpoint_row, from, to);
 			setListAdapter(adapter);
 			findViewById(R.id.layoutContainer).setVisibility(View.VISIBLE);
-		}else {
+		} else {
 			setListAdapter(null);
 		}
 		long sum = chk.calculateTotalHours(cursor);
@@ -68,7 +68,6 @@ public class MonthActivity extends CheckpointListActivity {
 		db.close();
 	}
 
-	@Override
 	protected Dialog createAddDialog() {
 		addDialog = new Dialog(this);
 		addDialog.setTitle(R.string.dialog_add_checkpoint_title2);
@@ -109,10 +108,18 @@ public class MonthActivity extends CheckpointListActivity {
 
 	}
 
+	
 	@Override
-	protected Dialog createEditDialog() {
-		// TODO Implement this method
-		return null;
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+			case DIALOG_ADD:
+				return createAddDialog();
+			case DIALOG_SET_MONTH:
+				return createSetMonthDialog();
+			default:
+				return super.onCreateDialog(id);
+
+		}
 	}
 
 	@Override
@@ -141,6 +148,8 @@ public class MonthActivity extends CheckpointListActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(Menu.NONE, MENU_ADD, Menu.NONE, R.string.menu_add_checkpoint).setIcon(
+				android.R.drawable.ic_menu_add);
 		menu.add(Menu.NONE, MENU_SET_MONTH, Menu.NONE, R.string.menu_set_month).setIcon(
 				android.R.drawable.ic_menu_month);
 		return super.onCreateOptionsMenu(menu);
@@ -155,21 +164,12 @@ public class MonthActivity extends CheckpointListActivity {
 		}
 		return super.onMenuItemSelected(featureId, item);
 	}
-	
+
 	private void setMonth(int month) {
 		this.month = month;
 		fillData();
 	}
 
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		switch(id) {
-			case DIALOG_SET_MONTH:
-			return createSetMonthDialog();
-			default:
-				return super.onCreateDialog(id);
-		}
-	}
 
 	protected Dialog createSetMonthDialog() {
 		return new AlertDialog.Builder(this).setItems(R.array.months,
@@ -182,7 +182,7 @@ public class MonthActivity extends CheckpointListActivity {
 				}).create();
 
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		month = Calendar.getInstance().get(Calendar.MONTH);

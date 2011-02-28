@@ -26,6 +26,7 @@ public class CheckpointsView {
 	private String csvExportFormat = "dd/MM/yyyy HH:mm:ss";
 
 	public static final int MONTH = 2;
+	public static final int WEEK = 3;
 	public static final int ALL = -1;
 	public static final String KEY_DAY = "DAY";
 	public static final String KEY_TOTAL = "TOTAL";
@@ -124,6 +125,7 @@ public class CheckpointsView {
 		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 		switch (type) {
 			case MONTH:
+			case WEEK:
 				
 				
 				cursor.moveToFirst();
@@ -174,6 +176,7 @@ public class CheckpointsView {
 						cursor.moveToNext();
 					}
 				}
+				break;
 		}
 
 		return list;
@@ -254,6 +257,21 @@ public class CheckpointsView {
 		writer.flush();
 		writer.close();
 		return gpxfile;
+	}
+	
+	public long insertCheckpoint() {
+		return insertCheckpoint(Calendar.getInstance().getTimeInMillis());
+	}
+	
+	public long insertCheckpoint(long checkpoint) {
+		long result;
+		DatabaseHelper db = new DatabaseHelper(context);
+		db.open();
+		result = db.insertCheckpoint(checkpoint);
+		db.close();
+		NotificationManager manager = new NotificationManager(context);
+		return result;
+		
 	}
 
 }
