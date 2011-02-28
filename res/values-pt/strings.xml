@@ -19,6 +19,8 @@
     <string name="message_restore_error">Infelizmente não foi possível restaurar o último backup!</string>
 	<string name="message_erase_done">Todos os checkpoints foram deletados...Significa que você tem um banco de dados fresquinho! Aproveite...</string>
     <string name="message_erase_error">Ops...parece que nenhum checkpoint foi apagado, está certo isso?</string>
+    <string name="message_first_week">Opa..chegamos na primeira semana do ano....passado é passado!</string>
+    <string name="message_current_week">Então, já estamos na semana atual..prever o futuro não rola ;-)</string>
 	<string name="total_hours">Total Executado:</string>
 	<string name="balance_hours">Saldo:</string>
 	<string name="monday">Segunda-Feira</string>
@@ -35,6 +37,8 @@
 	<string name="menu_export">Exportar CSV</string>
 	<string name="menu_add_checkpoint">Checkpoint</string>
 	<string name="menu_set_month">Mudar o Mês</string>
+	<string name="menu_previous_week">Semana anterior</string>
+    <string name="menu_next_week">Próxima semana</string>
 	<string name="dialog_add_checkpoint_title">Selecione a hora</string>
 	<string name="dialog_add_checkpoint_title2">Selecione o dia e a hora</string>
 	<string name="button_ok">OK</string>

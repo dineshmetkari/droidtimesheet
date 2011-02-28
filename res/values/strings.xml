@@ -19,6 +19,8 @@
     <string name="message_restore_error">Sorry, I couldn\'t restore the last backup, an error occured!</string>
     <string name="message_erase_done">All checkpoints were deleted, you have a fresh database now...Enjoy it!</string>
     <string name="message_erase_error">Ops...Sorry! Seems that no one checkpoint was deleted. Is that right?</string>
+    <string name="message_first_week">This is the first week of the year..let the past behind!</string>
+    <string name="message_current_week">We are already looking at the current week...we can\'t predict the future...</string>
     <string name="total_hours">Total Time:</string>
     <string name="balance_hours">Balance:</string>
     <string name="monday">Monday</string>
@@ -45,6 +47,8 @@
     <string name="menu_backup">Backup</string>
     <string name="menu_restore">Restore</string>
     <string name="menu_erase">Erase Data</string>
+    <string name="menu_previous_week">Previous Week</string>
+    <string name="menu_next_week">Next Week</string>
     <string name="dialog_erase_data">Are you sure? This will delete all checkpoints.</string>
     <string name="context_menu_title">Checkpoint</string>
     <string name="yes">Yes</string>

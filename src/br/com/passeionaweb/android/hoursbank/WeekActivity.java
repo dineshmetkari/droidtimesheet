@@ -16,10 +16,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class WeekActivity extends CheckpointListActivity {
 	private int week;
-	public static final int MENU_SET_WEEK = 20;
+	public static final int MENU_PREVIOUS_WEEK = 20;
+	public static final int MENU_NEXT_WEEK = 21;
 	public static final int DIALOG_SET_WEEK = 10;
 
 	protected void fillData() {
@@ -86,23 +88,36 @@ public class WeekActivity extends CheckpointListActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		/*
-		 * menu.add(Menu.NONE, MENU_SET_WEEK, Menu.NONE,
-		 * R.string.menu_set_week).setIcon( android.R.drawable.ic_menu_week);
-		 */
+
+		menu.add(Menu.NONE, MENU_PREVIOUS_WEEK, Menu.NONE, R.string.menu_previous_week).setIcon(
+				R.drawable.ic_menu_back);
+		menu.add(Menu.NONE, MENU_NEXT_WEEK, Menu.NONE, R.string.menu_next_week).setIcon(
+				R.drawable.ic_menu_foward);
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		/*
-		 * switch (item.getItemId()) { case MENU_SET_WEEK:
-		 * showDialog(DIALOG_SET_WEEK); break; }
-		 */
+		switch (item.getItemId()) {
+			case MENU_PREVIOUS_WEEK:
+				setWeek(week - 1);
+				break;
+			case MENU_NEXT_WEEK:
+				setWeek(week + 1);
+				break;
+		}
+
 		return super.onMenuItemSelected(featureId, item);
 	}
 
 	private void setWeek(int week) {
+		if (week <= 1) {
+			week = 1;
+			Toast.makeText(this, R.string.message_first_week, Toast.LENGTH_SHORT).show();
+		} else if (week > Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)) {
+			Toast.makeText(this, R.string.message_current_week, Toast.LENGTH_SHORT).show();
+			week = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
+		}
 		this.week = week;
 		fillData();
 	}
