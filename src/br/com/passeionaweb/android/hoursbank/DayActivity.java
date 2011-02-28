@@ -107,8 +107,6 @@ public class DayActivity extends CheckpointListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		checkDay();
-		
-		
 
 	}
 
@@ -117,8 +115,7 @@ public class DayActivity extends CheckpointListActivity {
 		super.onResume();
 		checkDay();
 	}
-	
-	
+
 	protected void checkDay() {
 		if (getIntent().hasExtra("DAY")) {
 			Calendar day = Calendar.getInstance();
@@ -133,14 +130,14 @@ public class DayActivity extends CheckpointListActivity {
 					.getInstance().get(Calendar.DAY_OF_WEEK)));
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(Menu.NONE, MENU_ADD, Menu.NONE, R.string.menu_add_checkpoint).setIcon(
 				android.R.drawable.ic_menu_add);
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
@@ -151,7 +148,7 @@ public class DayActivity extends CheckpointListActivity {
 		}
 		return super.onCreateDialog(id);
 	}
-	
+
 	protected Dialog createAddDialog() {
 		Calendar c = Calendar.getInstance();
 		TimePickerDialog addDialog = new TimePickerDialog(this, onAddCheckpointListener, c
@@ -175,5 +172,5 @@ public class DayActivity extends CheckpointListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		beginEdit(id);
 	}
-	
+
 }

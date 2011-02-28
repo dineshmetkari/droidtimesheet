@@ -50,7 +50,7 @@ public class BlotterActivity extends CheckpointListActivity {
 
 		db.close();
 	}
-	
+
 	protected Dialog createAddDialog() {
 		addDialog = new Dialog(this);
 		addDialog.setTitle(R.string.dialog_add_checkpoint_title2);

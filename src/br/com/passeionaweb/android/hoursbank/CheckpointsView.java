@@ -120,31 +120,35 @@ public class CheckpointsView {
 
 	}
 
-	public List<HashMap<String, String>> cursorToList(Cursor cursor, int type,int month) {
+	public List<HashMap<String, String>> cursorToList(Cursor cursor, int type, int month) {
 		HashMap<String, String> map = null;
 		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 		switch (type) {
 			case MONTH:
 			case WEEK:
-				
-				
+
 				cursor.moveToFirst();
 				boolean hasCheckpoints = false;
 				Calendar checkpoint = Calendar.getInstance();
-				checkpoint.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
-				Calendar lastCheckpoint = (Calendar)checkpoint.clone();
+				checkpoint.setTimeInMillis(cursor.getLong(cursor
+						.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
+				Calendar lastCheckpoint = (Calendar) checkpoint.clone();
 				ArrayList<Long> listCheckpoints = new ArrayList<Long>();
-				while(!cursor.isAfterLast() || hasCheckpoints  ) {
-					if(!cursor.isAfterLast()) {
-						checkpoint.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
+				while (!cursor.isAfterLast() || hasCheckpoints) {
+					if (!cursor.isAfterLast()) {
+						checkpoint.setTimeInMillis(cursor.getLong(cursor
+								.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
 					}
-					
-					if(!cursor.isAfterLast() && checkpoint.get(Calendar.DAY_OF_MONTH) == lastCheckpoint.get(Calendar.DAY_OF_MONTH) && checkpoint.get(Calendar.MONTH) == lastCheckpoint.get(Calendar.MONTH)) {
+
+					if (!cursor.isAfterLast()
+							&& checkpoint.get(Calendar.DAY_OF_MONTH) == lastCheckpoint
+									.get(Calendar.DAY_OF_MONTH)
+							&& checkpoint.get(Calendar.MONTH) == lastCheckpoint.get(Calendar.MONTH)) {
 						listCheckpoints.add(checkpoint.getTimeInMillis());
-						lastCheckpoint = (Calendar)checkpoint.clone();
+						lastCheckpoint = (Calendar) checkpoint.clone();
 						hasCheckpoints = true;
-					}else {//day has changed
-						
+					} else {// day has changed
+
 						long totalHours = calculateTotalHours(listCheckpoints);
 						String formated = formatTotalHours(totalHours);
 						map = new HashMap<String, String>();
@@ -168,11 +172,11 @@ public class CheckpointsView {
 						// add the created map to the collection
 						list.add(map);
 						listCheckpoints = new ArrayList<Long>();
-						lastCheckpoint = (Calendar)checkpoint.clone();
+						lastCheckpoint = (Calendar) checkpoint.clone();
 						hasCheckpoints = false;
 					}
-					
-					if(!cursor.isAfterLast() && hasCheckpoints) {
+
+					if (!cursor.isAfterLast() && hasCheckpoints) {
 						cursor.moveToNext();
 					}
 				}
@@ -203,7 +207,7 @@ public class CheckpointsView {
 		ArrayList<Calendar> list = new ArrayList<Calendar>();
 
 		while (minDay.before(maxDay)) {
-			list.add((Calendar)minDay.clone());
+			list.add((Calendar) minDay.clone());
 			minDay.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		return list;
@@ -258,11 +262,11 @@ public class CheckpointsView {
 		writer.close();
 		return gpxfile;
 	}
-	
+
 	public long insertCheckpoint() {
 		return insertCheckpoint(Calendar.getInstance().getTimeInMillis());
 	}
-	
+
 	public long insertCheckpoint(long checkpoint) {
 		long result;
 		DatabaseHelper db = new DatabaseHelper(context);
@@ -271,7 +275,7 @@ public class CheckpointsView {
 		db.close();
 		NotificationManager manager = new NotificationManager(context);
 		return result;
-		
+
 	}
 
 }

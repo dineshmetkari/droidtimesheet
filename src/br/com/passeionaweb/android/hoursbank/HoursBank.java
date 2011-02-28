@@ -30,8 +30,10 @@ public class HoursBank extends TabActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(Menu.NONE,MENU_EXPORT,Menu.NONE,R.string.menu_export).setIcon(android.R.drawable.ic_menu_share);
-		menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, R.string.menu_settings).setIcon(android.R.drawable.ic_menu_preferences);
+		menu.add(Menu.NONE, MENU_EXPORT, Menu.NONE, R.string.menu_export).setIcon(
+				android.R.drawable.ic_menu_share);
+		menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, R.string.menu_settings).setIcon(
+				android.R.drawable.ic_menu_preferences);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -39,14 +41,20 @@ public class HoursBank extends TabActivity {
 		TabHost tabHost = getTabHost();
 		tabHost.addTab(tabHost.newTabSpec(TAB_DAY)
 		// TODO create an icon and set it here as a drawable
-				.setIndicator(getResources().getText(R.string.tab_title_day)).setContent(new Intent(this, DayActivity.class)));
-		tabHost.addTab(tabHost.newTabSpec(TAB_WEEK).setIndicator(getString(R.string.tab_title_week)).setContent(new Intent(this, WeekActivity.class)));
-		
+				.setIndicator(getResources().getText(R.string.tab_title_day)).setContent(
+						new Intent(this, DayActivity.class)));
+		tabHost.addTab(tabHost.newTabSpec(TAB_WEEK)
+				.setIndicator(getString(R.string.tab_title_week)).setContent(
+						new Intent(this, WeekActivity.class)));
+
 		tabHost.addTab(tabHost.newTabSpec(TAB_MONTH)
 		// TODO create an icon and set it here as a drawable
-				.setIndicator(getResources().getText(R.string.tab_title_month)).setContent(new Intent(this, MonthActivity.class)));
+				.setIndicator(getResources().getText(R.string.tab_title_month)).setContent(
+						new Intent(this, MonthActivity.class)));
 
-		tabHost.addTab(tabHost.newTabSpec(TAB_BLOTTER).setIndicator(getResources().getText(R.string.tab_title_blotter), getResources().getDrawable(R.drawable.ic_tab_graph)).setContent(
+		tabHost.addTab(tabHost.newTabSpec(TAB_BLOTTER).setIndicator(
+				getResources().getText(R.string.tab_title_blotter),
+				getResources().getDrawable(R.drawable.ic_tab_graph)).setContent(
 				new Intent(this, BlotterActivity.class)));
 	}
 }

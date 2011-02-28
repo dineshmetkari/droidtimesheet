@@ -4,13 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 
-import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -34,7 +32,6 @@ public abstract class CheckpointListActivity extends ListActivity {
 	protected long editId;
 
 	protected abstract void fillData();
-
 
 	/** Called when the activity is first created. */
 	@Override
@@ -61,7 +58,6 @@ public abstract class CheckpointListActivity extends ListActivity {
 		fillData();
 		super.onResume();
 	}
-
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {

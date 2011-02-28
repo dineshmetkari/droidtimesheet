@@ -22,18 +22,17 @@ public class NotificationManager {
 
 	public void scheduleEndDayNotification() {
 		db.open();
-		if(PreferencesActivity.getNotificationEndDay(context) && db.getStatus().equals(db.STATUS_IN)) {
-		
+		if (PreferencesActivity.getNotificationEndDay(context)
+				&& db.getStatus().equals(db.STATUS_IN)) {
+
 			long when = getWhenEndDay();
-			
-			
-			
+
 			Notification notification = new Notification();
-		
+
 		}
 		db.close();
 	}
-	
+
 	private long getWhenEndDay() {
 		long result = 0;
 		long now = 0;
@@ -43,10 +42,7 @@ public class NotificationManager {
 		now = day.getTimeInMillis();
 		CheckpointsView chk = new CheckpointsView(context);
 		minHours = chk.calculateTotalHours(db.getCheckpointsByDay(day));
-		
-		
-		
-		
+
 		return result;
 	}
 

@@ -77,7 +77,6 @@ public class TimePickerPreference extends DialogPreference implements
 		return tp;
 	}
 
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -128,16 +127,17 @@ public class TimePickerPreference extends DialogPreference implements
 
 		return Integer.valueOf(time.split(":")[1]);
 	}
-	
+
 	@Override
 	public void onTimeChanged(TimePicker view, int hour, int minute) {
 		mHour = hour;
 		mMinute = minute;
 	}
+
 	@Override
 	public void onDialogClosed(boolean positiveResult) {
-		if( positiveResult ) {
-			if( isPersistent() )
+		if (positiveResult) {
+			if (isPersistent())
 				persistString(mHour + ":" + mMinute);
 		}
 	}
