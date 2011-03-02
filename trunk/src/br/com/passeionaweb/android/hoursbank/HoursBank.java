@@ -40,16 +40,17 @@ public class HoursBank extends TabActivity {
 	private void setupTabs() {
 		TabHost tabHost = getTabHost();
 		tabHost.addTab(tabHost.newTabSpec(TAB_DAY)
-		// TODO create an icon and set it here as a drawable
-				.setIndicator(getResources().getText(R.string.tab_title_day)).setContent(
+				.setIndicator(getResources().getText(R.string.tab_title_day),
+						getResources().getDrawable(R.drawable.ic_tab_day)).setContent(
 						new Intent(this, DayActivity.class)));
 		tabHost.addTab(tabHost.newTabSpec(TAB_WEEK)
-				.setIndicator(getString(R.string.tab_title_week)).setContent(
+				.setIndicator(getString(R.string.tab_title_week),
+						getResources().getDrawable(R.drawable.ic_tab_week)).setContent(
 						new Intent(this, WeekActivity.class)));
 
 		tabHost.addTab(tabHost.newTabSpec(TAB_MONTH)
-		// TODO create an icon and set it here as a drawable
-				.setIndicator(getResources().getText(R.string.tab_title_month)).setContent(
+				.setIndicator(getResources().getText(R.string.tab_title_month),
+						getResources().getDrawable(R.drawable.ic_tab_month)).setContent(
 						new Intent(this, MonthActivity.class)));
 
 		tabHost.addTab(tabHost.newTabSpec(TAB_BLOTTER).setIndicator(
