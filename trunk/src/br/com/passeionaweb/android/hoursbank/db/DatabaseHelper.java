@@ -86,7 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		int year = calendar.get(Calendar.YEAR);
 		calendar.clear();
 		calendar.set(Calendar.MONTH, month);
-		calendar.set(Calendar.DAY_OF_MONTH, firstDay);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		calendar.set(Calendar.YEAR, year);
 
 		if (calendar.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH)
@@ -98,10 +98,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Calendar calLastDay;
 		if (calendar.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH)) {
 			calLastDay = Calendar.getInstance();
-			//calLastDay.roll(Calendar.DAY_OF_MONTH, false);
-			calLastDay.set(Calendar.HOUR, 0);
-			calLastDay.set(Calendar.MINUTE, 0);
-			calLastDay.set(Calendar.SECOND, 0);
+			calLastDay.set(Calendar.HOUR_OF_DAY,0);
+			calLastDay.clear(Calendar.MINUTE);
+			calLastDay.clear(Calendar.SECOND);
 		} else {
 			calLastDay = (Calendar) calendar.clone();
 			calLastDay.roll(Calendar.MONTH, true);
@@ -121,7 +120,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		calendar.clear();
 		calendar.set(Calendar.WEEK_OF_YEAR, week);
 		calendar.set(Calendar.YEAR, year);
-
 		Calendar calLastDay = (Calendar) calendar.clone();
 		calLastDay.roll(Calendar.WEEK_OF_YEAR, true);
 		return getCheckpointsByCalendar(context, calendar, calLastDay);
