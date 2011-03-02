@@ -98,7 +98,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Calendar calLastDay;
 		if (calendar.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH)) {
 			calLastDay = Calendar.getInstance();
-			calLastDay.roll(Calendar.DAY_OF_MONTH, false);
+			//calLastDay.roll(Calendar.DAY_OF_MONTH, false);
+			calLastDay.set(Calendar.HOUR, 0);
+			calLastDay.set(Calendar.MINUTE, 0);
+			calLastDay.set(Calendar.SECOND, 0);
 		} else {
 			calLastDay = (Calendar) calendar.clone();
 			calLastDay.roll(Calendar.MONTH, true);
