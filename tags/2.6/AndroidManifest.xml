@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="br.com.passeionaweb.android.hoursbank" android:versionName="2.6" android:versionCode="30">
+	<supports-screens android:smallScreens="true"
+		android:normalScreens="true" android:largeScreens="true"
+		android:anyDensity="true" />
+	<application android:icon="@drawable/black_clock"
+		android:label="@string/app_name" android:debuggable="false">
+		<activity android:name=".HoursBank" android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".MonthActivity" android:label="@string/app_name">
+		</activity>
+		<activity android:name=".WeekActivity" android:label="@string/app_name">
+		</activity>
+		<activity android:name=".DayActivity" android:label="@string/app_name">
+		</activity>
+		<activity android:name=".BlotterActivity" android:label="@string/app_name">
+		</activity>
+		<activity android:name=".PreferencesActivity" android:label="@string/app_name">
+		</activity>
+		<receiver android:name=".widget.CheckpointWidget">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+				<action android:name="br.com.passeionaweb.android.hoursbank.widget.CLICK" />
+			</intent-filter>
+			<meta-data android:name="android.appwidget.provider"
+				android:resource="@xml/widget_checkpoint" />
+		</receiver>
+	</application>
+	<uses-sdk android:minSdkVersion="3"></uses-sdk>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+</manifest> 
