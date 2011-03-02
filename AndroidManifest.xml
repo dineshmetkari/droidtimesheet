@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="br.com.passeionaweb.android.hoursbank" android:versionCode="28" android:versionName="2.5">
+	package="br.com.passeionaweb.android.hoursbank" android:versionName="2.6" android:versionCode="30">
 	<supports-screens android:smallScreens="true"
 		android:normalScreens="true" android:largeScreens="true"
 		android:anyDensity="true" />
