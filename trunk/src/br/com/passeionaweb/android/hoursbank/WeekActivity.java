@@ -78,7 +78,7 @@ public class WeekActivity extends CheckpointListActivity {
 
 		String strDay = (String) ((TextView) v.findViewById(R.id.txtCheckPoint)).getText();
 		Calendar day = Calendar.getInstance();
-		day.set(Calendar.DAY_OF_WEEK, Integer.valueOf(strDay.split(" ")[1].split("/")[0]));
+		day.set(Calendar.DAY_OF_MONTH, Integer.valueOf(strDay.split(" ")[1].split("/")[0]));
 		day.set(Calendar.MONTH, Integer.valueOf(strDay.split(" ")[1].split("/")[1]) - 1);
 
 		intent.putExtra("DAY", day.getTimeInMillis());
