@@ -118,9 +118,7 @@ public abstract class CheckpointListActivity extends ListActivity {
 	}
 
 	protected void deleteCheckpoint(long id) {
-		db.open();
-		db.deleteCheckpoint(id);
-		db.close();
+		chk.deleteCheckpoint(id);
 		showToastMessage(TOAST_DELETED);
 		updateWidgets();
 	}
@@ -131,18 +129,14 @@ public abstract class CheckpointListActivity extends ListActivity {
 	}
 
 	protected void insertCheckpoint(long timeInMillis) {
-		db.open();
-		db.insertCheckpoint(timeInMillis);
-		db.close();
+		chk.insertCheckpoint(timeInMillis);
 		showToastMessage(TOAST_ADDED);
 		fillData();
 		updateWidgets();
 	}
 
 	protected void editCheckpoint(long checkpoint) {
-		db.open();
-		db.editCheckpoint(editId, checkpoint);
-		db.close();
+		chk.editCheckpoint(editId, checkpoint);
 		showToastMessage(TOAST_EDITED);
 		fillData();
 		updateWidgets();
