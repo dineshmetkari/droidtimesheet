@@ -15,7 +15,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
+import br.com.passeionaweb.android.hoursbank.db.CheckpointsDatabaseHelper;
 
 public class CheckpointsView {
 
@@ -32,11 +32,11 @@ public class CheckpointsView {
 	public static final String KEY_TOTAL = "TOTAL";
 	public static final String KEY_BALANCE = "BALANCE";
 	public static final String KEY_IMAGE = "IMAGE";
-	public DatabaseHelper db; 
+	public CheckpointsDatabaseHelper db; 
 	
 	public CheckpointsView(Context context) {
 		this.context = context;
-		this.db = new DatabaseHelper(context);
+		this.db = new CheckpointsDatabaseHelper(context);
 	}
 
 	public long calculateTotalHours(Cursor cursor) {
@@ -44,11 +44,11 @@ public class CheckpointsView {
 		long now = Calendar.getInstance().getTimeInMillis();
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
-			long checkpoint = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
+			long checkpoint = cursor.getLong(cursor.getColumnIndex(CheckpointsDatabaseHelper.KEY_CHECKPOINT));
 			if ((cursor.getPosition() + 1) % 2 == 0) {
 				cursor.moveToPrevious();
 				long lastCheckpoint = cursor.getLong(cursor
-						.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
+						.getColumnIndex(CheckpointsDatabaseHelper.KEY_CHECKPOINT));
 				totalHours += checkpoint - lastCheckpoint;
 				cursor.moveToNext();
 			} else {
@@ -133,13 +133,13 @@ public class CheckpointsView {
 				boolean hasCheckpoints = false;
 				Calendar checkpoint = Calendar.getInstance();
 				checkpoint.setTimeInMillis(cursor.getLong(cursor
-						.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
+						.getColumnIndex(CheckpointsDatabaseHelper.KEY_CHECKPOINT)));
 				Calendar lastCheckpoint = (Calendar) checkpoint.clone();
 				ArrayList<Long> listCheckpoints = new ArrayList<Long>();
 				while (!cursor.isAfterLast() || hasCheckpoints) {
 					if (!cursor.isAfterLast()) {
 						checkpoint.setTimeInMillis(cursor.getLong(cursor
-								.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
+								.getColumnIndex(CheckpointsDatabaseHelper.KEY_CHECKPOINT)));
 					}
 
 					if (!cursor.isAfterLast()
@@ -249,7 +249,7 @@ public class CheckpointsView {
 		long lastTimestamp = 0;
 		SimpleDateFormat dfExcel = new SimpleDateFormat(csvExportFormat);
 		while (!cursor.isAfterLast()) {
-			long timestamp = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
+			long timestamp = cursor.getLong(cursor.getColumnIndex(CheckpointsDatabaseHelper.KEY_CHECKPOINT));
 			String timestampFormatted = (dfExcel.format(new Date(timestamp)));
 			writer.append(timestampFormatted);
 			writer.append(",");

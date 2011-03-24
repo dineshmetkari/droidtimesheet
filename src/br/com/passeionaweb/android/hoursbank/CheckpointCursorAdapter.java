@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
-import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
+import br.com.passeionaweb.android.hoursbank.db.CheckpointsDatabaseHelper;
 
 public class CheckpointCursorAdapter extends ResourceCursorAdapter {
 
@@ -38,7 +38,15 @@ public class CheckpointCursorAdapter extends ResourceCursorAdapter {
 	public void bindView(View view, Context context, Cursor cursor) {
 
 		TextView tvListText = (TextView) view.findViewById(R.id.txtCheckPoint);
-		Date dt = new Date(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT)));
+		String note = cursor.getString(cursor.getColumnIndex(CheckpointsDatabaseHelper.KEY_NOTE));
+		ImageView imgNote = (ImageView) view.findViewById(R.id.imgNote);
+		if (note != null && note.trim().length() > 0) {
+			imgNote.setVisibility(View.VISIBLE);
+		}else {
+			imgNote.setVisibility(View.GONE);
+		}
+		Date dt = new Date(cursor.getLong(cursor
+				.getColumnIndex(CheckpointsDatabaseHelper.KEY_CHECKPOINT)));
 		switch (layoutType) {
 			case BLOTTER:
 				tvListText.setText(dt.toLocaleString());
@@ -50,15 +58,10 @@ public class CheckpointCursorAdapter extends ResourceCursorAdapter {
 				tvListText.setText(new SimpleDateFormat("HH:mm:ss").format(dt));
 				((ImageView) view.findViewById(R.id.imgCheckpointInOut))
 						.setImageResource(CheckpointsView.getImageResId(cursor.getPosition() + 1));
-				break;
-			case MONTH:
-				tvListText.setText(new SimpleDateFormat("MMM dd HH:mm:ss").format(dt));
-				((ImageView) view.findViewById(R.id.imgCheckpointInOut))
-						.setImageResource(CheckpointsView.getImageResId(cursor.getPosition() + 1));
+
 				break;
 			case OVERVIEW:
 				break;
 		}
 	}
-
 }

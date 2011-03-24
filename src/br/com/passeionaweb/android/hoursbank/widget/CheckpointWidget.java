@@ -12,7 +12,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 import br.com.passeionaweb.android.hoursbank.CheckpointsView;
 import br.com.passeionaweb.android.hoursbank.R;
-import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
+import br.com.passeionaweb.android.hoursbank.db.CheckpointsDatabaseHelper;
 
 public class CheckpointWidget extends AppWidgetProvider {
 	public static final String ACTION_CLICK = "br.com.passeionaweb.android.hoursbank.widget.CLICK";
@@ -59,7 +59,7 @@ public class CheckpointWidget extends AppWidgetProvider {
 	}
 
 	private static int getDrawableId(String status) {
-		if (DatabaseHelper.STATUS_IN.equals(status)) {
+		if (CheckpointsDatabaseHelper.STATUS_IN.equals(status)) {
 			return R.drawable.red_clock;
 		} else {
 			return R.drawable.blue_clock;
@@ -78,7 +78,7 @@ public class CheckpointWidget extends AppWidgetProvider {
 
 		views.setOnClickPendingIntent(R.id.widgetImage, pendingIntent);
 
-		DatabaseHelper db = new DatabaseHelper(context);
+		CheckpointsDatabaseHelper db = new CheckpointsDatabaseHelper(context);
 		db.open();
 		int clockId = getDrawableId(db.getStatus());
 		views.setImageViewResource(R.id.widgetImage, clockId);

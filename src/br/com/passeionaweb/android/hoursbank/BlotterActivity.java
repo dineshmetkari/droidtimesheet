@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import br.com.passeionaweb.android.hoursbank.db.BackupAgent;
-import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
+import br.com.passeionaweb.android.hoursbank.db.CheckpointsDatabaseHelper;
 
 public class BlotterActivity extends CheckpointListActivity {
 
@@ -235,7 +235,7 @@ public class BlotterActivity extends CheckpointListActivity {
 
 									@Override
 									public void onClick(DialogInterface dialog, int which) {
-										DatabaseHelper db = new DatabaseHelper(getBaseContext());
+										CheckpointsDatabaseHelper db = new CheckpointsDatabaseHelper(getBaseContext());
 										db.open();
 										if (db.eraseDatabase() > 0) {
 											Toast.makeText(getBaseContext(),

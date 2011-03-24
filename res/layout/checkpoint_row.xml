@@ -7,6 +7,9 @@
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:textSize="20dp" android:padding="8dp" android:textStyle="bold">
 	</TextView>
+	<ImageView android:id="@+id/imgNote"
+			android:layout_width="20dp" android:layout_height="20dp"
+			android:src="@drawable/ic_note" android:layout_margin="8dp" android:visibility="gone" />
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="horizontal"
 		android:gravity="right" android:layout_weight="1"
@@ -21,6 +24,6 @@
 		</TextView>
 		<ImageView android:id="@+id/imgCheckpointInOut"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:src="@drawable/black_clock" />
+			android:src="@drawable/ic_checkin" />
 	</LinearLayout>
 </LinearLayout>
