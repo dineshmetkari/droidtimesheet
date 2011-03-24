@@ -32,9 +32,11 @@ public class CheckpointsView {
 	public static final String KEY_TOTAL = "TOTAL";
 	public static final String KEY_BALANCE = "BALANCE";
 	public static final String KEY_IMAGE = "IMAGE";
-
+	public DatabaseHelper db; 
+	
 	public CheckpointsView(Context context) {
 		this.context = context;
+		this.db = new DatabaseHelper(context);
 	}
 
 	public long calculateTotalHours(Cursor cursor) {
@@ -269,13 +271,24 @@ public class CheckpointsView {
 
 	public long insertCheckpoint(long checkpoint) {
 		long result;
-		DatabaseHelper db = new DatabaseHelper(context);
 		db.open();
 		result = db.insertCheckpoint(checkpoint);
 		db.close();
 		NotificationManager manager = new NotificationManager(context);
 		return result;
 
+	}
+	
+	public void deleteCheckpoint(long id) {
+		db.open();
+		db.deleteCheckpoint(id);
+		db.close();
+	}
+	
+	public void editCheckpoint(long editId, long checkpoint) {
+		db.open();
+		db.editCheckpoint(editId, checkpoint);
+		db.close();
 	}
 
 }
