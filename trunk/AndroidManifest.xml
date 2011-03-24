@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="br.com.passeionaweb.android.hoursbank" android:versionName="2.6.1" android:versionCode="31">
+	package="br.com.passeionaweb.android.hoursbank" android:versionName="2.7" android:versionCode="34">
 	<supports-screens android:smallScreens="true"
 		android:normalScreens="true" android:largeScreens="true"
 		android:anyDensity="true" />
@@ -21,6 +21,8 @@
 		<activity android:name=".BlotterActivity" android:label="@string/app_name">
 		</activity>
 		<activity android:name=".PreferencesActivity" android:label="@string/app_name">
+		</activity>
+		<activity android:name=".NoteEditor" android:label="@string/app_name" android:theme="@android:style/Theme.Translucent">
 		</activity>
 		<receiver android:name=".widget.CheckpointWidget">
 			<intent-filter>

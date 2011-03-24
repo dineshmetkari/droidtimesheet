@@ -14,20 +14,21 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
+import br.com.passeionaweb.android.hoursbank.db.CheckpointsDatabaseHelper;
 import br.com.passeionaweb.android.hoursbank.widget.CheckpointWidget;
 
 public abstract class CheckpointListActivity extends ListActivity {
 	protected static final int MENU_ADD = 10;
 	protected static final int MENU_EDIT = 11;
 	protected static final int MENU_DELETE = 12;
+	protected static final int MENU_NOTE = 13;
 	protected static final int DIALOG_ADD = 1;
 	protected static final int DIALOG_EDIT = 2;
 	protected static final int TOAST_ADDED = 1;
 	protected static final int TOAST_DELETED = 2;
 	protected static final int TOAST_EDITED = 3;
 	protected static final int TOAST_EXPORT_ERROR = 4;
-	protected DatabaseHelper db;
+	protected CheckpointsDatabaseHelper db;
 	protected CheckpointsView chk;
 	protected long editId;
 
@@ -37,7 +38,7 @@ public abstract class CheckpointListActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		db = new DatabaseHelper(this);
+		db = new CheckpointsDatabaseHelper(this);
 		setContentView(R.layout.checkpoint_list);
 		chk = new CheckpointsView(this);
 		fillData();
@@ -50,6 +51,7 @@ public abstract class CheckpointListActivity extends ListActivity {
 		menu.setHeaderIcon(R.drawable.ic_dialog_time);
 		menu.add(0, MENU_EDIT, 0, R.string.menu_edit);
 		menu.add(0, MENU_DELETE, 0, R.string.menu_delete);
+		menu.add(0, MENU_NOTE, 0, R.string.menu_note);
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 
@@ -107,6 +109,11 @@ public abstract class CheckpointListActivity extends ListActivity {
 			case MENU_DELETE:
 				deleteCheckpoint(info.id);
 				fillData();
+				break;
+			case MENU_NOTE:
+				Intent intent = new Intent(getBaseContext(), NoteEditor.class);
+				intent.putExtra(NoteEditor.EXTRA_ID, info.id);
+				startActivity(intent);
 				break;
 		}
 		return super.onContextItemSelected(item);

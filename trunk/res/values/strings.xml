@@ -49,6 +49,7 @@
     <string name="menu_erase">Erase Data</string>
     <string name="menu_previous_week">Previous Week</string>
     <string name="menu_next_week">Next Week</string>
+    <string name="menu_note">Note</string>
     <string name="dialog_erase_data">Are you sure? This will delete all checkpoints.</string>
     <string name="context_menu_title">Checkpoint</string>
     <string name="yes">Yes</string>

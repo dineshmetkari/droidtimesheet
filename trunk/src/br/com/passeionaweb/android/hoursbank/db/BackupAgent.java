@@ -35,7 +35,7 @@ public class BackupAgent {
 			cursor.moveToFirst();
 			while (!cursor.isAfterLast()) {
 				long timestamp = cursor.getLong(cursor
-						.getColumnIndex(DatabaseHelper.KEY_CHECKPOINT));
+						.getColumnIndex(CheckpointsDatabaseHelper.KEY_CHECKPOINT));
 				writer.append(String.valueOf(timestamp));
 				if (!cursor.isLast()) {
 					writer.append("\n");
@@ -52,7 +52,7 @@ public class BackupAgent {
 	}
 
 	public boolean backupData(Context context) {
-		DatabaseHelper db = new DatabaseHelper(context);
+		CheckpointsDatabaseHelper db = new CheckpointsDatabaseHelper(context);
 		db.open();
 		Cursor cursor = db.getAllCheckpoints(true);
 		boolean result = backupData(context, cursor);
@@ -74,7 +74,7 @@ public class BackupAgent {
 				}
 			}
 			if (checkpoints.size() > 0) {
-				new DatabaseHelper(context).insertCheckpoints(checkpoints
+				new CheckpointsDatabaseHelper(context).insertCheckpoints(checkpoints
 						.toArray(new Long[checkpoints.size()]), true);
 			}
 

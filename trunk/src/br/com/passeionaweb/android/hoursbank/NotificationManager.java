@@ -5,19 +5,19 @@ import java.util.Calendar;
 import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
-import br.com.passeionaweb.android.hoursbank.db.DatabaseHelper;
+import br.com.passeionaweb.android.hoursbank.db.CheckpointsDatabaseHelper;
 
 public class NotificationManager {
 
 	private final android.app.NotificationManager manager;
 	private final Context context;
-	private final DatabaseHelper db;
+	private final CheckpointsDatabaseHelper db;
 
 	public NotificationManager(Context context) {
 		this.context = context;
 		this.manager = (android.app.NotificationManager) context
 				.getSystemService(Service.NOTIFICATION_SERVICE);
-		this.db = new DatabaseHelper(context);
+		this.db = new CheckpointsDatabaseHelper(context);
 	}
 
 	public void scheduleEndDayNotification() {

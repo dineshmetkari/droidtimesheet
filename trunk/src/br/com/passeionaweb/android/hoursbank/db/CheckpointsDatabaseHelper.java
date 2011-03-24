@@ -5,20 +5,23 @@ import java.util.Calendar;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import br.com.passeionaweb.android.hoursbank.PreferencesActivity;
 
 public class CheckpointsDatabaseHelper extends SQLiteOpenHelper {
 
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 	private static final String DATABASE_NAME = "droidtimesheetdata";
 	private static final String TABLE_NAME = "CheckPoints";
 	public static final String KEY_ID = "_id";
 	public static final String KEY_CHECKPOINT = "checkpoint";
+	public static final String KEY_NOTE = "note";
 	private static final String CREATE_SQL = "create table if not exists " + TABLE_NAME + " ("
 			+ KEY_ID + " integer primary key autoincrement ," + KEY_CHECKPOINT
-			+ " datetime not null)";
+			+ " datetime not null," + KEY_NOTE + " text)";
+
 	public static final String STATUS_IN = "STATUS_IN";
 	public static final String STATUS_OUT = "STATUS_OUT";
 
@@ -47,7 +50,13 @@ public class CheckpointsDatabaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		if (oldVersion == 1) {
+			try {
+				db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD " + KEY_NOTE + " text");
+			} catch (SQLException e) {
 
+			}
+		}
 	}
 
 	public Cursor getCheckpointsByDay(Calendar day) {
@@ -62,15 +71,15 @@ public class CheckpointsDatabaseHelper extends SQLiteOpenHelper {
 		endDate.set(Calendar.MINUTE, 59);
 		endDate.set(Calendar.SECOND, 59);
 
-		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_CHECKPOINT
-				+ " >= " + startDate.getTimeInMillis() + " AND " + KEY_CHECKPOINT + " <= "
-				+ endDate.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
+		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT, KEY_NOTE },
+				KEY_CHECKPOINT + " >= " + startDate.getTimeInMillis() + " AND " + KEY_CHECKPOINT
+						+ " <= " + endDate.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
 
 	}
 
 	public long getCheckpointById(long id) {
-		Cursor cursor = db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_ID
-				+ " = " + id, null, null, null, null);
+		Cursor cursor = db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT, KEY_NOTE },
+				KEY_ID + " = " + id, null, null, null, null);
 		if (cursor.getCount() > 0) {
 			cursor.moveToFirst();
 			return cursor.getLong(cursor.getColumnIndex(KEY_CHECKPOINT));
@@ -98,7 +107,7 @@ public class CheckpointsDatabaseHelper extends SQLiteOpenHelper {
 		Calendar calLastDay;
 		if (calendar.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH)) {
 			calLastDay = Calendar.getInstance();
-			calLastDay.set(Calendar.HOUR_OF_DAY,0);
+			calLastDay.set(Calendar.HOUR_OF_DAY, 0);
 			calLastDay.clear(Calendar.MINUTE);
 			calLastDay.clear(Calendar.SECOND);
 		} else {
@@ -109,9 +118,9 @@ public class CheckpointsDatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public Cursor getCheckpointsByCalendar(Context context, Calendar calFrom, Calendar calTo) {
-		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, KEY_CHECKPOINT
-				+ " >= " + calFrom.getTimeInMillis() + " AND " + KEY_CHECKPOINT + " < "
-				+ calTo.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
+		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT, KEY_NOTE },
+				KEY_CHECKPOINT + " >= " + calFrom.getTimeInMillis() + " AND " + KEY_CHECKPOINT
+						+ " < " + calTo.getTimeInMillis(), null, null, null, KEY_CHECKPOINT);
 	}
 
 	public Cursor getWeekCheckpoints(Context context, int week) {
@@ -130,8 +139,8 @@ public class CheckpointsDatabaseHelper extends SQLiteOpenHelper {
 		if (asc) {
 			orderBy = "";
 		}
-		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT }, null, null, null,
-				null, KEY_CHECKPOINT + orderBy);
+		return db.query(TABLE_NAME, new String[] { KEY_ID, KEY_CHECKPOINT, KEY_NOTE }, null, null,
+				null, null, KEY_CHECKPOINT + orderBy);
 	}
 
 	public long removeSeconds(long checkpoint) {
@@ -206,6 +215,29 @@ public class CheckpointsDatabaseHelper extends SQLiteOpenHelper {
 	public boolean deleteCheckpoints(long start, long end) {
 		return db.delete(TABLE_NAME, KEY_CHECKPOINT + " >= " + start + KEY_CHECKPOINT + " <= "
 				+ end, null) > 0;
+	}
+
+	public String getNoteById(long id) {
+		Cursor cursor = db.query(TABLE_NAME, new String[] { KEY_NOTE }, KEY_ID + " = " + id, null,
+				null, null, null);
+		try {
+			if (cursor.getCount() > 0) {
+				cursor.moveToFirst();
+				return cursor.getString(cursor.getColumnIndex(KEY_NOTE));
+			} else {
+				return "";
+			}
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
+		}
+	}
+	
+	public int updateNote(long id, String note) {
+		ContentValues values = new ContentValues();
+		values.put(KEY_NOTE, note);
+		return db.update(TABLE_NAME, values, KEY_ID + " = " + id, null);
 	}
 
 }
