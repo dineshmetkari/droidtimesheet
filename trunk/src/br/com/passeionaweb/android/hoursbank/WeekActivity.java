@@ -59,6 +59,7 @@ public class WeekActivity extends CheckpointListActivity {
 			((ImageView) findViewById(R.id.imgHoursBalance))
 					.setImageResource(R.drawable.ic_btn_round_minus);
 		}
+		cursor.close();
 		db.close();
 	}
 
