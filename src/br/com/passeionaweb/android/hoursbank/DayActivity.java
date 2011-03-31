@@ -100,6 +100,7 @@ public class DayActivity extends CheckpointListActivity {
 		}
 		findViewById(R.id.layoutBalance).setVisibility(View.VISIBLE);
 		((TextView) findViewById(R.id.lblHoursBalance)).setText(chk.formatTotalHours(getBalance()));
+		stopManagingCursor(cursor);
 		db.close();
 	}
 

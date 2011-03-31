@@ -47,7 +47,7 @@ public class BlotterActivity extends CheckpointListActivity {
 		String totalHours = chk.formatTotalHours(sum);
 
 		((TextView) findViewById(R.id.lblTotalHours)).setText(totalHours);
-
+		stopManagingCursor(cursor);
 		db.close();
 	}
 
