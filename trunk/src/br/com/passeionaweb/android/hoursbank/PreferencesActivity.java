@@ -2,12 +2,15 @@ package br.com.passeionaweb.android.hoursbank;
 
 import java.util.Calendar;
 
+import br.com.passeionaweb.android.hoursbank.db.WrapBackupManager;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 public class PreferencesActivity extends PreferenceActivity {
@@ -74,6 +77,12 @@ public class PreferencesActivity extends PreferenceActivity {
 					Toast.LENGTH_LONG);
 			t.show();
 		}
+	}
+	
+	@Override
+	protected void onPause() {
+	    new WrapBackupManager(getApplicationContext()).dataChanged();
+	    super.onPause();
 	}
 
 }
