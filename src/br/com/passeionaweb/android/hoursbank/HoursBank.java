@@ -10,13 +10,13 @@ import android.widget.TabHost;
 import br.com.passeionaweb.android.billing.util.UpgradeChecker;
 
 public class HoursBank extends TabActivity {
-    private static final String TAB_BLOTTER     = "blotter";
-    private static final String TAB_DAY         = "day";
-    private static final String TAB_WEEK        = "week";
-    private static final String TAB_MONTH       = "month";
+    private static final String TAB_BLOTTER   = "blotter";
+    private static final String TAB_DAY       = "day";
+    private static final String TAB_WEEK      = "week";
+    private static final String TAB_MONTH     = "month";
 
-    public static final int     MENU_SETTINGS   = 0;
-    public static final int     MENU_EXPORT     = 1;
+    public static final int     MENU_SETTINGS = 0;
+    public static final int     MENU_EXPORT   = 1;
 
     public static Dialog        upgradeDialog;
 
@@ -60,7 +60,7 @@ public class HoursBank extends TabActivity {
             case UpgradeChecker.DIALOG_UPGRADE:
                 return UpgradeChecker.getUpgradeDialog(this);
             default:
-                return  super.onCreateDialog(id);
+                return super.onCreateDialog(id);
         }
 
     }

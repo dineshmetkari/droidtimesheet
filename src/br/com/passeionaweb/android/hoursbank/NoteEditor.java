@@ -8,52 +8,52 @@ import br.com.passeionaweb.android.hoursbank.db.CheckpointsDatabaseHelper;
 
 public class NoteEditor extends Activity {
 
-	public static final String EXTRA_ID = "_id";
+    public static final String        EXTRA_ID = "_id";
 
-	private long id = 0L;
-	private CheckpointsDatabaseHelper db;
-	private TextView txtNote;
+    private long                      id       = 0L;
+    private CheckpointsDatabaseHelper db;
+    private TextView                  txtNote;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.edit_note);
-		Intent intent = getIntent();
-		db = new CheckpointsDatabaseHelper(getBaseContext());
-		if (intent.hasExtra(EXTRA_ID)) {
-			id = intent.getExtras().getLong(EXTRA_ID);
-		} else {
-			finish();
-		}
-		txtNote = (TextView) findViewById(R.id.note);
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.edit_note);
+        Intent intent = getIntent();
+        db = new CheckpointsDatabaseHelper(getBaseContext());
+        if (intent.hasExtra(EXTRA_ID)) {
+            id = intent.getExtras().getLong(EXTRA_ID);
+        } else {
+            finish();
+        }
+        txtNote = (TextView) findViewById(R.id.note);
+    }
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		loadNote();
-	}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadNote();
+    }
 
-	@Override
-	protected void onPause() {
-		db.open();
-		db.updateNote(id, txtNote.getText().toString());
-		db.close();
-		super.onPause();
-	}
+    @Override
+    protected void onPause() {
+        db.open();
+        db.updateNote(id, txtNote.getText().toString());
+        db.close();
+        super.onPause();
+    }
 
-	@Override
-	protected void onStop() {
-		db.open();
-		db.updateNote(id, txtNote.getText().toString());
-		db.close();
-		super.onStop();
-	}
+    @Override
+    protected void onStop() {
+        db.open();
+        db.updateNote(id, txtNote.getText().toString());
+        db.close();
+        super.onStop();
+    }
 
-	private void loadNote() {
-		db.open();
-		txtNote.setText(db.getNoteById(id));
-		db.close();
+    private void loadNote() {
+        db.open();
+        txtNote.setText(db.getNoteById(id));
+        db.close();
 
-	}
+    }
 }
