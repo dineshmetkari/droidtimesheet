@@ -17,7 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import br.com.passeionaweb.android.hoursbank.db.BackupAgent;
+import br.com.passeionaweb.android.hoursbank.db.BackupHelper;
 import br.com.passeionaweb.android.hoursbank.db.CheckpointsDatabaseHelper;
 
 public class BlotterActivity extends CheckpointListActivity {
@@ -186,8 +186,8 @@ public class BlotterActivity extends CheckpointListActivity {
 		String message;
 		switch (item.getItemId()) {
 			case MENU_BACKUP:
-				BackupAgent bkpAgent = new BackupAgent();
-				boolean bkpDone = bkpAgent.backupData(getBaseContext());
+				BackupHelper bkpAgent = new BackupHelper(getApplicationContext());
+				boolean bkpDone = bkpAgent.backupData();
 				if (bkpDone) {
 					message = getString(R.string.message_backup_done)
 							+ Environment.getExternalStorageDirectory() + "\\"
@@ -199,7 +199,7 @@ public class BlotterActivity extends CheckpointListActivity {
 				Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 				break;
 			case MENU_RESTORE:
-				if (new BackupAgent().restoreData(getBaseContext())) {
+				if (new BackupHelper(getApplicationContext()).restoreData()) {
 					message = getString(R.string.message_restore_done);
 				} else {
 					message = getString(R.string.message_restore_error);
