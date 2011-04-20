@@ -307,8 +307,6 @@ public class CheckpointsView {
         db.close();
         minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(context, dayCal.get(Calendar.DAY_OF_WEEK)));
         result = now + minHours - hoursDone;
-        result = now + 1000 * 10;
-
         return result;
     }
 
