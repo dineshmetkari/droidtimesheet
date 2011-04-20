@@ -16,6 +16,7 @@ import android.database.Cursor;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import br.com.passeionaweb.android.hoursbank.db.CheckpointsDatabaseHelper;
+import br.com.passeionaweb.android.hoursbank.notification.NotificationManager;
 
 public class CheckpointsView {
 
@@ -83,6 +84,10 @@ public class CheckpointsView {
         return totalHours;
     }
 
+    public String formatTotalHours(Calendar totalHours) {
+        return totalHours.get(Calendar.HOUR_OF_DAY) + ":" + totalHours.get(Calendar.MINUTE);
+    }
+
     public String formatTotalHours(long totalHours) {
         if (totalHours < 0) {
             totalHours *= -1;
@@ -103,6 +108,7 @@ public class CheckpointsView {
             sMinutes = String.valueOf(minutes);
         }
         return sHours + ":" + sMinutes;
+
     }
 
     public long unformatTotalHours(String totalHours) {
@@ -266,6 +272,7 @@ public class CheckpointsView {
         result = db.insertCheckpoint(checkpoint);
         db.close();
         NotificationManager manager = new NotificationManager(context);
+        manager.scheduleEndDayNotification();
         return result;
 
     }
@@ -280,6 +287,29 @@ public class CheckpointsView {
         db.open();
         db.editCheckpoint(editId, checkpoint);
         db.close();
+    }
+
+    public long calculateTimeToGo() {
+        return calculateTimeToGo(System.currentTimeMillis());
+    }
+
+    public long calculateTimeToGo(long day) {
+        Calendar dayCal = Calendar.getInstance();
+        dayCal.setTimeInMillis(day);
+        long result = 0;
+        long now = 0;
+        long hoursDone = 0;
+        long minHours = 0;
+        now = System.currentTimeMillis();
+        CheckpointsView chk = new CheckpointsView(context);
+        db.open();
+        hoursDone = chk.calculateTotalHours(db.getCheckpointsByDay(dayCal));
+        db.close();
+        minHours = chk.unformatTotalHours(PreferencesActivity.getHoursPrefByDay(context, dayCal.get(Calendar.DAY_OF_WEEK)));
+        result = now + minHours - hoursDone;
+        result = now + 1000 * 10;
+
+        return result;
     }
 
 }

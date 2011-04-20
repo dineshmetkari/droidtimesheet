@@ -78,6 +78,9 @@
 	<string name="prefs_lunch_autoround_off">Não arredondar nada</string>
 	<string name="prefs_lunch_autoround_time">Arredondar para</string>
 	<string name="prefs_time_to_round">Quanto tempo de almoço você pode tirar?</string>
+	<string name="label_time_to_go">Hora de Ir:</string>
+	<string name="notification_time_to_go">Ótimas notícias! Você já pode ir para casa!</string>
+	<string name="notification_title_time_to_go">Hora de Ir</string>
 	<string-array name="months">
     	<item>Janeiro</item>
 		<item>Fevereiro</item>

@@ -2,14 +2,18 @@ package br.com.passeionaweb.android.hoursbank;
 
 import java.util.Calendar;
 
+import br.com.passeionaweb.android.hoursbank.db.CheckpointsDatabaseHelper;
+
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.database.Cursor;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -97,6 +101,19 @@ public class DayActivity extends CheckpointListActivity {
         findViewById(R.id.layoutBalance).setVisibility(View.VISIBLE);
         ((TextView) findViewById(R.id.lblHoursBalance)).setText(chk.formatTotalHours(getBalance()));
         stopManagingCursor(cursor);
+        if (!areHoursByDayDone() && !getIntent().hasExtra("DAY") && db.getStatus().equals(CheckpointsDatabaseHelper.STATUS_IN)) {
+            long timetogo = System.currentTimeMillis() + minHours - hoursDone;
+            Calendar calTimetogo = Calendar.getInstance();
+            calTimetogo.setTimeInMillis(timetogo);
+            if (timetogo > 0) {
+                ((LinearLayout) findViewById(R.id.layoutTimeToGo)).setVisibility(View.VISIBLE);
+                ((TextView) findViewById(R.id.lblTimeToGo)).setText(chk.formatTotalHours(calTimetogo));
+            } else {
+                ((LinearLayout) findViewById(R.id.layoutTimeToGo)).setVisibility(View.GONE);
+            }
+        } else {
+            ((LinearLayout) findViewById(R.id.layoutTimeToGo)).setVisibility(View.GONE);
+        }
         db.close();
     }
 
