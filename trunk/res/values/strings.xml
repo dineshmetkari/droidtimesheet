@@ -78,6 +78,9 @@
 	<string name="prefs_lunch_autoround_off">Won\'t round the lunch time</string>
 	<string name="prefs_lunch_autoround_time">Round to?</string>
 	<string name="prefs_time_to_round">How many time of lunch can you take?</string>
+	<string name="label_time_to_go">Time to go:</string>
+	<string name="notification_time_to_go">Great news! You can go home now!</string>
+	<string name="notification_title_time_to_go">Time to go</string>
     <string-array name="months">
     	<item>January</item>
 		<item>February</item>

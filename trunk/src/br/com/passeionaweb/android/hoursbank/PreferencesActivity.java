@@ -2,33 +2,37 @@ package br.com.passeionaweb.android.hoursbank;
 
 import java.util.Calendar;
 
-import br.com.passeionaweb.android.hoursbank.db.WrapBackupManager;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
+import br.com.passeionaweb.android.hoursbank.db.WrapBackupManager;
 
 public class PreferencesActivity extends PreferenceActivity {
 
-    public static final String KEY_FIRST_DAY           = "first_day";
-    public static final String KEY_MIN_LUNCH           = "min_lunch";
-    public static final String KEY_HOURS_MONDAY        = "hours_monday";
-    public static final String KEY_HOURS_TUESDAY       = "hours_tuesday";
-    public static final String KEY_HOURS_WEDNESDAY     = "hours_wednesday";
-    public static final String KEY_HOURS_THURSDAY      = "hours_thursday";
-    public static final String KEY_HOURS_FRIDAY        = "hours_friday";
-    public static final String KEY_HOURS_SATURDAY      = "hours_saturday";
-    public static final String KEY_HOURS_SUNDAY        = "hours_sunday";
-    public static final String KEY_NOFICIATION_END_DAY = "notification_end_day";
+    public static final String KEY_FIRST_DAY             = "first_day";
+    public static final String KEY_MIN_LUNCH             = "min_lunch";
+    public static final String KEY_HOURS_MONDAY          = "hours_monday";
+    public static final String KEY_HOURS_TUESDAY         = "hours_tuesday";
+    public static final String KEY_HOURS_WEDNESDAY       = "hours_wednesday";
+    public static final String KEY_HOURS_THURSDAY        = "hours_thursday";
+    public static final String KEY_HOURS_FRIDAY          = "hours_friday";
+    public static final String KEY_HOURS_SATURDAY        = "hours_saturday";
+    public static final String KEY_HOURS_SUNDAY          = "hours_sunday";
+    public static final String KEY_NOTIFICATIONS_ENABLED = "notification_enabled";
+    public static final String KEY_NOTIFICATION_END_DAY  = "notification_end_day";
 
     public static boolean getNotificationEndDay(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(KEY_NOFICIATION_END_DAY, true);
+        return prefs.getBoolean(KEY_NOTIFICATION_END_DAY, true);
+    }
+
+    public static boolean isNotificationSystemEnabled(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(KEY_NOTIFICATIONS_ENABLED, true);
     }
 
     public static int getFirstDayOfMonth(Context context) {
