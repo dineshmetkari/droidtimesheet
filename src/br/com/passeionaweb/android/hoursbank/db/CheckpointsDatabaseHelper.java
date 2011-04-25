@@ -166,12 +166,6 @@ public class CheckpointsDatabaseHelper extends SQLiteOpenHelper {
         return db.update(TABLE_NAME, values, KEY_ID + " = " + id, null);
     }
 
-    public int updateCheckpoint(long id, long checkpoint) {
-        ContentValues values = new ContentValues();
-        values.put(KEY_CHECKPOINT, checkpoint);
-        return db.update(TABLE_NAME, values, KEY_ID + " = " + id, null);
-    }
-
     public String getStatus() {
         int todayCount = getCheckpointsByDay(Calendar.getInstance()).getCount();
         if (todayCount % 2 == 0) {

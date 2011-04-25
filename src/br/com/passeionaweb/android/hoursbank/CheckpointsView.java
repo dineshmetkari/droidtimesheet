@@ -281,12 +281,16 @@ public class CheckpointsView {
         db.open();
         db.deleteCheckpoint(id);
         db.close();
+        NotificationManager manager = new NotificationManager(context);
+        manager.scheduleEndDayNotification();
     }
 
     public void editCheckpoint(long editId, long checkpoint) {
         db.open();
         db.editCheckpoint(editId, checkpoint);
         db.close();
+        NotificationManager manager = new NotificationManager(context);
+        manager.scheduleEndDayNotification();
     }
 
     public long calculateTimeToGo() {
