@@ -85,7 +85,9 @@ public class CheckpointsView {
     }
 
     public String formatTotalHours(Calendar totalHours) {
-        return totalHours.get(Calendar.HOUR_OF_DAY) + ":" + totalHours.get(Calendar.MINUTE);
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        Date dt = new Date(totalHours.getTimeInMillis());
+        return formatter.format(dt);
     }
 
     public String formatTotalHours(long totalHours) {
