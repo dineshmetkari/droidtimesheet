@@ -5,6 +5,7 @@ import java.util.Calendar;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -87,7 +88,7 @@ public class PreferencesActivity extends PreferenceActivity {
         try {
             WrapBackupManager.checkAvailable();
             new WrapBackupManager(getApplicationContext()).dataChanged();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             // devices doesn't suppport backup
             // TODO: log the error
         }
