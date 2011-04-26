@@ -88,7 +88,7 @@ public class PreferencesActivity extends PreferenceActivity {
         try {
             WrapBackupManager.checkAvailable();
             new WrapBackupManager(getApplicationContext()).dataChanged();
-        } catch (Throwable e) {
+        } catch (Exception e) {
             // devices doesn't suppport backup
             // TODO: log the error
         }
