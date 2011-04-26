@@ -84,7 +84,13 @@ public class PreferencesActivity extends PreferenceActivity {
 
     @Override
     protected void onPause() {
-        new WrapBackupManager(getApplicationContext()).dataChanged();
+        try {
+            WrapBackupManager.checkAvailable();
+            new WrapBackupManager(getApplicationContext()).dataChanged();
+        } catch (Exception e) {
+            // devices doesn't suppport backup
+            // TODO: log the error
+        }
         super.onPause();
     }
 

@@ -1,12 +1,9 @@
 package br.com.passeionaweb.android.hoursbank.db;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -15,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 
-import android.app.backup.BackupManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Environment;

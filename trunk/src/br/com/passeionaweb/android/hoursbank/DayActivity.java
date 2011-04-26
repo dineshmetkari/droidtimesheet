@@ -2,13 +2,10 @@ package br.com.passeionaweb.android.hoursbank;
 
 import java.util.Calendar;
 
-import br.com.passeionaweb.android.hoursbank.db.CheckpointsDatabaseHelper;
-
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.database.Cursor;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -17,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import br.com.passeionaweb.android.hoursbank.db.CheckpointsDatabaseHelper;
 
 public class DayActivity extends CheckpointListActivity {
 

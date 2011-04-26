@@ -2,7 +2,6 @@ package br.com.passeionaweb.android.hoursbank.db;
 
 import android.app.backup.BackupManager;
 import android.content.Context;
-import android.util.Log;
 
 public class WrapBackupManager {
     private BackupManager wrappedInstance;
