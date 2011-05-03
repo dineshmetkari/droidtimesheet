@@ -162,7 +162,7 @@ public class CheckpointsDatabaseHelper extends SQLiteOpenHelper {
 
     public int editCheckpoint(long id, long timestamp) {
         ContentValues values = new ContentValues();
-        values.put(KEY_CHECKPOINT, timestamp);
+        values.put(KEY_CHECKPOINT, removeSeconds(timestamp));
         return db.update(TABLE_NAME, values, KEY_ID + " = " + id, null);
     }
 
