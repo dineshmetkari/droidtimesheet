@@ -11,7 +11,7 @@ public class WrapBackupManager {
     static {
         try {
             Class.forName("android.app.backup.BackupManager");
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
