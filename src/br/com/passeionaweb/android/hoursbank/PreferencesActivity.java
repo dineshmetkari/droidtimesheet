@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
-import br.com.passeionaweb.android.hoursbank.db.WrapBackupManager;
 
 public class PreferencesActivity extends PreferenceActivity {
 
@@ -80,17 +79,5 @@ public class PreferencesActivity extends PreferenceActivity {
             Toast t = Toast.makeText(this, getResources().getString(R.string.prefs_error), Toast.LENGTH_LONG);
             t.show();
         }
-    }
-
-    @Override
-    protected void onPause() {
-        try {
-            WrapBackupManager.checkAvailable();
-            new WrapBackupManager(getApplicationContext()).dataChanged();
-        } catch (Throwable e) {
-            // devices doesn't suppport backup
-            // TODO: log the error
-        }
-        super.onPause();
     }
 }
