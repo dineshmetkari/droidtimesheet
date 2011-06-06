@@ -126,14 +126,4 @@ public class BackupHelper {
         File backupFolder = new File(root.getAbsolutePath() + "/" + context.getString(R.string.app_name));
         return backupFolder;
     }
-
-    private void backupToCloud() {
-        try {
-            WrapBackupManager.checkAvailable();
-            new WrapBackupManager(context).dataChanged();
-        } catch (Throwable e) {
-            // Not available...do nothing
-        }
-    }
-
 }
