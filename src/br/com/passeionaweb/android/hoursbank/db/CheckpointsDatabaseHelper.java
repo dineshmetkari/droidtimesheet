@@ -95,9 +95,13 @@ public class CheckpointsDatabaseHelper extends SQLiteOpenHelper {
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         calendar.set(Calendar.YEAR, year);
 
-        if (calendar.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH) && calendar.get(Calendar.DAY_OF_MONTH) < firstDay) {
+        
+        
+        if (calendar.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH) && Calendar.getInstance().get(Calendar.DAY_OF_MONTH) < firstDay) {
             calendar.roll(Calendar.MONTH, false);
-        }
+        }/*else if (calendar.get(Calendar.MONTH) > Calendar.getInstance().get(Calendar.MONTH)) {
+            calendar.roll(Calendar.MONTH, false);
+        }*/
         calendar.set(Calendar.DAY_OF_MONTH, firstDay);
 
         Calendar calLastDay;

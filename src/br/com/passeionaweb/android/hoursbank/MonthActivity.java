@@ -4,9 +4,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -27,7 +25,8 @@ import android.widget.TimePicker;
 public class MonthActivity extends CheckpointListActivity {
     private Dialog          addDialog;
     private int             month;
-    public static final int MENU_SET_MONTH   = 20;
+    public static final int MENU_PREVIOUS_MONTH   = 20;
+    public static final int MENU_NEXT_MONTH   = 30;
     public static final int DIALOG_SET_MONTH = 10;
 
     protected void fillData() {
@@ -102,8 +101,6 @@ public class MonthActivity extends CheckpointListActivity {
         switch (id) {
             case DIALOG_ADD:
                 return createAddDialog();
-            case DIALOG_SET_MONTH:
-                return createSetMonthDialog();
             default:
                 return super.onCreateDialog(id);
 
@@ -136,36 +133,37 @@ public class MonthActivity extends CheckpointListActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(Menu.NONE, MENU_PREVIOUS_MONTH, Menu.NONE, R.string.menu_previous_month).setIcon(R.drawable.ic_menu_back);
+        menu.add(Menu.NONE, MENU_NEXT_MONTH, Menu.NONE, R.string.menu_next_month).setIcon(R.drawable.ic_menu_foward);
         menu.add(Menu.NONE, MENU_ADD, Menu.NONE, R.string.menu_add_checkpoint).setIcon(android.R.drawable.ic_menu_add);
-        menu.add(Menu.NONE, MENU_SET_MONTH, Menu.NONE, R.string.menu_set_month).setIcon(android.R.drawable.ic_menu_month);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         switch (item.getItemId()) {
-            case MENU_SET_MONTH:
-                showDialog(DIALOG_SET_MONTH);
+            case MENU_PREVIOUS_MONTH:
+                setMonth(month - 1);
+                break;
+            case MENU_NEXT_MONTH:
+                setMonth(month + 1);
                 break;
         }
+
         return super.onMenuItemSelected(featureId, item);
     }
 
     private void setMonth(int month) {
+        if(month >= 12) {
+            month = 0;
+        }else if(month < 0) {
+            month = 11;
+        }
+        
         this.month = month;
         fillData();
     }
-
-    protected Dialog createSetMonthDialog() {
-        return new AlertDialog.Builder(this).setItems(R.array.months, new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                setMonth(which);
-            }
-        }).create();
-
-    }
+    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
