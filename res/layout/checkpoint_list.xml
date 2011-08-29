@@ -15,7 +15,7 @@
 	</LinearLayout>
 	<LinearLayout android:id="@+id/layoutContainer"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:orientation="horizontal">
+		android:orientation="horizontal" android:background="@drawable/bg_layout_border_top" android:paddingLeft="8dp" android:paddingRight="8dp">
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:text="@string/total_hours"
 			android:gravity="left" android:textSize="20dp" />
@@ -26,7 +26,7 @@
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:textSize="32dp" android:text="00:00"></TextView>
 	</LinearLayout>
-	<LinearLayout android:id="@+id/layoutBalance"
+	<LinearLayout android:id="@+id/layoutBalance" android:paddingLeft="8dp" android:paddingRight="8dp"
 		android:visibility="gone" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="horizontal">
 		<TextView android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:textSize="32dp" android:text="00:00"></TextView>
 	</LinearLayout>
-	<LinearLayout android:id="@+id/layoutTimeToGo"
+	<LinearLayout android:id="@+id/layoutTimeToGo" android:paddingLeft="8dp" android:paddingRight="8dp"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:orientation="horizontal" android:visibility="gone">
 		<TextView android:layout_width="wrap_content"
