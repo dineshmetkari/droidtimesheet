@@ -109,7 +109,7 @@ public class WeekActivity extends CheckpointListActivity {
             Toast.makeText(this, R.string.message_first_week, Toast.LENGTH_SHORT).show();
         } else if (week > Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)) {
             Toast.makeText(this, R.string.message_current_week, Toast.LENGTH_SHORT).show();
-            week = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
+            week = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR); 
         }
         this.week = week;
         fillData();

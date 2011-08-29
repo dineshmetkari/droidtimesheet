@@ -36,7 +36,8 @@
     <string name="menu_settings">Preferences</string>
     <string name="menu_export">Export to CSV</string>
     <string name="menu_add_checkpoint">Checkpoint</string>
-    <string name="menu_set_month">Set Month</string>
+    <string name="menu_previous_month">Previous Month</string>
+    <string name="menu_next_month">Next Month</string>
     <string name="dialog_add_checkpoint_title">Select the time</string>
     <string name="dialog_add_checkpoint_title2">Select Date and Time</string>
     <string name="button_ok">OK</string>
@@ -81,18 +82,4 @@
 	<string name="label_time_to_go">Time to go:</string>
 	<string name="notification_time_to_go">Great news! You can go home now!</string>
 	<string name="notification_title_time_to_go">Time to go</string>
-    <string-array name="months">
-    	<item>January</item>
-		<item>February</item>
-		<item>March</item>
-		<item>April</item>
-		<item>May</item>
-		<item>June</item>
-		<item>July</item>
-		<item>August</item>
-		<item>September</item>
-		<item>October</item>
-		<item>November</item>
-		<item>December</item>
-    </string-array>
 </resources>
