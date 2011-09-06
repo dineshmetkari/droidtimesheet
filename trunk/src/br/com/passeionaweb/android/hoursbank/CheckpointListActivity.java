@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import br.com.passeionaweb.android.billing.util.MenuSupport;
+import br.com.passeionaweb.android.billing.util.UpgradeChecker;
 import br.com.passeionaweb.android.hoursbank.db.CheckpointsDatabaseHelper;
 import br.com.passeionaweb.android.hoursbank.widget.CheckpointWidget;
 
@@ -54,7 +57,18 @@ public abstract class CheckpointListActivity extends ListActivity {
         menu.add(0, MENU_NOTE, 0, R.string.menu_note);
         super.onCreateContextMenu(menu, v, menuInfo);
     }
+    
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case UpgradeChecker.DIALOG_UPGRADE:
+                return UpgradeChecker.getUpgradeDialog(this);
+            default:
+                return super.onCreateDialog(id);
+        }
 
+    }
+    
     @Override
     protected void onResume() {
         fillData();
@@ -72,8 +86,11 @@ public abstract class CheckpointListActivity extends ListActivity {
             case MENU_ADD:
                 showDialog(DIALOG_ADD);
                 break;
-            case HoursBank.MENU_EXPORT:
+            case BlotterActivity.MENU_EXPORT:
                 export();
+                break;
+            case MenuSupport.MENU_SUPPORT:
+                MenuSupport.showSupport(this);
                 break;
         }
         return super.onMenuItemSelected(featureId, item);

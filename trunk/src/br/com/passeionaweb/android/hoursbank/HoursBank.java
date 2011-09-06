@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.Window;
 import android.widget.TabHost;
+import br.com.passeionaweb.android.billing.util.MenuSupport;
 import br.com.passeionaweb.android.billing.util.UpgradeChecker;
 import br.com.passeionaweb.android.hoursbank.design.TabHelper;
 
@@ -18,7 +19,7 @@ public class HoursBank extends TabActivity {
     private static final String TAB_MONTH     = "month";
 
     public static final int     MENU_SETTINGS = 0;
-    public static final int     MENU_EXPORT   = 1;
+    public static final int     MENU_SUPPORT = 1;
 
     public static Dialog        upgradeDialog;
 
@@ -37,10 +38,11 @@ public class HoursBank extends TabActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(Menu.NONE, MENU_EXPORT, Menu.NONE, R.string.menu_export).setIcon(android.R.drawable.ic_menu_share);
         menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, R.string.menu_settings).setIcon(android.R.drawable.ic_menu_preferences);
+        MenuSupport.addSupportMenu(menu);
         return super.onCreateOptionsMenu(menu);
     }
+    
 
     private void setupTabs() {
         TabHost tabHost = getTabHost();

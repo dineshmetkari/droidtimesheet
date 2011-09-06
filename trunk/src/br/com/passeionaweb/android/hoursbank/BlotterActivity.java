@@ -27,6 +27,7 @@ public class BlotterActivity extends CheckpointListActivity {
     private static final int MENU_BACKUP       = 20;
     private static final int MENU_RESTORE      = 21;
     private static final int MENU_ERASE        = 22;
+    public static final int MENU_EXPORT        = 23;
     private static final int DIALOG_ERASE_DATA = 20;
 
     protected void fillData() {
@@ -155,6 +156,7 @@ public class BlotterActivity extends CheckpointListActivity {
         menu.add(Menu.NONE, MENU_BACKUP, Menu.NONE, R.string.menu_backup).setIcon(android.R.drawable.ic_menu_save);
         menu.add(Menu.NONE, MENU_RESTORE, Menu.NONE, R.string.menu_restore).setIcon(android.R.drawable.ic_menu_revert);
         menu.add(Menu.NONE, MENU_ERASE, Menu.NONE, R.string.menu_erase).setIcon(android.R.drawable.ic_menu_delete);
+        menu.add(Menu.NONE, MENU_EXPORT, Menu.NONE, R.string.menu_export).setIcon(android.R.drawable.ic_menu_share);
         return super.onCreateOptionsMenu(menu);
     }
 
