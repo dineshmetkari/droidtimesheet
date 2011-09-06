@@ -30,6 +30,7 @@ public class DayActivity extends CheckpointListActivity {
                                                                                   Calendar cal = (Calendar) day.clone();
                                                                                   cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                                                                   cal.set(Calendar.MINUTE, minute);
+                                                                                  cal.clear(Calendar.SECOND);
                                                                                   editCheckpoint(cal.getTimeInMillis());
                                                                               }
                                                                           };
