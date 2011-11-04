@@ -30,11 +30,4 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>onUpgradeLib_src</name>
-			<type>2</type>
-			<locationURI>_android_onUpgradeLib_4ff46a08/src</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

@@ -28,6 +28,9 @@
 			android:defaultValue="1" android:title="@string/pref_first_day"
 			android:inputType="number" android:maxLength="2"
 			android:summary="@string/pref_first_day_summary" android:dialogTitle="@string/pref_first_day_title" />
+		<ListPreference android:key="first_day_of_week"
+			android:defaultValue="0" android:entries="@array/week_days" android:entryValues="@array/week_days_values" android:title="@string/pref_first_day_of_week"
+			android:summary="@string/pref_first_day_of_week_summary" android:dialogTitle="@string/pref_first_week_day_title" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/hours_day">
 		<TimePickerPreference android:key="hours_monday"

@@ -34,6 +34,7 @@
     <string name="dialog_hours_summary">How many hours do you have to work this day? eg. 9:00</string>
     <string name="menu_donate">Support!</string>
     <string name="menu_settings">Preferences</string>
+    <string name="menu_widget">Add Widget</string>
     <string name="menu_export">Export to CSV</string>
     <string name="menu_add_checkpoint">Checkpoint</string>
     <string name="menu_previous_month">Previous Month</string>
@@ -82,4 +83,25 @@
 	<string name="label_time_to_go">Time to go:</string>
 	<string name="notification_time_to_go">Great news! You can go home now!</string>
 	<string name="notification_title_time_to_go">Time to go</string>
+	<string name="pref_first_day_of_week">First day of week</string>
+	<string name="pref_first_day_of_week_summary">Select the first day of week</string>
+	<string name="pref_first_week_day_title">Select the day</string>
+	<string-array name="week_days">
+		<item>Sunday</item>
+		<item>Monday</item>
+		<item>Tuesday</item>
+		<item>Wednesday</item>
+		<item>Thursday</item>
+		<item>Friday</item>
+		<item>Saturday</item>
+	</string-array>
+	<string-array name="week_days_values">
+	<item>1</item>
+	<item>2</item>
+	<item>3</item>
+	<item>4</item>
+	<item>5</item>
+	<item>6</item>
+	<item>7</item>
+	</string-array>
 </resources>

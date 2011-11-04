@@ -125,6 +125,7 @@ public class CheckpointsDatabaseHelper extends SQLiteOpenHelper {
     public Cursor getWeekCheckpoints(Context context, int week) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
+        calendar.setFirstDayOfWeek(PreferencesActivity.getFirstDayOfWeek(context));
         calendar.clear();
         calendar.set(Calendar.WEEK_OF_YEAR, week);
         calendar.set(Calendar.YEAR, year);
