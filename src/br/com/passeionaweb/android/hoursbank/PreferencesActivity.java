@@ -13,6 +13,7 @@ import android.widget.Toast;
 public class PreferencesActivity extends PreferenceActivity {
 
     public static final String KEY_FIRST_DAY             = "first_day";
+    public static final String KEY_FIRST_WEEK_DAY        = "first_day_of_week";
     public static final String KEY_MIN_LUNCH             = "min_lunch";
     public static final String KEY_HOURS_MONDAY          = "hours_monday";
     public static final String KEY_HOURS_TUESDAY         = "hours_tuesday";
@@ -47,6 +48,11 @@ public class PreferencesActivity extends PreferenceActivity {
             // TODO: notify the user about the wrong set preference
         }
         return day;
+    }
+
+    public static int getFirstDayOfWeek(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return Integer.valueOf(prefs.getString(KEY_FIRST_WEEK_DAY, "1"));
     }
 
     public static String getHoursPrefByDay(Context context, int dayOfWeek) {

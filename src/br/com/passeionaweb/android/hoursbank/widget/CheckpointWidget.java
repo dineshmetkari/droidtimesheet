@@ -82,8 +82,12 @@ public class CheckpointWidget extends AppWidgetProvider {
         // Perform this loop procedure for each App Widget that belongs to this
         // provider
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        ComponentName provider = new ComponentName("br.com.passeionaweb.android.hoursbank", "br.com.passeionaweb.android.hoursbank.widget.CheckpointWidget");
+        ComponentName provider = getWidgetComponent();
         appWidgetManager.updateAppWidget(provider, views);
 
+    }
+    
+    public static ComponentName getWidgetComponent() {
+        return new ComponentName("br.com.passeionaweb.android.hoursbank", "br.com.passeionaweb.android.hoursbank.widget.CheckpointWidget");
     }
 }
